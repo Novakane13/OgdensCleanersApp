@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ogdens Cleaners</string>
-    <string name="logo_desc">Logo for Ogden's Cleaners</string> <!-- Removed incorrect escape -->
+    <string name="logo_desc">Logo for Ogden\'s Cleaners</string> <!-- Removed incorrect escape -->
 
     <!-- User Information -->
     <string name="full_name">Full Name</string>
@@ -13,7 +13,7 @@
     <!-- User Actions -->
     <string name="register">Register</string>
     <string name="login">Login</string>
-    <string name="don_t_have_an_account_register_here">Don't have an account? Register here</string> <!-- Removed incorrect escape -->
+    <string name="don_t_have_an_account_register_here">Don\'t have an account? Register here</string> <!-- Removed incorrect escape -->
     <string name="save_changes">Save Changes</string>
 
     <!-- Billing and Payments -->
@@ -54,7 +54,7 @@
     <!-- Navigation Drawer Actions -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Ogden's Cleaners</string> <!-- Updated for clarity -->
+    <string name="nav_header_title">Ogden\'s Cleaners</string> <!-- Updated for clarity -->
     <string name="nav_header_subtitle">contact@ogdenscleaners.com</string> <!-- Updated to be more meaningful -->
     <string name="nav_header_desc">Navigation header</string>
 
@@ -75,6 +75,7 @@
     <string name="pieces">Pieces</string>
     <string name="order_id">Order ID</string>
     <string name="total">Total</string>
+    <string name="total_amount_format">Total: %s</string>
     <string name="ordertotal">order total</string>
     <string name="orderpieces">orderpieces</string>
     <string name="open_navigation_menu">open navigation menu</string>

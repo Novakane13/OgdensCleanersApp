@@ -37,7 +37,8 @@ class BillingStatementAdapter(
 
         // Use getString() from the context to properly format the total amount text
         val totalAmountText = context.getString(R.string.billing_statement_total, statement.totalAmount)
-        holder.totalAmountTextView.text = totalAmountText
+        holder.totalAmountTextView.text = context.getString(R.string.total_amount_format, statement.totalAmountText)
+
 
         // Set click listeners for Pay and Details buttons
         holder.payButton.setOnClickListener {
@@ -48,6 +49,15 @@ class BillingStatementAdapter(
             onDetailsClickListener(statement)
         }
     }
+
+    private fun onDetailsClickListener(billingStatement: com.ogdenscleaners.ogdenscleanersapp.activities.BillingStatement) {
+        TODO("Not yet implemented")
+    }
+
+    private fun onPayClickListener(billingStatement: com.ogdenscleaners.ogdenscleanersapp.activities.BillingStatement) {
+        TODO("Not yet implemented")
+    }
+
 
     override fun getItemCount() = billingStatements.size
 }
