@@ -46,7 +46,7 @@ fun AccountScreen(userId: String) {
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
-    var savedCards by remember { mutableStateOf(listOf<Pair<String, String>>()) }
+    val savedCards by remember { mutableStateOf(listOf<Pair<String, String>>()) }
 
     val context = LocalContext.current
     val db = Firebase.firestore

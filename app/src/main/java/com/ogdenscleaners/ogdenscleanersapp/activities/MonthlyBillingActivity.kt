@@ -50,4 +50,9 @@ class MonthlyBillingActivity : AppCompatActivity() {
     }
 }
 
-data class BillingStatement(val month: String, val totalAmount: String)
+data class BillingStatement(val month: String, val totalAmount: String) {
+    val totalAmountText: Any?
+        get() {
+            TODO()
+        }
+}
