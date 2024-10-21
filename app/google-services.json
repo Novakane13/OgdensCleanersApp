@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "30722918635",
+    "project_id": "ogcapp-4aba1",
+    "storage_bucket": "ogcapp-4aba1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30722918635:android:66a7f027958f04a59516ae",
+        "android_client_info": {
+          "package_name": "com.ogdenscleaners.ogdenscleanersapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30722918635-6v00in7fdfaq2nh0bcr4f0katma47scl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ogdenscleaners.ogdenscleanersapp",
+            "certificate_hash": "6b8b4141715f022a1593d8aaada7fd31c5da3d8a"
+          }
+        },
+        {
+          "client_id": "30722918635-64jcc74lqrdik6rc93lure9it2evi4e5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBETyyj5wCeZb89C9YilGrdVaTlCwlqC_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30722918635-64jcc74lqrdik6rc93lure9it2evi4e5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    android:padding="8dp">
+
+    <!-- Logo at the top -->
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logo_desc"
+        android:paddingBottom="16dp" />
+
+    <!-- Active Orders Section -->
+    <TextView
+        android:id="@+id/activeOrdersTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/active_orders"
+        android:textSize="20sp"
+        android:textColor="#00CCCC" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/active_orders_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        tools:itemCount="9" />
+
+    <!-- Inactive Orders Section -->
+    <TextView
+        android:id="@+id/inactiveOrdersTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/inactive_orders"
+        android:textSize="20sp"
+        android:textColor="#00CCCC" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/inactive_orders_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="225dp"
+        android:padding="8dp"
+        tools:itemCount="6"
+        tools:listitem="@layout/order_item" />
+
+    <!-- Action Buttons at the bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/moreInfoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/more_info"
+            android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/addToPaymentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_to_payment"
+            android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/makePaymentButton"
+            android:layout_width="109dp"
+            android:layout_height="wrap_content"
+            android:text="@string/make_payment" />
+    </LinearLayout>
+
+</LinearLayout>

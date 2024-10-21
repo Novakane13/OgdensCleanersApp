@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_account"
+        android:title="@string/nav_account_info"
+        android:icon="@drawable/nav_account"
+        android:enabled="true"
+        android:visible="true" />
+
+    <item
+        android:id="@+id/nav_orders"
+        android:title="@string/nav_orders"
+        android:icon="@drawable/nav_orders"/>
+
+    <item
+        android:id="@+id/nav_billing"
+        android:title="@string/nav_billing"
+        android:icon="@drawable/money_symbol"/>
+
+    <item
+        android:id="@+id/nav_delivery"
+        android:icon="@drawable/delivery_truck"
+        android:title="@string/nav_delivery" />
+
+    <item
+        android:id="@+id/nav_notifications"
+        android:title="@string/nav_notifications"
+        android:icon="@drawable/ic_notification"/>
+
+    <item
+        android:id="@+id/nav_feedback"
+        android:title="@string/nav_feedback"
+        android:icon="@drawable/nav_feedback"/>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:title="@string/nav_logout"
+        android:icon="@drawable/nav_logout" />
+
+</menu>

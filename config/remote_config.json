@@ -1,0 +1,17 @@
+{
+  "welcome_message": {
+    "defaultValue": "Welcome to Ogden's Cleaners!",
+    "conditionalValues": {}
+  },
+  "discount_percentage": {
+    "defaultValue": "10",
+    "conditionalValues": {
+      "new_customer": "15",
+      "holiday_season": "20"
+    }
+  },
+  "feature_flag": {
+    "defaultValue": "true",
+    "conditionalValues": {}
+  }
+}

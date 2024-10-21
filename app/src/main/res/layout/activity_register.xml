@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:contentDescription="@string/password"
+    android:tag="pass">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000">
+
+        <!-- Name Input -->
+
+        <!-- Email Input -->
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="377dp"
+            android:layout_height="64dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="32dp"
+            android:autofillHints=""
+            android:hint="@string/full_name"
+            android:inputType="textPersonName"
+            android:text="@string/full_name"
+            android:textColor="#03A9F4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="377dp"
+            android:layout_height="54dp"
+            android:layout_margin="16dp"
+            android:autofillHints=""
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:text="@string/Email"
+            android:textColor="#03A9F4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextName"
+            tools:text="Email" />
+
+        <!-- Phone Number Input -->
+        <EditText
+            android:id="@+id/editTextPhone"
+            android:layout_width="378dp"
+            android:layout_height="53dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="140dp"
+            android:autoSizeTextType="uniform"
+            android:autofillHints=""
+            android:backgroundTint="#000000"
+            android:breakStrategy="simple"
+            android:hint="@string/phone_number"
+            android:inputType="phone"
+            android:text="@string/phone_number"
+            android:textColor="#03A9F4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.125"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
+
+        <!-- Password Input -->
+
+        <!-- Register Button -->
+
+        <EditText
+            android:id="@+id/Passwordinput"
+            android:layout_width="378dp"
+            android:layout_height="51dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="12dp"
+            android:autofillHints=""
+            android:background="#087DB3"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            android:textColorLink="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextPhone"
+            tools:ignore="DuplicateSpeakableTextCheck"
+            tools:text="Enter In Password" />
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="320dp"
+            android:layout_height="51dp"
+            android:layout_margin="16dp"
+            android:layout_marginTop="315dp"
+            android:background="#000000"
+            android:text="@string/register"
+            android:textColor="#087DB3"
+            app:layout_constraintBottom_toBottomOf="@+id/confirm_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextName"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/confirmpassword"
+            android:layout_width="378dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginBottom="4dp"
+            android:autofillHints=""
+            android:background="#087DB3"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_optimizationLevel="standard"
+            tools:text="Confirm  Password" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_password"
+            android:layout_width="15dp"
+            android:layout_height="16dp"
+            android:textColorHint="#000000"
+            app:boxBackgroundColor="#F8F8F8"
+            app:boxBackgroundMode="outline"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:passwordToggleContentDescription="Show/Hide password"
+            app:passwordToggleDrawable="@android:drawable/ic_menu_view"
+            app:passwordToggleEnabled="true"
+            tools:layout_editor_absoluteX="213dp"
+            tools:layout_editor_absoluteY="253dp">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirm_password"
+            android:layout_width="15dp"
+            android:layout_height="16dp"
+            android:textColorHint="#000000"
+            app:boxBackgroundColor="#F8F8F8"
+            app:boxBackgroundMode="outline"
+            app:hintEnabled="true"
+            app:hintTextAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:passwordToggleContentDescription="Show/Hide password"
+            app:passwordToggleDrawable="@android:drawable/ic_menu_view"
+            app:passwordToggleEnabled="true"
+            tools:layout_editor_absoluteX="213dp"
+            tools:layout_editor_absoluteY="320dp">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
