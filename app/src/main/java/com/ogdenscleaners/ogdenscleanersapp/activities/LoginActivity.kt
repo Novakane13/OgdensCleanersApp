@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
+import com.ogdenscleaners.ogdenscleanersapp.RegisterActivity
 import com.ogdenscleaners.ogdenscleanersapp.ui.theme.OgdensCleanersAppTheme
 
 class LoginActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.os.Bundle
 import android.widget.Toast
@@ -21,6 +21,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.ogdenscleaners.ogdenscleanersapp.ui.theme.OgdensCleanersAppTheme
 import androidx.compose.ui.tooling.preview.Preview
+import com.ogdenscleaners.ogdenscleanersapp.R
 
 class AccountInfoActivity : ComponentActivity() {
     private var userId: String? = null
@@ -74,7 +75,7 @@ fun AccountScreen(userId: String) {
     ) {
         // Logo at the top center
         Image(
-            painter = painterResource(id = R.drawable.logo2),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
             modifier = Modifier
                 .height(100.dp)
@@ -226,7 +227,7 @@ fun AccountScreenPreview() {
     ) {
         // Logo at the top center
         Image(
-            painter = painterResource(id = R.drawable.logo2),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "Logo",
             modifier = Modifier
                 .height(100.dp)

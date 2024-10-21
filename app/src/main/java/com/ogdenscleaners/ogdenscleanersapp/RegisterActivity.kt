@@ -15,6 +15,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.ogdenscleaners.ogdenscleanersapp.activities.DashboardActivity
+import com.ogdenscleaners.ogdenscleanersapp.activities.LoginActivity
 import com.ogdenscleaners.ogdenscleanersapp.ui.theme.OgdensCleanersAppTheme
 
 class RegisterActivity : ComponentActivity() {

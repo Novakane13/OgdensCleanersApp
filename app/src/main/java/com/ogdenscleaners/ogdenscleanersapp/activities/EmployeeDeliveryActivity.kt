@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.os.Bundle
 import android.widget.Toast
@@ -10,6 +10,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.android.PolyUtil
+import com.ogdenscleaners.ogdenscleanersapp.R
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException

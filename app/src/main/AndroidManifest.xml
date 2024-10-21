@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Required permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".MyApplication"
@@ -12,8 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OgdensCleanersApp">
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY_HERE"/>
+
+
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,34 +29,34 @@
             </intent-filter>
         </activity> <!-- Other Activities -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".activities.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountInfoActivity"
+            android:name=".activities.AccountInfoActivity"
             android:exported="false" />
         <activity
             android:name=".BillingActivity"
             android:exported="false" />
         <activity
-            android:name=".DeliveryActivity"
+            android:name=".activities.DeliveryActivity"
             android:exported="false" />
         <activity
-            android:name=".FeedbackActivity"
+            android:name=".activities.FeedbackActivity"
             android:exported="false" />
         <activity
-            android:name=".NotificationsActivity"
+            android:name=".activities.NotificationsActivity"
             android:exported="false" />
         <activity
-            android:name=".OrdersActivity"
+            android:name=".activities.OrdersActivity"
             android:exported="false" />
-        <activity android:name=".CustomerCheckActivity" />
-        <activity android:name=".EmployeeDeliveryActivity" />
+        <activity android:name=".activities.CustomerCheckActivity" />
+        <activity android:name=".activities.EmployeeDeliveryActivity" />
     </application>
 
 </manifest>

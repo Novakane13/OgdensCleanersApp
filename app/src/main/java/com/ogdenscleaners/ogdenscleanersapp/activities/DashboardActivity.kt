@@ -1,10 +1,9 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -34,7 +33,7 @@ class DashboardActivity : ComponentActivity() {
         val intent = when (destination) {
             "AccountInfo" -> Intent(this, AccountInfoActivity::class.java)
             "Orders" -> Intent(this, OrdersActivity::class.java)
-            "Billing" -> Intent(this, BillingActivity::class.java)
+            "Billing" -> Intent(this, MonthlyBillingActivity::class.java)
             "Delivery" -> Intent(this, DeliveryActivity::class.java)
             "Notifications" -> Intent(this, NotificationsActivity::class.java)
             "Feedback" -> Intent(this, FeedbackActivity::class.java)

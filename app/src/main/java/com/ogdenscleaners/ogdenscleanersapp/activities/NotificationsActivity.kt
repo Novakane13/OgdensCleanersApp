@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.content.Context
 import android.content.SharedPreferences

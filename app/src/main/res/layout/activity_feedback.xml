@@ -1,27 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutFeedback"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     android:orientation="vertical"
     android:padding="16dp">
 
     <!-- Feedback Input -->
-    <EditText
-        android:id="@+id/editTextFeedback"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@string/logo"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/your_feedback"
-        android:inputType="textMultiLine"
-        android:minLines="5"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/textview"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        tools:text="Please let us about your experience and how we could make it better! " />
 
     <!-- Submit Button -->
+    <EditText
+        android:id="@+id/editTextFeedback"
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="enter feedback"
+        android:background="@color/colorAccent"
+        android:backgroundTintMode="screen"
+        android:elegantTextHeight="false"
+        android:ellipsize="none"
+        android:hint="@string/your_feedback"
+        android:includeFontPadding="false"
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:outlineProvider="bounds"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Write feedback here" />
+
     <Button
         android:id="@+id/buttonSubmitFeedback"
-        android:layout_width="match_parent"
+        android:layout_width="186dp"
         android:layout_height="wrap_content"
-        android:text="@string/submit_feedback" />
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="32dp"
+        android:background="#1D2E2A"
+        android:text="@string/submit_feedback"
+        android:textColor="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/suggestions"
+        android:layout_width="380dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="enter suggestions"
+        android:background="#03D9C4"
+        android:ems="10"
+        android:gravity="center_horizontal|center_vertical"
+        android:inputType="textMultiLine"
+        android:text="@string/write_suggestions_here"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="32dp"
+        android:background="#1D2E2A"
+        android:text="@string/submit_suggestions"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
 import com.google.maps.android.PolyUtil
+import com.ogdenscleaners.ogdenscleanersapp.R
 
 
 class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -21,9 +23,10 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var customerAddressInput: EditText
     private lateinit var checkButton: Button
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customer_check)
+        setContentView(R.layout.activity_check_delivery_range)
 
         customerAddressInput = findViewById(R.id.customerAddressInput)
         checkButton = findViewById(R.id.checkButton)

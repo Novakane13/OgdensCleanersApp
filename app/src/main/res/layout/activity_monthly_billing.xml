@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Main Layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/black"
+        android:padding="16dp">
+
+        <!-- Logo Button to Open Navigation Drawer -->
+        <ImageButton
+            android:id="@+id/logoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/logo_desc"
+            android:layout_gravity="start" />
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monthly Billing Statements"
+            android:textColor="#00D0C6"
+            android:textSize="24sp"
+            android:layout_marginTop="16dp" />
+
+        <!-- Billing Statements Recycler View -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/billingStatementsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#00D0C6"
+            android:padding="8dp" />
+
+        <!-- Payment Button -->
+        <Button
+            android:id="@+id/payNowButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#333333"
+            android:textColor="@android:color/white"
+            android:text="Pay Now"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Stop/Restart Monthly Billing Button -->
+        <Button
+            android:id="@+id/stopRestartBillingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#333333"
+            android:textColor="@android:color/white"
+            android:text="Stop / Restart Billing Service"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <!-- Navigation Drawer -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/drawer_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

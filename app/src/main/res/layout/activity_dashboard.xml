@@ -25,7 +25,6 @@
         android:verticalScrollbarPosition="right"
         android:visibility="visible"
         app:headerLayout="@layout/nav_header"
-        app:itemBackground="@drawable/logo"
         app:itemTextColor="#225C6E"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imageView2"
@@ -34,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.663"
         app:menu="@menu/drawer_menu"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/imageView2"

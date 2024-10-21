@@ -1,53 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#000000">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="700dp"
         android:orientation="vertical"
         android:padding="16dp">
 
         <!-- Name Input -->
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="16dp"
+            android:adjustViewBounds="false"
+            android:background="#000000"
+            android:contentDescription="@string/open_navigation_menu"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo" />
+
         <EditText
             android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Full_name"/>
+            android:layout_width="340dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="enter information"
+            android:background="#226E90"
+            android:inputType="text|textPersonName"
+            android:textColor="#FFFFFF"
+            tools:text="Name"
+            tools:ignore="LabelFor" />
 
         <!-- Email Input -->
         <EditText
             android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/EMail"
-            android:inputType="textEmailAddress"/>
+            android:layout_width="340dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="enter information"
+            android:background="#226D8F"
+            android:inputType="textEmailAddress"
+            android:textColor="#FFFFFF"
+            tools:text="Email"
+            tools:ignore="LabelFor" />
 
         <!-- Phone Number Input -->
         <EditText
             android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/Phone_number"
-            android:inputType="phone"/>
+            android:layout_width="340dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="enter phone number"
+            android:background="#226D8E"
+            android:inputType="phone"
+            android:textColor="#F8F3F3"
+            tools:text="Phone number"
+            tools:ignore="LabelFor" />
 
         <!-- Credit Card Input -->
-        <EditText
-            android:id="@+id/editTextCreditCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/credit_card_information"
-            android:inputType="number"/>
 
         <!-- Save Button -->
+
+        <EditText
+            android:id="@+id/editTextCreditCard"
+            android:layout_width="340dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="enter information"
+            android:background="#226D8E"
+            android:inputType="number"
+            android:textColor="#FFFFFF"
+            tools:text="Credit card information"
+            tools:ignore="LabelFor" />
+
         <Button
             android:id="@+id/buttonSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save_changes"
-            android:layout_marginTop="16dp"/>
+            android:layout_width="250dp"
+            android:layout_height="85dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="48dp"
+            android:background="#1D2E2A"
+            android:textColor="#FFFFFF"
+            tools:text="Save changes" />
 
     </LinearLayout>
 </ScrollView>

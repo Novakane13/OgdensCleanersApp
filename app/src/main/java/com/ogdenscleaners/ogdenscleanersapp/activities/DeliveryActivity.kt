@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.os.Bundle
 import android.widget.Toast

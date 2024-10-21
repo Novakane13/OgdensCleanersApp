@@ -88,6 +88,8 @@ dependencies {
 
     // Stripe
     implementation(libs.stripe.android)
+    implementation (libs.stripe.android.v20151)
+
 
     // Firebase BoM
     //implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
@@ -116,6 +118,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation (libs.material.v190)
 
 
     // Core Library Desugaring

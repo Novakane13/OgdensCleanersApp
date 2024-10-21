@@ -1,25 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutNotifications"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#000000"
+    android:orientation="vertical">
 
     <!-- Notifications Switch -->
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#000000"
+        android:contentDescription="Navigation button"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/logo"
+        tools:layout_editor_absoluteX="130dp"
+        tools:layout_editor_absoluteY="16dp" />
+
     <TextView
         android:id="@+id/textViewNotifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:text="@string/receive_order_status_notifications"
-        android:textSize="16sp" />
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        tools:text="Receive notification when order is ready" />
 
     <Switch
         android:id="@+id/switchNotifications"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:checked="false"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:switchMinWidth="100dp"
+        android:thumb="?android:attr/fingerprintAuthDrawable"
+        android:thumbTint="#000000"
+        android:track="@color/white"
+        android:trackTintMode="add"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        tools:text="Receive notification when delivery is on the way" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:switchMinWidth="100dp"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:thumb="?android:attr/fingerprintAuthDrawable"
+        android:thumbTint="#000000"
+        android:track="@color/white"
+        tools:checked="false" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        tools:text="Receive notification for outstanding order of 1 week" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:switchMinWidth="100dp"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:thumb="?android:attr/fingerprintAuthDrawable"
+        android:thumbTint="#000000"
+        android:track="@color/white"
+        tools:checked="false" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        tools:text="Receive notification for outstanding order of 2 weeks" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:switchMinWidth="100dp"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:thumb="?android:attr/fingerprintAuthDrawable"
+        android:thumbTint="#000000"
+        android:track="@color/white"
+        tools:checked="false" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        tools:text="Receive notification for outstanding order of 1 month" />
+
+    <Switch
+        android:id="@+id/switch4"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:switchMinWidth="100dp"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:thumb="?android:attr/fingerprintAuthDrawable"
+        android:thumbTint="#000000"
+        android:track="@color/white"
+        tools:checked="false" />
 
 </LinearLayout>
