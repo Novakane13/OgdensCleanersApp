@@ -1,22 +1,22 @@
 [versions]
 activityComposeVersion = "1.9.3"
 agp = "8.6.1"
-androidMapsUtils = "2.2.5"
+androidMapsUtils = "3.8.2"
 androidxComposeBom = "2024.10.00"
 androidxJunit = "1.2.1"
 appcompatVersion = "1.7.0"
 composeBomVersion = "2024.10.00"
-converterGson = "2.9.0"
+converterGson = "2.11.0"
 coreKtxVersion = "1.13.1"
 desugar_jdk_libs = "2.1.2"
 espressoCoreVersion = "3.6.1"
-firebaseAuthKtx = "23.0.0"
+firebaseAuthKtx = "23.1.0"
 firebaseCore = "21.1.1"
 firebaseDatabaseKtx = "21.0.0"
-firebaseDataconnect = "16.0.0-beta01"
-firebaseFirestoreKtx = "25.1.0"
-firebaseMessagingKtx = "24.0.2"
-gson = "2.10.1"
+firebaseDataconnect = "16.0.0-beta02"
+firebaseFirestoreKtx = "25.1.1"
+firebaseMessagingKtx = "24.0.3"
+gson = "2.11.0"
 kotlin = "1.9.10"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -40,13 +40,13 @@ mediarouter = "1.7.0"
 stripeAndroid = "20.52.0"
 lifecycleLivedataKtx = "2.8.6"
 lifecycleViewmodelKtx = "2.8.6"
-navigationFragmentKtx = "2.8.2"
+navigationFragmentKtx = "2.8.3"
 navigationUiKtx = "2.8.2"
 stripeAndroidVersion = "20.15.1"
 
 [libraries]
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
-androidx-activity-compose-v180 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
+androidx-activity-compose-v180 = { module = "androidx.activity:activity-compose", version = "1.9.3" }
 androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-compose-bom-v20230901 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
 androidx-compose-bom-v20241000 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
@@ -83,27 +83,27 @@ androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview"
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-material-v190 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-material3 = { module = "androidx.compose.material3:material3" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.3" }
+material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
+material-v190 = { module = "com.google.android.material:material", version = "1.12.0" }
+material3 = { module = "androidx.compose.material3:material3", version = "1.4.0-alpha02" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 cronet-embedded = { group = "org.chromium.net", name = "cronet-embedded", version.ref = "cronetEmbedded" }
 androidx-mediarouter = { group = "androidx.mediarouter", name = "mediarouter", version.ref = "mediarouter" }
 play-services-maps-v1802 = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMapsVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
-stripe-android = { module = "com.stripe:stripe-android", version.ref = "stripeAndroid" }
-stripe-android-v20151 = { module = "com.stripe:stripe-android", version.ref = "stripeAndroidVersion" }
-ui = { module = "androidx.compose.ui:ui" }
-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
+stripe-android = { module = "com.stripe:stripe-android", version = "20.53.0" }
+stripe-android-v20151 = { module = "com.stripe:stripe-android", version = "20.53.0" }
+ui = { module = "androidx.compose.ui:ui", version = "1.8.0-alpha04" }
+ui-graphics = { module = "androidx.compose.ui:ui-graphics", version = "1.8.0-alpha04" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
 ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling", version = "1.8.0-alpha04" }
+ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version = "1.8.0-alpha04" }
 androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version = "2.8.3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

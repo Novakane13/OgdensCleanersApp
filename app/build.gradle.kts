@@ -1,19 +1,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.31" // Use the version matching your Kotlin version
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
     id("com.google.gms.google-services")
 }
 
-
 android {
     namespace = "com.ogdenscleaners.ogdenscleanersapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.ogdenscleaners.ogdenscleanersapp"
         minSdk = 28
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -21,6 +20,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+    }
+
+    buildFeatures {
+        viewBinding = true // Proper place for enabling view binding
+        compose = true
     }
 
     buildTypes {
@@ -43,21 +47,17 @@ android {
         jvmTarget = "17"
     }
 
-    buildFeatures {
-        compose = true
-        viewBinding = false // Disabled View Binding since we're using Jetpack Compose
-    }
-
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3" // Ensure this matches your Compose version
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
 }
+
 
 dependencies {
     // Kotlin BOM
@@ -88,11 +88,7 @@ dependencies {
 
     // Stripe
     implementation(libs.stripe.android)
-    implementation (libs.stripe.android.v20151)
-
-
-    // Firebase BoM
-    //implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation(libs.stripe.android.v20151)
 
     // Firebase Services
     implementation(libs.firebase.auth.ktx)
@@ -102,24 +98,22 @@ dependencies {
     implementation(libs.firebase.dataconnect)
     implementation(libs.firebase.core)
 
-
     // Other dependencies
     implementation(libs.androidx.appcompat.v161)
-    implementation (libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
     implementation(libs.play.services.maps)
-    implementation (libs.play.services.maps.v1802)
-    implementation (libs.android.maps.utils)
+    implementation(libs.play.services.maps.v1802)
+    implementation(libs.android.maps.utils)
     implementation(libs.cronet.embedded)
     implementation(libs.androidx.mediarouter)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation (libs.material.v190)
-
+    implementation(libs.material.v190)
 
     // Core Library Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)

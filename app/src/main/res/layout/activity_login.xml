@@ -1,82 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
-
-    <!-- Email Input -->
-
-    <!-- Password Input -->
-
-    <!-- Login Button -->
-
-    <!-- Register Redirect Text -->
-
-    <EditText
-        android:id="@+id/editTextEmail"
-        android:layout_width="385dp"
-        android:layout_height="55dp"
-        android:background="#11A0B8"
-        android:inputType="textEmailAddress"
-        android:textColor="#FFFFFF"
-        tools:layout_editor_absoluteX="13dp"
-        tools:layout_editor_absoluteY="214dp"
-        tools:text="Email"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="280dp"
-        android:layout_height="68dp"
-        android:layout_marginEnd="64dp"
-        android:background="#1D2E2A"
-        android:text="@string/login"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="401dp"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/textViewRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/don_t_have_an_account_register_here"
-        android:textColor="@color/colorPrimary"
-        android:textSize="16sp"
-        tools:layout_editor_absoluteX="75dp"
-        tools:layout_editor_absoluteY="489dp" />
+    android:background="#000000"
+    tools:context=".LoginActivity">
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="32dp"
         android:background="#000000"
         android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo"
-        tools:layout_editor_absoluteX="130dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="64dp"
+        android:background="#11A0B8"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageButton3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="385dp"
-        android:layout_height="49dp"
-        tools:layout_editor_absoluteX="12dp"
-        tools:layout_editor_absoluteY="300dp">
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail">
 
         <EditText
             android:id="@+id/passwordinput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="#11A0B8"
-            android:editable="false"
-            android:gravity="center_horizontal|fill_horizontal"
+            android:hint="Password"
             android:inputType="textPassword"
-            android:textColor="#FFFFFF"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="220dp"
-            tools:text="Password" />
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="64dp"
+        android:background="#1D2E2A"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <TextView
+        android:id="@+id/textViewRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Don't have an account? Register here"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonLogin" />
 </androidx.constraintlayout.widget.ConstraintLayout>

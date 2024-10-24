@@ -1,58 +1,66 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.Toast
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ogdenscleaners.ogdenscleanersapp.R
-import com.ogdenscleaners.ogdenscleanersapp.adapters.BillingStatementAdapter
+import com.ogdenscleaners.ogdenscleanersapp.adapters.BillingAdapter
+import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
 
-class MonthlyBillingActivity : AppCompatActivity() {
+class MonthlyBillingActivity() : AppCompatActivity(), Parcelable {
 
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var billingRecyclerView: RecyclerView
-    private lateinit var adapter: BillingStatementAdapter
+    constructor(parcel: Parcel) : this() {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MonthlyBillingActivity> {
+        override fun createFromParcel(parcel: Parcel): MonthlyBillingActivity {
+            return MonthlyBillingActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MonthlyBillingActivity?> {
+            return arrayOfNulls(size)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_monthly_billing)
 
-        // Setup navigation drawer
-        drawerLayout = findViewById(R.id.drawer_layout)
-        val logoButton: ImageButton = findViewById(R.id.logoButton)
-        logoButton.setOnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-
-        // Setup the RecyclerView for billing statements
-        billingRecyclerView = findViewById(R.id.billingStatementsRecyclerView)
-        billingRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // Sample Data
-        val statements = listOf(
-            BillingStatement("January 2024", "$100.00"),
-            BillingStatement("February 2024", "$120.00")
+        // Placeholder data for billing statements
+        val oneHundred = "100.00"
+        val billingStatements = listOf(
+            BillingStatement(
+                id = "1",
+                month = "January 2024",
+                totalAmount = "$100.00",
+                totalAmountText = oneHundred,
+                details = "Monthly dry cleaning charges",
+                paidStatus = false
+            ),
+            BillingStatement(
+                id = "2",
+                month = "February 2024",
+                totalAmount = "$80.00",
+                totalAmountText = oneHundred,
+                details = "Monthly dry cleaning charges",
+                paidStatus = true
+            )
         )
 
-        adapter = BillingStatementAdapter(statements, onPayClickListener = { statement ->
-            Toast.makeText(this, "Processing payment for ${statement.month}", Toast.LENGTH_SHORT).show()
-            // Integrate Stripe payment here
-        }, onDetailsClickListener = { statement ->
-            Toast.makeText(this, "Viewing details for ${statement.month}", Toast.LENGTH_SHORT).show()
-            // Show detailed statement here
-        })
-
-        billingRecyclerView.adapter = adapter
+        // Set up RecyclerView
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewBilling)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = BillingAdapter(billingStatements)
     }
-}
-
-data class BillingStatement(val month: String, val totalAmount: String) {
-    val totalAmountText: Any?
-        get() {
-            TODO()
-        }
 }

@@ -2,4 +2,11 @@
 <resources>
     <item name="customerAddressInput" type="id"/>
     <item name="checkButton" type="id"/>
+    <item name="nav_button_orders" type="id"/>
+    <item name="nav_button_billing" type="id"/>
+    <item name="nav_button_delivery" type="id"/>
+    <item name="nav_button_feedback" type="id"/>
+    <item name="nav_button_notifications" type="id"/>
+    <item name="nav_button_account_info" type="id"/>
+    <item name="logoImageView" type="id"/>
 </resources>
