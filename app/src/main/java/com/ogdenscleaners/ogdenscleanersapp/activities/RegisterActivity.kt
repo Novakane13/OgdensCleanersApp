@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp
+package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.ogdenscleaners.ogdenscleanersapp.activities.DashboardActivity
+import com.ogdenscleaners.ogdenscleanersapp.R
 
 class RegisterActivity : ComponentActivity() {
     private lateinit var mAuth: FirebaseAuth

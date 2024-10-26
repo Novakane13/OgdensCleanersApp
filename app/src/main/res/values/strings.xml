@@ -85,4 +85,27 @@
     <string name="logo">logo</string> <!-- Updated for clarity -->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="notes">"Notes "</string>
+    <string name="delivery_information">Delivery Information</string>
+    <string name="request_pickup">Request a Pickup</string>
+    <string name="address_check">Check Address</string>
+    <string name="start_delivery">Start New Delivery Service</string>
+    <string name="temp_stop">Temporarily Stop Service</string>
+    <string name="stop_service">Stop Delivery Service</string>
+    <string name="feedback">Write feedback here</string>
+    <string name="add_card">Add Credit Card</string>
+    <string name="del_notification">Receive notification when delivery is on the way</string>
+    <string name="week_notification">Receive notification for outstanding order of 1 week</string>
+    <string name="two_week_notif">Receive notification for outstanding order of 2 weeks</string>
+    <string name="month_notification">Receive notification for outstanding order of 1 month</string>
+    <string name="nav_menu_button">Button for navigation menu</string>
+    <string name="nav_logo">Click for Nav</string>
+    <string name="check_address">Check Address</string>
+    <string name="request_a_pickup">Request a Pickup</string>
+    <string name="stop_delivery_service">Stop Delivery Service</string>
+    <string name="start_new_delivery_service">Start New Delivery Service</string>
+    <string name="temporary_stop_service">Temporary Stop Service</string>
+    <string name="check_delivery_range">Check Delivery Range</string>
+    <string name="enter_your_address">Enter your address</string>
+    <string name="save">Save</string>
 </resources>

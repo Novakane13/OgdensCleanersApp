@@ -16,7 +16,7 @@
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
         android:background="#000000"
-        android:contentDescription="Navigation button"
+        android:contentDescription="@string/open_navigation_menu"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/logo"
         tools:layout_editor_absoluteX="130dp"
@@ -29,7 +29,7 @@
         android:layout_marginTop="35dp"
         android:text="@string/receive_order_status_notifications"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="18sp"
         tools:text="Receive notification when order is ready" />
 
     <Switch
@@ -43,7 +43,7 @@
         android:switchMinWidth="100dp"
         android:thumb="?android:attr/fingerprintAuthDrawable"
         android:thumbTint="#000000"
-        android:track="@color/white"
+        android:track="@color/colorPrimary"
         android:trackTintMode="add"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -52,10 +52,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/del_notification"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        tools:text="Receive notification when delivery is on the way" />
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/switch1"
@@ -70,7 +69,7 @@
         android:textSize="14sp"
         android:thumb="?android:attr/fingerprintAuthDrawable"
         android:thumbTint="#000000"
-        android:track="@color/white"
+        android:track="@color/colorPrimary"
         tools:checked="false" />
 
     <TextView
@@ -78,10 +77,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/week_notification"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        tools:text="Receive notification for outstanding order of 1 week" />
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/switch2"
@@ -96,7 +94,7 @@
         android:textSize="14sp"
         android:thumb="?android:attr/fingerprintAuthDrawable"
         android:thumbTint="#000000"
-        android:track="@color/white"
+        android:track="@color/colorPrimary"
         tools:checked="false" />
 
     <TextView
@@ -104,9 +102,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/two_week_notif"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textSize="18sp"
         tools:text="Receive notification for outstanding order of 2 weeks" />
 
     <Switch
@@ -122,7 +120,7 @@
         android:textSize="14sp"
         android:thumb="?android:attr/fingerprintAuthDrawable"
         android:thumbTint="#000000"
-        android:track="@color/white"
+        android:track="@color/colorPrimary"
         tools:checked="false" />
 
     <TextView
@@ -130,10 +128,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/month_notification"
         android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        tools:text="Receive notification for outstanding order of 1 month" />
+        android:textSize="18sp" />
 
     <Switch
         android:id="@+id/switch4"
@@ -148,7 +145,15 @@
         android:textSize="14sp"
         android:thumb="?android:attr/fingerprintAuthDrawable"
         android:thumbTint="#000000"
-        android:track="@color/white"
+        android:track="@color/colorPrimary"
         tools:checked="false" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="175dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:text="Button" />
 
 </LinearLayout>

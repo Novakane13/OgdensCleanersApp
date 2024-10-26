@@ -42,7 +42,7 @@
         android:backgroundTintMode="screen"
         android:elegantTextHeight="false"
         android:ellipsize="none"
-        android:hint="@string/your_feedback"
+        android:hint="@string/feedback"
         android:includeFontPadding="false"
         android:inputType="textMultiLine"
         android:minLines="5"
@@ -50,12 +50,11 @@
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="18sp"
-        android:textStyle="bold"
-        tools:text="Write feedback here" />
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/buttonSubmitFeedback"
-        android:layout_width="186dp"
+        android:layout_width="198dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginTop="32dp"
@@ -73,14 +72,14 @@
         android:background="#03D9C4"
         android:ems="10"
         android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/write_suggestions_here"
         android:inputType="textMultiLine"
-        android:text="@string/write_suggestions_here"
         android:textColor="#000000"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="186dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginTop="32dp"

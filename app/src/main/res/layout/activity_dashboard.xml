@@ -1,0 +1,101 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".activities.DashboardActivity">
+
+    <!-- Logo at the top -->
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Orders button -->
+    <Button
+        android:id="@+id/nav_button_orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nav_orders"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1D2E2A"
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Billing button -->
+    <Button
+        android:id="@+id/nav_button_billing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nav_billing"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1D2E2A"
+        app:layout_constraintTop_toBottomOf="@id/nav_button_orders"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Delivery button -->
+    <Button
+        android:id="@+id/nav_button_delivery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nav_delivery"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1D2E2A"
+        app:layout_constraintTop_toBottomOf="@id/nav_button_billing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Notifications button -->
+    <Button
+        android:id="@+id/nav_button_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nav_notifications"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1D2E2A"
+        app:layout_constraintTop_toBottomOf="@id/nav_button_delivery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Feedback button -->
+    <Button
+        android:id="@+id/nav_button_feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nav_feedback"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1D2E2A"
+        app:layout_constraintTop_toBottomOf="@id/nav_button_notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Account Info button -->
+    <Button
+        android:id="@+id/nav_button_account_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nav_account_info"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1D2E2A"
+        app:layout_constraintTop_toBottomOf="@id/nav_button_feedback"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

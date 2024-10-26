@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,140 +10,97 @@
     android:clickable="true"
     tools:actionBarNavMode="standard">
 
+    <!-- Buttons for Actions -->
     <Button
         android:id="@+id/button"
-        android:layout_width="186dp"
+        android:layout_width="260dp"
         android:layout_height="50dp"
-        android:layout_margin="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="#1D2E2A"
-        android:text="@string/delivery_request"
+        android:text="@string/temporary_stop_service"
         android:textColor="#FFFFFF"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.795"
-        tools:text="temporarily stop service"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.795" />
 
     <Button
         android:id="@+id/startnew"
-        android:layout_width="186dp"
+        android:layout_width="270dp"
         android:layout_height="50dp"
-        android:layout_margin="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="#1D2E2A"
-        android:text="@string/delivery_request"
+        android:text="@string/start_new_delivery_service"
         android:textColor="#FFFFFF"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.676"
-        tools:text="start new delivery service"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.676" />
 
     <Button
         android:id="@+id/stopdelservice"
-        android:layout_width="187dp"
+        android:layout_width="200dp"
         android:layout_height="49dp"
-        android:layout_margin="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="#1D2E2A"
-        android:layoutDirection="locale"
-        android:letterSpacing="0"
-        android:lineSpacingExtra="12sp"
-        android:lineSpacingMultiplier="1"
-        android:lines="1"
-        android:linksClickable="true"
-        android:longClickable="true"
-        android:text="@string/delivery_request"
+        android:text="@string/stop_delivery_service"
         android:textColor="#FFFFFF"
-        android:visibility="visible"
-        app:barrierDirection="start"
-        app:layout_constrainedWidth="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.365"
-        app:layout_wrapBehaviorInParent="included"
-        tools:text="stop delivery service"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.365" />
 
+    <!-- Additional Buttons for Other Actions -->
     <Button
         android:id="@+id/requestapickup"
         android:layout_width="186dp"
         android:layout_height="50dp"
-        android:layout_margin="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="#1D2E2A"
-        android:text="@string/delivery_request"
+        android:text="@string/request_a_pickup"
         android:textColor="#FFFFFF"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.557"
-        tools:text="request a pick-up"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.557" />
 
     <Button
         android:id="@+id/updateorview"
-        android:layout_width="186dp"
+        android:layout_width="225dp"
         android:layout_height="50dp"
-        android:layout_margin="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:background="#1D2E2A"
-        android:text="@string/delivery_request"
+        android:text="Delivery Information"
         android:textColor="#FFFFFF"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.436"
-        tools:text="update or view delivery information"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.436" />
 
     <Button
         android:id="@+id/addresscheck"
         android:layout_width="186dp"
         android:layout_height="50dp"
-        android:layout_margin="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:autoLink="map"
-        android:background="#1D2E2A"
-        android:clickable="true"
-        android:contextClickable="false"
-        android:fitsSystemWindows="true"
-        android:text="@string/delivery_request"
+        android:text="@string/check_address"
         android:textColor="#FFFFFF"
-        android:textColorHighlight="#FFFFFF"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.315"
-        tools:text="check address"
-        tools:visibility="visible" />
+        app:layout_constraintVertical_bias="0.315" />
 
+    <!-- Logo Image -->
     <ImageView
         android:id="@+id/logo"
         android:layout_width="150dp"

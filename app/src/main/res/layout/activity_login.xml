@@ -4,7 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".LoginActivity">
+    android:backgroundTintMode="add"
+    android:contentDescription="@string/nav_menu_button"
+    android:foregroundTint="#FB0404"
+    android:outlineAmbientShadowColor="#FFFFFF"
+    android:outlineProvider="bounds"
+    android:outlineSpotShadowColor="#FFFFFF"
+    android:theme="@style/Theme.OgdensCleanersApp"
+    android:visibility="visible">
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -12,12 +19,14 @@
         android:layout_height="150dp"
         android:layout_marginTop="32dp"
         android:background="#000000"
-        android:scaleType="fitCenter"
+        android:contentDescription="@string/nav_logo"
+        android:scaleType="fitXY"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        tools:srcCompat="@drawable/logo" />
+        tools:srcCompat="@drawable/logo"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -39,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextEmail">
@@ -59,12 +69,21 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="64dp"
-        android:background="#1D2E2A"
-        android:text="Login"
+        android:background="#2B2D30"
+        android:duplicateParentState="false"
+        android:editable="false"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/login"
         android:textColor="#FFFFFF"
+        app:icon="@android:drawable/star_big_off"
+        app:iconGravity="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:strokeWidth="6dp" />
 
     <TextView
         android:id="@+id/textViewRegister"

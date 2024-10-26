@@ -15,8 +15,6 @@
         android:orientation="vertical">
 
         <!-- Logo ImageButton (opens the navigation drawer) -->
-
-        <!-- Google Map Fragment -->
         <ImageButton
             android:id="@+id/logoButton"
             android:layout_width="150dp"
@@ -27,11 +25,12 @@
             android:scaleType="fitCenter"
             android:src="@drawable/logo" />
 
-        <fragment
+        <!-- Google Map Fragment -->
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mapFragment"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="382dp"
+            android:layout_height="0dp"
             android:layout_weight="1" />
 
         <!-- Address Input Field and Check Button -->
@@ -44,7 +43,7 @@
                 android:id="@+id/addressInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter your address"
+                android:hint="@string/enter_your_address"
                 android:inputType="text"
                 android:textColor="#FFFFFF"
                 tools:text="Enter your address" />
@@ -57,7 +56,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
             android:background="#1D2E2A"
-            android:text="Check Delivery Range"
+            android:text="@string/check_delivery_range"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

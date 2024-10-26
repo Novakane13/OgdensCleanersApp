@@ -33,7 +33,7 @@
             android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".activities.DashboardActivity"
@@ -42,7 +42,7 @@
             android:name=".activities.AccountInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".BillingActivity"
+            android:name=".activities.MonthlyBillingActivity"
             android:exported="false" />
         <activity
             android:name=".activities.DeliveryActivity"
@@ -56,8 +56,12 @@
         <activity
             android:name=".activities.OrdersActivity"
             android:exported="false" />
-        <activity android:name=".activities.CustomerCheckActivity" />
-        <activity android:name=".activities.EmployeeDeliveryActivity" />
+        <activity
+            android:name=".activities.CustomerCheckActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EmployeeDeliveryActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

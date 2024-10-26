@@ -16,4 +16,5 @@
     <color name="colorSecondaryVariant">#018786</color>
     <color name="colorOnSecondary">#000000</color>
     <color name="textColor">#000000</color>
+    <color name="buttonbackground">#1D2E2A</color>
 </resources>

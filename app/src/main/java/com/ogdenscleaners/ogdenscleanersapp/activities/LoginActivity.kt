@@ -4,13 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.ogdenscleaners.ogdenscleanersapp.R
-import com.ogdenscleaners.ogdenscleanersapp.RegisterActivity
 
 class LoginActivity : ComponentActivity() {
     private lateinit var mAuth: FirebaseAuth
