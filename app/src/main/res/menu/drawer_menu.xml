@@ -5,6 +5,7 @@
         android:id="@+id/nav_account"
         android:enabled="true"
         android:icon="@drawable/nav_account"
+        android:iconTint="#FF0000"
         android:iconTintMode="add"
         android:menuCategory="container"
         android:title="@string/nav_account_info"
@@ -12,32 +13,37 @@
 
     <item
         android:id="@+id/nav_orders"
-        android:title="@string/nav_orders"
-        android:icon="@drawable/nav_orders"/>
+        android:iconTintMode="add"
+        android:title="@string/nav_orders" />
 
     <item
         android:id="@+id/nav_billing"
-        android:title="@string/nav_billing"
-        android:icon="@drawable/money_symbol"/>
+        android:icon="@drawable/money_symbol"
+        android:iconTint="#FF0000"
+        android:title="@string/nav_billing" />
 
     <item
         android:id="@+id/nav_delivery"
         android:icon="@drawable/delivery_truck"
+        android:iconTint="#FF0000"
         android:title="@string/nav_delivery" />
 
     <item
         android:id="@+id/nav_notifications"
-        android:title="@string/nav_notifications"
-        android:icon="@drawable/ic_notification"/>
+        android:icon="@drawable/ic_notification"
+        android:iconTint="#FF0000"
+        android:title="@string/nav_notifications" />
 
     <item
         android:id="@+id/nav_feedback"
-        android:title="@string/nav_feedback"
-        android:icon="@drawable/nav_feedback"/>
+        android:icon="@drawable/nav_feedback"
+        android:iconTint="#FF0000"
+        android:title="@string/nav_feedback" />
 
     <item
         android:id="@+id/nav_logout"
-        android:title="@string/nav_logout"
-        android:icon="@drawable/nav_logout" />
+        android:icon="@drawable/nav_logout"
+        android:iconTint="#FF0000"
+        android:title="@string/nav_logout" />
 
 </menu>

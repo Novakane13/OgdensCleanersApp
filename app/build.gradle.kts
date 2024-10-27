@@ -114,6 +114,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.material.v190)
+    implementation(libs.firebase.inappmessaging)
 
     // Core Library Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)

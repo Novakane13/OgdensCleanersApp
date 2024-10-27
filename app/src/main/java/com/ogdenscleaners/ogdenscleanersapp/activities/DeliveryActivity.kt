@@ -9,10 +9,12 @@ import com.ogdenscleaners.ogdenscleanersapp.R
 class DeliveryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.activity_delivery)
+        setContentView(R.layout.activity_delivery)
 
         val checkAddressButton = findViewById<Button>(R.id.checkDeliveryButton)
-        checkAddressButton.setOnClickListener {
+
+        // Adding navigation from DeliveryActivity to CustomerCheckActivity
+        checkAddressButton?.setOnClickListener {
             val intent = Intent(this, CustomerCheckActivity::class.java)
             startActivity(intent)
         }

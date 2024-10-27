@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Ogdens Cleaners</string>
-    <string name="logo_desc">Logo for Ogden\'s Cleaners</string> <!-- Removed incorrect escape -->
+    <string name="logo_desc">Logo for Ogden\'s Cleaners</string>
 
     <!-- User Information -->
     <string name="full_name">Full Name</string>
@@ -13,11 +13,11 @@
     <!-- User Actions -->
     <string name="register">Register</string>
     <string name="login">Login</string>
-    <string name="don_t_have_an_account_register_here">Don\'t have an account? Register here</string> <!-- Removed incorrect escape -->
+    <string name="dont_have_an_account_register_here">Don\'t have an account? Register here</string>
     <string name="save_changes">Save Changes</string>
 
     <!-- Billing and Payments -->
-    <string name="amount_due_50_00">Amount Due: $50.00</string>
+    <string name="amount_due">Amount Due: %s</string>
     <string name="pay_now">Pay Now</string>
     <string name="add_to_payment">Add to Payment</string>
     <string name="make_payment">Make Payment</string>
@@ -45,7 +45,7 @@
     <string name="nav_account_info">Account Information</string>
     <string name="nav_orders">Orders</string>
     <string name="nav_billing">Billing</string>
-    <string name="nav_delivery">Delivery</string> <!-- Changed label from "Cast" to "Delivery" -->
+    <string name="nav_delivery">Delivery</string>
     <string name="nav_request_delivery">Request Delivery</string>
     <string name="nav_notifications">Notifications</string>
     <string name="nav_feedback">Feedback</string>
@@ -54,38 +54,17 @@
     <!-- Navigation Drawer Actions -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Ogden\'s Cleaners</string> <!-- Updated for clarity -->
-    <string name="nav_header_subtitle">contact@ogdenscleaners.com</string> <!-- Updated to be more meaningful -->
+    <string name="nav_header_title">Ogden\'s Cleaners</string>
+    <string name="nav_header_subtitle">contact@ogdenscleaners.com</string>
     <string name="nav_header_desc">Navigation header</string>
-
-    <!-- Additional Menu Items (If Needed) -->
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
 
     <!-- Miscellaneous -->
     <string name="action_settings">Settings</string>
     <string name="title_activity_main2">Main Activity</string>
     <string name="mainlogo">Main Logo</string>
-    <string name="total_100_00">Total: $100.00</string>
     <string name="view_details">View Details</string>
     <string name="pay">Pay</string>
-    <string name="january_2024">January 2024</string>
-    <string name="order_date">Order Date</string>
-    <string name="pieces">Pieces</string>
-    <string name="order_id">Order ID</string>
-    <string name="total">Total</string>
-    <string name="total_amount_format">Total: %s</string>
-    <string name="ordertotal">order total</string>
-    <string name="orderpieces">orderpieces</string>
-    <string name="open_navigation_menu">open navigation menu</string>
-    <string name="submit_suggestions">Submit Suggestions</string>
-    <string name="write_suggestions_here">Write suggestions here</string>
-    <string name="textview">TextView</string>
-    <string name="logo">logo</string> <!-- Updated for clarity -->
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="notes">"Notes "</string>
+    <string name="notes">Notes</string>
     <string name="delivery_information">Delivery Information</string>
     <string name="request_pickup">Request a Pickup</string>
     <string name="address_check">Check Address</string>
@@ -94,18 +73,32 @@
     <string name="stop_service">Stop Delivery Service</string>
     <string name="feedback">Write feedback here</string>
     <string name="add_card">Add Credit Card</string>
-    <string name="del_notification">Receive notification when delivery is on the way</string>
-    <string name="week_notification">Receive notification for outstanding order of 1 week</string>
-    <string name="two_week_notif">Receive notification for outstanding order of 2 weeks</string>
-    <string name="month_notification">Receive notification for outstanding order of 1 month</string>
-    <string name="nav_menu_button">Button for navigation menu</string>
-    <string name="nav_logo">Click for Nav</string>
-    <string name="check_address">Check Address</string>
-    <string name="request_a_pickup">Request a Pickup</string>
-    <string name="stop_delivery_service">Stop Delivery Service</string>
-    <string name="start_new_delivery_service">Start New Delivery Service</string>
-    <string name="temporary_stop_service">Temporary Stop Service</string>
+    <string name="no_saved_cards">No Saved Cards</string>
+    <string name="saved_cards">Saved Credit Cards</string>
+    <string name="card_ending_in">Card Ending In</string>
+    <string name="add_credit_card">Add Credit Card</string>
+    <string name="open_navigation_menu">Open Nav Menu</string>
+    <string name="enter_your_address">Enter Your Address</string>
     <string name="check_delivery_range">Check Delivery Range</string>
-    <string name="enter_your_address">Enter your address</string>
-    <string name="save">Save</string>
+    <string name="temporary_stop_service">Temp Stop Service</string>
+    <string name="start_new_delivery_service">Start New Service</string>
+    <string name="stop_delivery_service">Stop Del Service</string>
+    <string name="request_a_pickup">Request A Pickup</string>
+    <string name="check_address">Check Address</string>
+    <string name="textview">Text View</string>
+    <string name="logo">Logo</string>
+    <string name="write_suggestions_here">Write Suggestions Here</string>
+    <string name="submit_suggestions">Submit Suggestions</string>
+    <string name="nav_logo">Nav Logo</string>
+    <string name="nav_menu_button">Nav Menu Button</string>
+    <string name="total_100_00">total</string>
+    <string name="january_2024">January 2024</string>
+    <string name="del_notification">Delivery Notification</string>
+    <string name="week_notification">Week Notification</string>
+    <string name="two_week_notif">Two Week Notification</string>
+    <string name="month_notification">Month Notification</string>
+    <string name="order_id">order id\t\t\t</string>
+    <string name="order_date">order data</string>
+    <string name="orderpieces">order pieces</string>
+    <string name="ordertotal">order total</string>
 </resources>

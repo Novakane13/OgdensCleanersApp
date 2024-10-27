@@ -9,4 +9,8 @@
     <item name="nav_button_notifications" type="id"/>
     <item name="nav_button_account_info" type="id"/>
     <item name="logoImageView" type="id"/>
+    <item name="editTextCardNumber" type="id"/>
+    <item name="buttonSaveCard" type="id"/>
+    <item name="editTextCardExpiry" type="id"/>
+    <item name="editTextCardCVV" type="id"/>
 </resources>

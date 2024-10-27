@@ -13,13 +13,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="850dp"
+        android:layout_height="wrap_content"
         android:background="#000000"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Name Input -->
-
+        <!-- Logo -->
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="150dp"
@@ -33,90 +32,103 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/logo" />
 
+        <!-- Full Name Input -->
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="340dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:autofillHints="enter information"
             android:background="#226E90"
             android:hint="@string/full_name"
-            android:inputType="text|textPersonName"
+            android:inputType="textPersonName"
             android:textColor="#FFFFFF"
-            tools:ignore="LabelFor" />
+            tools:ignore="Autofill,LabelFor" />
 
-        <!-- Email Input -->
+        <!-- Phone Number Input -->
         <EditText
             android:id="@+id/editTextPhone"
             android:layout_width="340dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:autofillHints="enter phone number"
             android:background="#226D8E"
             android:hint="@string/phone_number"
             android:inputType="phone"
             android:textColor="#F8F3F3"
-            tools:ignore="LabelFor" />
+            tools:ignore="Autofill,LabelFor" />
 
+        <!-- Email Input -->
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="340dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:autofillHints="enter information"
             android:background="#226D8F"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:textColor="#FFFFFF"
-            tools:ignore="LabelFor" />
+            tools:ignore="Autofill,LabelFor" />
 
-        <!-- Phone Number Input -->
-
-        <!-- Credit Card Input -->
-
-        <!-- Save Button -->
-
+        <!-- Notes Input -->
         <EditText
             android:id="@+id/editTextNotes"
             android:layout_width="340dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:autofillHints="enter information"
             android:background="#226D8E"
             android:hint="@string/notes"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="#FFFFFF"
-            tools:ignore="LabelFor" />
+            tools:ignore="Autofill,LabelFor" />
 
+        <!-- Save Changes Button -->
         <Button
-
+            android:id="@+id/buttonSave"
             android:layout_width="201dp"
             android:layout_height="78dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="48dp"
-
-
             android:backgroundTint="#2F2110"
-            android:hint="@string/save"
+            android:text="@string/save_changes"
             android:textColor="#FFFFFF"
             android:textColorHint="#FFFFFF" />
 
+        <!-- Add Credit Card Button -->
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip2"
+            android:id="@+id/chipAddCard"
             android:layout_width="225dp"
             android:layout_height="73dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:background="#2F2110"
-            android:backgroundTint="#2F2110"
-            android:hint="@string/add_card"
+            android:text="@string/add_credit_card"
             android:textAlignment="center"
             android:textColorHint="#FFFFFF"
             app:chipStrokeColor="#FFFFFF" />
+
+        <!-- Saved Credit Cards Section -->
+        <TextView
+            android:id="@+id/textViewSavedCards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="@string/saved_cards"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/savedCardsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:gravity="center_horizontal">
+            <!-- Credit Card placeholders will be added dynamically here -->
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

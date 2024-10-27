@@ -33,12 +33,14 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
         checkButton.setOnClickListener {
             val address = customerAddressInput.text.toString()
-            val customerLocation = LatLng(33.45, -112.08) // Example coordinates
+            // Placeholder coordinates for the customer's address
+            val customerLocation = LatLng(33.45, -112.08) // Example coordinates for testing
 
-            // Define the delivery area
+            // Define the delivery area - Update these to match your actual area
             val deliveryArea = PolygonOptions()
                 .add(LatLng(33.45, -112.07), LatLng(33.46, -112.05), LatLng(33.44, -112.09))
 
+            // Check if the customer location is within the delivery area
             val isWithinDelivery = PolyUtil.containsLocation(customerLocation, deliveryArea.points, true)
 
             if (isWithinDelivery) {
@@ -51,8 +53,16 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val centerPoint = LatLng(33.45, -112.07)
+        val centerPoint = LatLng(33.45, -112.07) // Center of your delivery area
         mMap.addMarker(MarkerOptions().position(centerPoint).title("Center of Delivery Area"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerPoint, 10f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerPoint, 12f))
+
+        // Draw the delivery area on the map
+        val deliveryArea = PolygonOptions()
+            .add(LatLng(33.45, -112.07), LatLng(33.46, -112.05), LatLng(33.44, -112.09))
+            .strokeColor(0xFF6200EE.toInt())
+            .fillColor(0x556200EE.toInt()) // Semi-transparent fill
+
+        mMap.addPolygon(deliveryArea)
     }
 }
