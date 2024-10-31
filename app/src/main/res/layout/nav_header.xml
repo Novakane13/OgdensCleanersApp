@@ -12,7 +12,8 @@
         android:layout_width="231dp"
         android:layout_height="104dp"
         android:layout_gravity="center_horizontal|top"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textViewUserName"

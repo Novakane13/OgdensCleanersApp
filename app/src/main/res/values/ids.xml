@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="customerAddressInput" type="id"/>
-    <item name="checkButton" type="id"/>
-    <item name="nav_button_orders" type="id"/>
-    <item name="nav_button_billing" type="id"/>
-    <item name="nav_button_delivery" type="id"/>
-    <item name="nav_button_feedback" type="id"/>
-    <item name="nav_button_notifications" type="id"/>
-    <item name="nav_button_account_info" type="id"/>
-    <item name="logoImageView" type="id"/>
-    <item name="editTextCardNumber" type="id"/>
-    <item name="buttonSaveCard" type="id"/>
-    <item name="editTextCardExpiry" type="id"/>
-    <item name="editTextCardCVV" type="id"/>
+    <item name="customerAddressInput" type="id" />
+    <item name="checkButton" type="id" />
+    <item name="nav_button_orders" type="id" />
+    <item name="nav_button_billing" type="id" />
+    <item name="nav_button_delivery" type="id" />
+    <item name="nav_button_feedback" type="id" />
+    <item name="nav_button_notifications" type="id" />
+    <item name="nav_button_account_info" type="id" />
+    <item name="logoImageView" type="id" />
+    <item name="editTextCardNumber" type="id" />
+    <item name="buttonSaveCard" type="id" />
+    <item name="editTextCardExpiry" type="id" />
+    <item name="editTextCardCVV" type="id" />
+    <item name="address_input" type="id" />
+    <item name="zip_code_input" type="id" />
+    <item name="apt_input" type="id" />
+    <item name="save_button" type="id" />
+    <item name="delivery_info_text" type="id" />
 </resources>

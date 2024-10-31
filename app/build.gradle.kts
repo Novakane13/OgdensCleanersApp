@@ -89,6 +89,7 @@ dependencies {
     // Stripe
     implementation(libs.stripe.android)
     implementation(libs.stripe.android.v20151)
+    implementation(libs.stripe.android.vpaymentcompose)
 
     // Firebase Services
     implementation(libs.firebase.auth.ktx)
@@ -115,6 +116,12 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.material.v190)
     implementation(libs.firebase.inappmessaging)
+    implementation (libs.android.maps.utils.v223)
+    implementation (libs.retrofit.v290)
+    implementation (libs.converter.gson.v290)
+    implementation(libs.volley)
+    implementation(libs.play.services.wallet)
+
 
     // Core Library Desugaring
     coreLibraryDesugaring(libs.desugar.jdk.libs)

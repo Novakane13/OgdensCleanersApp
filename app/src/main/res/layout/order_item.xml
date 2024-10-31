@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Order Item Layout -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#00CCCC"
-        android:text="@string/order_id"
         android:textSize="14sp"
         android:gravity="center" />
 
@@ -25,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#00CCCC"
-        android:text="@string/order_date"
         android:textSize="14sp"
         android:gravity="center" />
 
@@ -35,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#00CCCC"
-        android:text="@string/orderpieces"
         android:textSize="14sp"
         android:gravity="center" />
 
@@ -45,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#00CCCC"
-        android:text="@string/ordertotal"
         android:textSize="14sp"
         android:gravity="center" />
 

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toTopOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/startservicename"
+        android:layout_width="237dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:hint="@string/full_name"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/startservicephone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstdeliverydate" />
+
+    <EditText
+        android:id="@+id/startservicephone"
+        android:layout_width="245dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:hint="@string/phone_number"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/startserviceaddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startservicename" />
+
+    <EditText
+        android:id="@+id/firstdeliverydate"
+        android:layout_width="243dp"
+        android:layout_height="62dp"
+        android:ems="10"
+        android:hint="@string/first_delivery_date"
+        android:importantForAutofill="no"
+        android:inputType="datetime|date"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/startservicename"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <EditText
+        android:id="@+id/startserviceaddress"
+        android:layout_width="249dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="1dp"
+        android:ems="10"
+        android:hint="@string/delivery_address"
+        android:importantForAutofill="no"
+        android:inputType="textPostalAddress"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/startservicenotes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startservicephone" />
+
+    <EditText
+        android:id="@+id/startservicenotes"
+        android:layout_width="244dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="175dp"
+        android:ems="10"
+        android:hint="@string/notes"
+        android:importantForAutofill="no"
+        android:inputType="text|textLongMessage|textMultiLine"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startserviceaddress" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="455dp"
+        android:layout_height="3dp"
+        android:background="@color/colorSecondary"
+        app:layout_constraintBottom_toTopOf="@+id/firstdeliverydate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startservicenotes" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

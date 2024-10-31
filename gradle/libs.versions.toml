@@ -2,11 +2,13 @@
 activityComposeVersion = "1.9.3"
 agp = "8.6.1"
 androidMapsUtils = "3.8.2"
+androidMapsUtilsVersion = "2.2.3"
 androidxComposeBom = "2024.10.00"
 androidxJunit = "1.2.1"
 appcompatVersion = "1.7.0"
 composeBomVersion = "2024.10.00"
 converterGson = "2.11.0"
+converterGsonVersion = "2.9.0"
 coreKtxVersion = "1.13.1"
 desugar_jdk_libs = "2.1.2"
 espressoCoreVersion = "3.6.1"
@@ -37,6 +39,7 @@ material = "1.12.0"
 playServicesMaps = "19.0.0"
 cronetEmbedded = "119.6045.31"
 mediarouter = "1.7.0"
+retrofit = "2.9.0"
 stripeAndroid = "20.52.0"
 lifecycleLivedataKtx = "2.8.6"
 lifecycleViewmodelKtx = "2.8.6"
@@ -44,9 +47,14 @@ navigationFragmentKtx = "2.8.3"
 navigationUiKtx = "2.8.2"
 stripeAndroidVersion = "20.15.1"
 firebaseInappmessaging = "21.0.1"
+stripeStripeAndroid = "20.15.1"
+stripeStripeAndroidVersion = "payment-compose"
+volley = "1.2.1"
+playServicesWallet = "19.4.0"
 
 [libraries]
 android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
+android-maps-utils-v223 = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtilsVersion" }
 androidx-activity-compose-v180 = { module = "androidx.activity:activity-compose", version = "1.9.3" }
 androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-compose-bom-v20230901 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
@@ -58,6 +66,7 @@ androidx-junit-v115 = { module = "androidx.test.ext:junit", version.ref = "andro
 androidx-lifecycle-runtime-ktx-v261 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+converter-gson-v290 = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGsonVersion" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-core = { module = "com.google.firebase:firebase-core", version.ref = "firebaseCore" }
@@ -93,8 +102,11 @@ cronet-embedded = { group = "org.chromium.net", name = "cronet-embedded", versio
 androidx-mediarouter = { group = "androidx.mediarouter", name = "mediarouter", version.ref = "mediarouter" }
 play-services-maps-v1802 = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMapsVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
+retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 stripe-android = { module = "com.stripe:stripe-android", version = "20.53.0" }
 stripe-android-v20151 = { module = "com.stripe:stripe-android", version = "20.53.0" }
+stripe-android-vpaymentcompose = { module = "com.stripe:stripe-android", version.ref = "stripeStripeAndroidVersion" }
+stripe-stripe-android-v20151 = { module = "com.stripe:stripe-android", version.ref = "stripeStripeAndroid" }
 ui = { module = "androidx.compose.ui:ui", version = "1.8.0-alpha04" }
 ui-graphics = { module = "androidx.compose.ui:ui-graphics", version = "1.8.0-alpha04" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
@@ -106,6 +118,8 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version = "2.8.3" }
 firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+play-services-wallet = { group = "com.google.android.gms", name = "play-services-wallet", version.ref = "playServicesWallet" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

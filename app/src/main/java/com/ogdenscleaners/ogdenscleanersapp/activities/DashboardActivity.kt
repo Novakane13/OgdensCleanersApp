@@ -20,6 +20,10 @@ class DashboardActivity : AppCompatActivity() {
         val navButtonFeedback: Button? = findViewById(R.id.nav_button_feedback)
         val navButtonAccountInfo: Button? = findViewById(R.id.nav_button_account_info)
 
+        navButtonAccountInfo?.setOnClickListener {
+            startActivity(Intent(this, AccountInfoActivity::class.java))
+        }
+
         navButtonOrders?.setOnClickListener {
             startActivity(Intent(this, OrdersActivity::class.java))
         }
@@ -39,9 +43,6 @@ class DashboardActivity : AppCompatActivity() {
         navButtonFeedback?.setOnClickListener {
             startActivity(Intent(this, FeedbackActivity::class.java))
         }
-
-        navButtonAccountInfo?.setOnClickListener {
-            startActivity(Intent(this, AccountInfoActivity::class.java))
-        }
     }
 }
+
