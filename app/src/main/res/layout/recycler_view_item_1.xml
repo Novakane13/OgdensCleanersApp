@@ -3,50 +3,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="#1E1E1E"
-    android:padding="8dp"
+    android:background="#222121"
     android:divider="?android:attr/dividerHorizontal"
+    android:orientation="horizontal"
+    android:padding="8dp"
     android:showDividers="middle">
 
-  <TextView
-      android:id="@+id/order_id"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:textColor="#00CCCC"
-      android:text="@string/order_id"
-      android:textSize="14sp"
-      android:gravity="center" />
+    <TextView
+        android:id="@+id/order_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="@string/order_id"
+        android:textColor="#00CCCC"
+        android:textSize="14sp" />
 
-  <TextView
-      android:id="@+id/order_date"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:textColor="#00CCCC"
-      android:text="@string/order_date"
-      android:textSize="14sp"
-      android:gravity="center" />
+    <TextView
+        android:id="@+id/order_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="@string/order_date"
+        android:textColor="#00CCCC"
+        android:textSize="14sp" />
 
-  <TextView
-      android:id="@+id/order_pieces"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:textColor="#00CCCC"
-      android:text="@string/orderpieces"
-      android:textSize="14sp"
-      android:gravity="center" />
+    <TextView
+        android:id="@+id/order_pieces"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="@string/orderpieces"
+        android:textColor="#00CCCC"
+        android:textSize="14sp" />
 
-  <TextView
-      android:id="@+id/order_total"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="1"
-      android:textColor="#00CCCC"
-      android:text="@string/ordertotal"
-      android:textSize="14sp"
-      android:gravity="center" />
+    <TextView
+        android:id="@+id/order_total"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="@string/ordertotal"
+        android:textColor="#00CCCC"
+        android:textSize="14sp" />
 
 </LinearLayout>

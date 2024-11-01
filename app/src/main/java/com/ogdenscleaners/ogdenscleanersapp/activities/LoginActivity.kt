@@ -8,10 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.ogdenscleaners.ogdenscleanersapp.R
 
 class LoginActivity : ComponentActivity() {
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
@@ -21,8 +23,9 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         // Initialize views
         emailEditText = findViewById(R.id.editTextEmail)
@@ -41,7 +44,10 @@ class LoginActivity : ComponentActivity() {
                 mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            navigateToDashboard()
+                            val user = mAuth.currentUser
+                            if (user != null) {
+                                fetchUserRoleAndNavigate(user.uid)
+                            }
                         } else {
                             showToast("Authentication Failed: ${task.exception?.message}")
                         }
@@ -55,8 +61,32 @@ class LoginActivity : ComponentActivity() {
         }
     }
 
-    private fun navigateToDashboard() {
-        startActivity(Intent(this, DashboardActivity::class.java))
+    private fun fetchUserRoleAndNavigate(uid: String) {
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val role = document.getString("role")
+                    if (role == "employee") {
+                        navigateToDashboard(true)
+                    } else {
+                        navigateToDashboard(false)
+                    }
+                } else {
+                    showToast("User role not found")
+                }
+            }
+            .addOnFailureListener {
+                showToast("Failed to fetch user role")
+            }
+    }
+
+    private fun navigateToDashboard(isEmployee: Boolean) {
+        val intent = if (isEmployee) {
+            Intent(this, EmployeeDashboardActivity::class.java)
+        } else {
+            Intent(this, DashboardActivity::class.java)
+        }
+        startActivity(intent)
         finish()
     }
 

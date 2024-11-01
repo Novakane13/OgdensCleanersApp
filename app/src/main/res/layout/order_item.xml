@@ -13,35 +13,39 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
         android:textColor="#00CCCC"
-        android:textSize="14sp"
-        android:gravity="center" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/order_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
         android:textColor="#00CCCC"
-        android:textSize="14sp"
-        android:gravity="center" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/order_pieces"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
         android:textColor="#00CCCC"
-        android:textSize="14sp"
-        android:gravity="center" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/order_total"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="#000000"
+        android:gravity="center"
         android:textColor="#00CCCC"
-        android:textSize="14sp"
-        android:gravity="center" />
+        android:textSize="14sp" />
 
 </LinearLayout>

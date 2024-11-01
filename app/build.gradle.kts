@@ -86,6 +86,9 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.gson)
 
+    // Google Play
+    implementation(libs.play.services.ads.v2330)
+
     // Stripe
     implementation(libs.stripe.android)
     implementation(libs.stripe.android.v20151)
@@ -121,6 +124,7 @@ dependencies {
     implementation (libs.converter.gson.v290)
     implementation(libs.volley)
     implementation(libs.play.services.wallet)
+    implementation(libs.play.services.ads)
 
 
     // Core Library Desugaring

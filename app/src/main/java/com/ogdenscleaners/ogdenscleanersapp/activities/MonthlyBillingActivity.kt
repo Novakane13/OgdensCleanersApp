@@ -1,65 +1,75 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.BillingAdapter
 import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
 import com.ogdenscleaners.ogdenscleanersapp.models.CreditCard
+import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
-import org.json.JSONArray
+import org.json.JSONObject
 
 class MonthlyBillingActivity : AppCompatActivity() {
-
     private lateinit var billingRecyclerView: RecyclerView
-    private lateinit var makePaymentButton: MaterialButton
+    private lateinit var payBillButton: Button
     private lateinit var billingAdapter: BillingAdapter
     private lateinit var paymentSheet: PaymentSheet
     private var paymentIntentClientSecret: String? = null
-    private val billingStatements = mutableListOf<BillingStatement>()
-    private val savedCards: MutableList<CreditCard> = mutableListOf()
 
+    private val billingStatements = mutableListOf<BillingStatement>()
+    private val savedCards = mutableListOf<CreditCard>() // Placeholder for saved credit cards
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_monthly_billing)
 
+        // Initialize PaymentConfiguration with the test key
+        PaymentConfiguration.init(applicationContext, "pk_test_51QEmC6F9q8Y1A3UES8uzimDczaKS3xMRUNr9QN4vhQN8wjktGMEONNrWWP7mFCJRrdYDmTPADDDVxn1GvS0mTkCw00XlEDwkSY")
+
         // Initialize views
-        billingRecyclerView = findViewById(R.id.billingRecyclerView)
-        makePaymentButton = findViewById(R.id.makePaymentButton)
+        billingRecyclerView = findViewById(R.id.recyclerViewBilling)
+        payBillButton = findViewById(R.id.button5)
 
         // Initialize Stripe PaymentSheet
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
 
-        // Set up RecyclerView and Adapters
-        billingAdapter = BillingAdapter(onMoreInfoClick = { statement -> showBillingDetails(statement) })
+        // Set up RecyclerView and Adapter
+        billingAdapter = BillingAdapter(billingStatements) { billingStatement, isSelected ->
+            if (isSelected) {
+                billingStatements.add(billingStatement)
+            } else {
+                billingStatements.remove(billingStatement)
+            }
+        }
 
         billingRecyclerView.layoutManager = LinearLayoutManager(this)
         billingRecyclerView.adapter = billingAdapter
 
-        // Add placeholder billing statements
+        // Add placeholder billing statements for testing
         billingStatements.addAll(
             listOf(
-                BillingStatement("January", "2024-01-31", 100.0, "Unpaid"),
-                BillingStatement("February", "2024-02-28", 150.0, "Unpaid"),
-                BillingStatement("March", "2024-03-31", 120.0, "Unpaid")
+                BillingStatement("1", "January 2024", "100.00", "Monthly dry cleaning charges", "Billing statement for the Month of January", false),
+                BillingStatement("2", "February 2024", "80.00", "Monthly dry cleaning charges","Billing Statement for the Month of February", true)
             )
         )
-        billingAdapter.submitList(billingStatements)
+        billingAdapter.notifyDataSetChanged()
 
-        // Load saved credit cards
-        loadSavedCreditCards()
-
-        // Set up onClickListeners
-        makePaymentButton.setOnClickListener {
-            val selectedStatements = billingAdapter.getSelectedStatements()
+        // Set up onClickListener for Pay Bill button
+        payBillButton.setOnClickListener {
+            val selectedStatements = billingAdapter.getSelectedBillingStatements()
             if (selectedStatements.isNotEmpty()) {
                 showPaymentOptions(selectedStatements)
             } else {
@@ -108,29 +118,51 @@ class MonthlyBillingActivity : AppCompatActivity() {
     private fun initiatePayment(selectedStatements: List<BillingStatement>, creditCard: CreditCard?) {
         // Placeholder for calling server to create PaymentIntent
         val totalAmount = calculateTotalAmount(selectedStatements)
+        createPaymentIntent(totalAmount)
+    }
 
-        // Create payment data and make network call to initiate PaymentIntent
-        // Assume this function communicates with the backend and returns a PaymentIntent's client secret
-        paymentIntentClientSecret = "retrieved_client_secret_here" // Placeholder for actual client secret
-        paymentIntentClientSecret?.let { presentPaymentSheet(it) }
+    private fun calculateTotalAmount(selectedStatements: List<BillingStatement>): Int {
+        // Calculate the total amount in cents
+        return selectedStatements.sumOf { it.totalAmount.toDouble() * 100 }.toInt()
+    }
+
+    private fun createPaymentIntent(amount: Int) {
+        val queue = Volley.newRequestQueue(this)
+        val url = "http://10.0.2.2:4242/create-payment-intent"
+
+        val jsonObject = JSONObject().apply {
+            put("amount", amount)
+            put("currency", "usd")
+        }
+
+        val request = JsonObjectRequest(Request.Method.POST, url, jsonObject, { response ->
+            paymentIntentClientSecret = response.getString("clientSecret")
+            paymentIntentClientSecret?.let { presentPaymentSheet(it) }
+        }, { error ->
+            Log.e("MonthlyBillingActivity", "Error creating payment intent: $error")
+            Toast.makeText(this, "Error creating payment intent", Toast.LENGTH_SHORT).show()
+        })
+        queue.add(request)
     }
 
     private fun presentPaymentSheet(clientSecret: String) {
         paymentSheet.presentWithPaymentIntent(
-            clientSecret, PaymentSheet.Configuration(
+            clientSecret,
+            PaymentSheet.Configuration(
                 merchantDisplayName = "Ogden's Cleaners"
             )
         )
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         when (paymentSheetResult) {
             is PaymentSheetResult.Completed -> {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show()
-                val selectedStatements = billingAdapter.getSelectedStatements()
-                billingStatements.removeAll(selectedStatements)
-                billingAdapter.clearSelectedStatements()
-                billingAdapter.notifyDataSetChanged()
+                // Mark billing statements as paid
+                val selectedBillingStatements = billingAdapter.getSelectedBillingStatements()
+                selectedBillingStatements.forEach { it.paidStatus = true }
+                billingAdapter.notifyDataSetChanged() // Update billing list
             }
             is PaymentSheetResult.Canceled -> {
                 Toast.makeText(this, "Payment canceled.", Toast.LENGTH_SHORT).show()
@@ -139,25 +171,5 @@ class MonthlyBillingActivity : AppCompatActivity() {
                 Toast.makeText(this, "Payment failed: ${paymentSheetResult.error.localizedMessage}", Toast.LENGTH_LONG).show()
             }
         }
-    }
-
-    private fun loadSavedCreditCards() {
-        val cardsJson = getSharedPreferences("credit_cards", MODE_PRIVATE).getString("cards", null)
-        if (cardsJson != null) {
-            val jsonArray = JSONArray(cardsJson)
-            for (i in 0 until jsonArray.length()) {
-                val cardJson = jsonArray.getJSONObject(i)
-                val card = CreditCard(
-                    cardholderName = cardJson.getString("cardholderName"),
-                    lastFourDigits = cardJson.getString("lastFourDigits"),
-                    expiryDate = cardJson.getString("expiryDate")
-                )
-                savedCards.add(card)
-            }
-        }
-    }
-
-    private fun calculateTotalAmount(statements: List<BillingStatement>): Int {
-        return statements.sumOf { (it.amountDue * 100).toInt() }
     }
 }

@@ -18,15 +18,15 @@
         android:layout_height="wrap_content"
         android:text="@string/january_2024"
         android:textColor="@color/colorOnPrimary"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/totalAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/total_100_00"
+        android:text="@string/total"
         android:textColor="@color/colorOnPrimary"
-        android:textSize="16sp" />
+        android:textSize="20sp" />
 
     <!-- Details Button -->
 
@@ -52,16 +52,6 @@
         android:layout_marginTop="4dp"
         android:background="#00D0C6"
         android:text="@string/view_details"
-        android:textColor="@android:color/white" />
-
-    <Button
-        android:id="@+id/payButton"
-        android:layout_width="138dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="4dp"
-        android:background="#333333"
-        android:text="@string/pay"
         android:textColor="@android:color/white" />
 
 </LinearLayout>

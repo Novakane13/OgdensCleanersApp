@@ -122,5 +122,8 @@
     <string name="expiry_date_mm_yy">Expiry Date (MM/YY)</string>
     <string name="save_card">Save Card</string>
     <string name="Save">Save button\n</string>
+    <string name="total">Total: $</string>
+    <string name="don_t_have_an_account_register_here">Don\'t have an account? Register here</string>
+    <string name="employee_pin_optional">Employee PIN (Optional)</string>
 
 </resources>

@@ -23,26 +23,17 @@
         android:outlineSpotShadowColor="#FF0000"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
-        android:paddingBottom="123dp"
+        android:paddingBottom="84dp"
         android:scrollbarStyle="insideOverlay"
         android:verticalScrollbarPosition="defaultPosition"
         tools:layout_editor_absoluteY="1dp">
 
-        <!-- Name Input -->
-
-        <!-- Email Input -->
-
-        <!-- Phone Number Input -->
-
-        <!-- Password Input -->
-
-        <!-- Register Button -->
 
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="314dp"
             android:layout_height="79dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="80dp"
             android:background="#1D2E2A"
             android:text="@string/register"
             android:textColor="#FFFFFF"
@@ -51,6 +42,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/confirm_password"
             app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/editTextEmployeePin"
+            android:layout_width="360dp"
+            android:layout_height="57dp"
+            android:layout_marginBottom="32dp"
+            android:hint="@string/employee_pin_optional"
+            android:importantForAutofill="no"
+            android:inputType="numberPassword"
+            android:textColor="#03A9F4"
+            android:textColorHint="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/input_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
         <EditText
             android:id="@+id/editTextEmail"
@@ -72,10 +78,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirm_password"
-            android:layout_width="360dp"
-            android:layout_height="57dp"
+            android:layout_width="364dp"
+            android:layout_height="69dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="45dp"
             android:textColorHint="#000000"
             app:boxBackgroundColor="#F8F8F8"
             app:boxBackgroundMode="outline"
@@ -83,7 +89,6 @@
             app:hintTextAppearance="@style/TextAppearance.AppCompat.Display1"
             app:layout_constraintBottom_toTopOf="@+id/buttonRegister"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_password"
             app:layout_constraintVertical_bias="1.0"
@@ -110,7 +115,7 @@
             android:layout_width="360dp"
             android:layout_height="57dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="32dp"
             android:autoSizeTextType="uniform"
             android:autofillHints=""
             android:backgroundTint="#000000"
@@ -119,7 +124,7 @@
             android:inputType="phone"
             android:textColor="#03A9F4"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/input_password"
+            app:layout_constraintBottom_toTopOf="@id/editTextEmployeePin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
@@ -128,7 +133,7 @@
             android:id="@+id/editTextName"
             android:layout_width="360dp"
             android:layout_height="57dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="75dp"
             android:layout_marginBottom="10dp"
             android:autofillHints=""
             android:hint="@string/full_name"
@@ -143,9 +148,9 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_password"
-            android:layout_width="360dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="364dp"
+            android:layout_height="69dp"
+            android:layout_marginTop="48dp"
             android:layout_marginBottom="10dp"
             android:textColorHint="#000000"
             app:boxBackgroundColor="#F8F8F8"
@@ -155,7 +160,7 @@
             app:layout_constraintBottom_toTopOf="@+id/confirm_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
+            app:layout_constraintTop_toBottomOf="@id/editTextEmployeePin"
             app:layout_constraintVertical_bias="0"
             app:passwordToggleContentDescription="Show/Hide password"
             app:passwordToggleDrawable="@android:drawable/ic_menu_view"
@@ -164,7 +169,7 @@
             <EditText
                 android:id="@+id/Passwordinput"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="57dp"
                 android:autofillHints=""
                 android:background="#087DB3"
                 android:inputType="textPassword"
@@ -179,13 +184,13 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginStart="115dp"
-            android:layout_marginEnd="128dp"
+            android:layout_marginEnd="115dp"
             android:layout_marginBottom="20dp"
             android:background="#000000"
+            android:importantForAccessibility="no"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toTopOf="@+id/editTextName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.355"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo" />

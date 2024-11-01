@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 import com.ogdenscleaners.ogdenscleanersapp.R
 
 class RegisterActivity : ComponentActivity() {
@@ -17,6 +18,7 @@ class RegisterActivity : ComponentActivity() {
     private lateinit var phoneEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
+    private lateinit var employeePinEditText: EditText
     private lateinit var registerButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class RegisterActivity : ComponentActivity() {
         phoneEditText = findViewById(R.id.editTextPhone)
         passwordEditText = findViewById(R.id.Passwordinput)
         confirmPasswordEditText = findViewById(R.id.confirmpassword)
+        employeePinEditText = findViewById(R.id.editTextEmployeePin)
         registerButton = findViewById(R.id.buttonRegister)
 
         // Register button action
@@ -40,9 +43,10 @@ class RegisterActivity : ComponentActivity() {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
             val confirmPassword = confirmPasswordEditText.text.toString()
+            val employeePin = employeePinEditText.text.toString()
 
             if (validateInputs(name, email, password, confirmPassword)) {
-                registerUser(name, email, password)
+                registerUser(name, email, password, employeePin)
             }
         }
     }
@@ -51,7 +55,7 @@ class RegisterActivity : ComponentActivity() {
         name: String,
         email: String,
         password: String,
-        confirmPassword: String
+        confirmPassword: String,
     ): Boolean {
         return when {
             name.isEmpty() -> {
@@ -74,18 +78,22 @@ class RegisterActivity : ComponentActivity() {
         }
     }
 
-    private fun registerUser(name: String, email: String, password: String) {
+    private fun registerUser(name: String, email: String, password: String, employeePin: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
+                    val isEmployee = employeePin == "1313"  // Employee PIN to differentiate
+
                     val profileUpdates = UserProfileChangeRequest.Builder()
                         .setDisplayName(name)
                         .build()
+
                     user?.updateProfile(profileUpdates)?.addOnCompleteListener { profileTask ->
                         if (profileTask.isSuccessful) {
+                            saveUserType(user.uid, isEmployee)
                             showToast("Registration successful")
-                            navigateToDashboard()
+                            navigateToDashboard(isEmployee)
                         }
                     }
                 } else {
@@ -94,12 +102,33 @@ class RegisterActivity : ComponentActivity() {
             }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private fun saveUserType(uid: String, isEmployee: Boolean) {
+        // Save user type to Firestore
+        val db = FirebaseFirestore.getInstance()
+        val userRole = if (isEmployee) "employee" else "customer"
+        val userMap = hashMapOf("role" to userRole)
+
+        db.collection("users").document(uid)
+            .set(userMap)
+            .addOnSuccessListener {
+                showToast("User role saved")
+            }
+            .addOnFailureListener {
+                showToast("Failed to save user role")
+            }
     }
 
-    private fun navigateToDashboard() {
-        startActivity(Intent(this, DashboardActivity::class.java))
+    private fun navigateToDashboard(isEmployee: Boolean) {
+        val intent = if (isEmployee) {
+            Intent(this, EmployeeDashboardActivity::class.java)  // Launch employee dashboard
+        } else {
+            Intent(this, DashboardActivity::class.java)  // Launch normal user dashboard
+        }
+        startActivity(intent)
         finish()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

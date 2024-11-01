@@ -24,6 +24,7 @@ class CreditCardActivity : AppCompatActivity() {
     private lateinit var cardAdapter: CreditCardAdapter
 
     private lateinit var sharedPreferences: SharedPreferences
+    private val savedCards: MutableList<CreditCard> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +40,11 @@ class CreditCardActivity : AppCompatActivity() {
         // Set up SharedPreferences
         sharedPreferences = getSharedPreferences("credit_cards", MODE_PRIVATE)
 
+        // Load saved cards
+        loadSavedCards()
+
         // Set up RecyclerView
-        cardAdapter = CreditCardAdapter(loadSavedCards())
+        cardAdapter = CreditCardAdapter(savedCards)
         cardsRecyclerView.layoutManager = LinearLayoutManager(this)
         cardsRecyclerView.adapter = cardAdapter
 
@@ -58,7 +62,8 @@ class CreditCardActivity : AppCompatActivity() {
                     expiryDate = expiryDate
                 )
                 saveCard(creditCard)
-                cardAdapter.addCard(creditCard)
+                savedCards.add(creditCard)
+                cardAdapter.notifyItemInserted(savedCards.size - 1)
 
                 // Clear inputs
                 cardNumberInput.text.clear()
@@ -76,20 +81,19 @@ class CreditCardActivity : AppCompatActivity() {
         val cardsJson = sharedPreferences.getString("cards", null)
         val jsonArray = if (cardsJson != null) JSONArray(cardsJson) else JSONArray()
 
-        val cardJson = JSONObject()
-        cardJson.put("cardholderName", creditCard.cardholderName)
-        cardJson.put("lastFourDigits", creditCard.lastFourDigits)
-        cardJson.put("expiryDate", creditCard.expiryDate)
+        val cardJson = JSONObject().apply {
+            put("cardholderName", creditCard.cardholderName)
+            put("lastFourDigits", creditCard.lastFourDigits)
+            put("expiryDate", creditCard.expiryDate)
+        }
 
         jsonArray.put(cardJson)
 
         sharedPreferences.edit().putString("cards", jsonArray.toString()).apply()
     }
 
-    private fun loadSavedCards(): MutableList<CreditCard> {
+    private fun loadSavedCards() {
         val cardsJson = sharedPreferences.getString("cards", null)
-        val cardList = mutableListOf<CreditCard>()
-
         if (cardsJson != null) {
             val jsonArray = JSONArray(cardsJson)
             for (i in 0 until jsonArray.length()) {
@@ -99,10 +103,8 @@ class CreditCardActivity : AppCompatActivity() {
                     lastFourDigits = cardJson.getString("lastFourDigits"),
                     expiryDate = cardJson.getString("expiryDate")
                 )
-                cardList.add(card)
+                savedCards.add(card)
             }
         }
-
-        return cardList
     }
 }

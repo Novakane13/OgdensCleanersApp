@@ -16,6 +16,14 @@ class BillingAdapter(
     private val onItemSelected: (BillingStatement, Boolean) -> Unit
 ) : RecyclerView.Adapter<BillingAdapter.BillingViewHolder>() {
 
+    // Set to keep track of selected billing statements
+    private val selectedStatements = mutableSetOf<BillingStatement>()
+
+    // Function to get selected billing statements
+    fun getSelectedBillingStatements(): List<BillingStatement> {
+        return selectedStatements.toList()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillingViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_billing_statement, parent, false)
         return BillingViewHolder(view)
@@ -46,9 +54,11 @@ class BillingAdapter(
                 Toast.makeText(itemView.context, billingStatement.details, Toast.LENGTH_SHORT).show()
             }
 
-            selectCheckBox.setOnCheckedChangeListener(null) // Clear previous listeners to avoid duplication
-            selectCheckBox.isChecked = billingStatement.paidStatus
+            // Clear previous listener to avoid issues with recycled views
+            selectCheckBox.setOnCheckedChangeListener(null)
+            selectCheckBox.isChecked = selectedStatements.contains(billingStatement)
 
+            // Set new listener for the CheckBox
             selectCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 if (billingStatement.paidStatus && isChecked) {
                     // Prevent selecting a paid billing statement
@@ -59,6 +69,11 @@ class BillingAdapter(
                     ).show()
                     selectCheckBox.isChecked = false
                 } else {
+                    if (isChecked) {
+                        selectedStatements.add(billingStatement)
+                    } else {
+                        selectedStatements.remove(billingStatement)
+                    }
                     onItemSelected(billingStatement, isChecked)
                 }
             }

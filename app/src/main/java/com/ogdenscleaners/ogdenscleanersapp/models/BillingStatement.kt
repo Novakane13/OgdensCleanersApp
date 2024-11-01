@@ -6,5 +6,5 @@ data class BillingStatement(
     val totalAmount: String,
     val totalAmountText: String,          // Total amount for the month (e.g., "$100.00")
     val details: String,            // Statement details or any notes
-    val paidStatus: Boolean         // Indicates whether the bill is paid or not
+    var paidStatus: Boolean         // Indicates whether the bill is paid or not
 )

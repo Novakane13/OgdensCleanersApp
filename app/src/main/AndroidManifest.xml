@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Required permissions -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -22,6 +22,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA9_HFfk9t48l4_G0mCuIZss6PjSqN9jrQ"/>
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2406873860479635~6853526496"/>
+
 
         <activity
             android:name=".activities.MainActivity"
@@ -31,7 +35,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Other Activities -->
+        </activity>
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
@@ -46,7 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.MonthlyBillingActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.DeliveryActivity"
             android:exported="false" />
@@ -61,9 +65,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.CustomerCheckActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.EmployeeDeliveryActivity"
             android:exported="false" />
         <activity
             android:name=".activities.DeliveryInfoActivity"
