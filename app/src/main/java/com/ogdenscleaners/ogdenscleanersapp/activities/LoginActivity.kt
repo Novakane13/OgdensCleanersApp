@@ -23,17 +23,15 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Initialize Firebase Auth and Firestore
         mAuth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Initialize views
         emailEditText = findViewById(R.id.editTextEmail)
         passwordEditText = findViewById(R.id.passwordinput)
         loginButton = findViewById(R.id.buttonLogin)
         registerTextView = findViewById(R.id.textViewRegister)
 
-        // Login button action
+
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()

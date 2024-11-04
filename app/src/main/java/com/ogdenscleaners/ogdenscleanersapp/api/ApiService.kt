@@ -1,6 +1,5 @@
 package com.ogdenscleaners.ogdenscleanersapp.api
 
-
 import com.ogdenscleaners.ogdenscleanersapp.models.*
 import retrofit2.Call
 import retrofit2.http.Body
@@ -25,10 +24,9 @@ interface ApiService {
     @POST("deliveries")
     suspend fun requestDelivery(@Body deliveryRequest: DeliveryRequest): DeliveryResponse
 
-    @POST("create-payment-intent")
+    @POST("/ephemeral_keys")
+    fun createEphemeralKey(@Body ephemeralKeyRequest: EphemeralKeyRequest): Call<EphemeralKeyResponse>
+
+    @POST("/create-payment-intent")
     fun createPaymentIntent(@Body paymentIntentRequest: PaymentIntentRequest): Call<PaymentIntentResponse>
-
-
-
-    // Add more endpoints as needed
 }

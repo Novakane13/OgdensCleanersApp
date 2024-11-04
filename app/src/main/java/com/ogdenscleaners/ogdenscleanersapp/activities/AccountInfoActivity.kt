@@ -1,5 +1,6 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,15 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-import com.ogdenscleaners.ogdenscleanersapp.R.*
+import com.ogdenscleaners.ogdenscleanersapp.R.id
+import com.ogdenscleaners.ogdenscleanersapp.R.layout
 import com.ogdenscleaners.ogdenscleanersapp.adapters.CreditCardAdapter
-import com.ogdenscleaners.ogdenscleanersapp.models.CreditCard
+import com.ogdenscleaners.ogdenscleanersapp.models.Customer
 import org.json.JSONArray
 
 class AccountInfoActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences: SharedPreferences
-    private val savedCards: MutableList<CreditCard> = mutableListOf()
+    private val savedCards: MutableList<Customer.CreditCard> = mutableListOf()
 
     // UI Elements
     private lateinit var editTextName: EditText
@@ -30,6 +32,7 @@ class AccountInfoActivity : AppCompatActivity() {
     private lateinit var chipAddCard: Chip
     private lateinit var savedCardsRecyclerView: RecyclerView
     private lateinit var cardAdapter: CreditCardAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,23 +102,23 @@ class AccountInfoActivity : AppCompatActivity() {
         editTextNotes.setText(sharedPreferences.getString("notes", ""))
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadSavedCreditCards() {
         savedCards.clear()
-        val cardsJson = sharedPreferences.getString("cards", null)
+        val cardsJson = getSharedPreferences("credit_cards", MODE_PRIVATE).getString("cards", null)
         if (cardsJson != null) {
             val jsonArray = JSONArray(cardsJson)
             for (i in 0 until jsonArray.length()) {
                 val cardJson = jsonArray.getJSONObject(i)
-                val card = CreditCard(
+                val card = Customer.CreditCard(
                     cardholderName = cardJson.getString("cardholderName"),
                     lastFourDigits = cardJson.getString("lastFourDigits"),
-                    expiryDate = cardJson.getString("expiryDate")
+                    expirationDate = cardJson.getString("expiryDate"),
+                    cardToken = cardJson.optString("cardToken")
                 )
                 savedCards.add(card)
             }
+            cardAdapter.notifyDataSetChanged()
         }
-        // Since the entire list is being reloaded, use submitList() for efficiency
-        cardAdapter.notifyItemRangeChanged(0, savedCards.size)
     }
-
 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ogdenscleaners.ogdenscleanersapp.R
-import com.ogdenscleaners.ogdenscleanersapp.models.CreditCard
+import com.ogdenscleaners.ogdenscleanersapp.models.Customer.CreditCard
 
 class CreditCardAdapter(private val cards: MutableList<CreditCard>) :
     RecyclerView.Adapter<CreditCardAdapter.CreditCardViewHolder>() {
@@ -27,7 +27,7 @@ class CreditCardAdapter(private val cards: MutableList<CreditCard>) :
         val card = cards[position]
         holder.cardholderName.text = card.cardholderName
         holder.lastFourDigits.text = "**** **** **** ${card.lastFourDigits}"
-        holder.expiryDate.text = card.expiryDate
+        holder.expiryDate.text = card.expirationDate
     }
 
     override fun getItemCount(): Int {

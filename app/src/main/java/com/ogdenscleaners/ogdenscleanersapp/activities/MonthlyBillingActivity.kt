@@ -15,7 +15,7 @@ import com.android.volley.toolbox.Volley
 import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.BillingAdapter
 import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
-import com.ogdenscleaners.ogdenscleanersapp.models.CreditCard
+import com.ogdenscleaners.ogdenscleanersapp.models.Customer.CreditCard
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -37,7 +37,7 @@ class MonthlyBillingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_monthly_billing)
 
         // Initialize PaymentConfiguration with the test key
-        PaymentConfiguration.init(applicationContext, "pk_test_51QEmC6F9q8Y1A3UES8uzimDczaKS3xMRUNr9QN4vhQN8wjktGMEONNrWWP7mFCJRrdYDmTPADDDVxn1GvS0mTkCw00XlEDwkSY")
+        PaymentConfiguration.init(applicationContext, "your_publishable_key_here")
 
         // Initialize views
         billingRecyclerView = findViewById(R.id.recyclerViewBilling)
@@ -62,7 +62,7 @@ class MonthlyBillingActivity : AppCompatActivity() {
         billingStatements.addAll(
             listOf(
                 BillingStatement("1", "January 2024", "100.00", "Monthly dry cleaning charges", "Billing statement for the Month of January", false),
-                BillingStatement("2", "February 2024", "80.00", "Monthly dry cleaning charges","Billing Statement for the Month of February", true)
+                BillingStatement("2", "February 2024", "80.00", "Monthly dry cleaning charges", "Billing Statement for the Month of February", true)
             )
         )
         billingAdapter.notifyDataSetChanged()

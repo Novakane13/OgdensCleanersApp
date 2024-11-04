@@ -18,4 +18,10 @@
     <item name="apt_input" type="id" />
     <item name="save_button" type="id" />
     <item name="delivery_info_text" type="id" />
-</resources>
+    <item name="etexpmonth" type="id" />
+    <item name="etexpyear" type="id" />
+    <item name="etcvc" type="id" />
+    <item name="btntokenize" type="id" />
+    <item name="tvresult" type="id" />
+    <item name="etcardnumber" type="id" />
+    </resources>

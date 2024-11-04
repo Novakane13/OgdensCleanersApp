@@ -93,6 +93,9 @@ dependencies {
     implementation(libs.stripe.android)
     implementation(libs.stripe.android.v20151)
     implementation(libs.stripe.android.vpaymentcompose)
+    implementation (libs.stripe.android)
+
+
 
     // Firebase Services
     implementation(libs.firebase.auth.ktx)
@@ -125,6 +128,15 @@ dependencies {
     implementation(libs.volley)
     implementation(libs.play.services.wallet)
     implementation(libs.play.services.ads)
+
+    // OkHttp
+    implementation (libs.okhttp) // Or latest version
+    implementation (libs.okhttp.v493)
+
+    // Coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+
 
 
     // Core Library Desugaring
