@@ -1,5 +1,7 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
+import com.ogdenscleaners.ogdenscleanersapp.api.PaymentData
+import com.ogdenscleaners.ogdenscleanersapp.api.PaymentIntentResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -20,5 +22,5 @@ object RetrofitClient {
 
 interface APIService {
     @POST("/create-payment-intent")
-    fun createPaymentIntent(@Body paymentData: com.ogdenscleaners.ogdenscleanersapp.activities.PaymentData): retrofit2.Call<PaymentIntentResponse>
+    fun createPaymentIntent(@Body paymentData: PaymentData): retrofit2.Call<PaymentIntentResponse>
 }

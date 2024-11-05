@@ -7,14 +7,6 @@
         <entry key="Firebase Crashlytics">
           <value>
             <InsightsFilterSettings>
-              <option name="connection">
-                <ConnectionSetting>
-                  <option name="appId" value="com.ogdenscleaners.ogdenscleanersapp" />
-                  <option name="mobileSdkAppId" value="1:30722918635:android:66a7f027958f04a59516ae" />
-                  <option name="projectId" value="ogcapp-4aba1" />
-                  <option name="projectNumber" value="30722918635" />
-                </ConnectionSetting>
-              </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
               <option name="timeIntervalDays" value="THIRTY_DAYS" />
               <option name="visibilityType" value="ALL" />

@@ -1,14 +1,13 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
-    id("com.google.gms.google-services")
-    id("com.google.dagger.hilt.android")
-    id("kotlin-kapt") // KAPT plugin for annotation processing (required for Hilt)
+    id("com.android.application") version "8.1.1"
+    id("org.jetbrains.kotlin.android") version "1.9.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
+    id("com.google.gms.google-services") version "4.4.2"
+    id("com.google.dagger.hilt.android") version "2.44"
+    id("org.jetbrains.kotlin.kapt") // Make sure it’s `org.jetbrains.kotlin.kapt`
 }
 
 android {
-    namespace = "com.ogdenscleaners.ogdenscleanersapp"
     compileSdk = 35
 
     defaultConfig {
@@ -17,36 +16,32 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
 
-        // Add BuildConfig fields for API keys
-        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${getApiKey("GOOGLE_MAPS_API_KEY")}\""
-        buildConfigField "String", "STRIPE_PUBLISHABLE_KEY", "\"${getApiKey("STRIPE_PUBLISHABLE_KEY")}\""
+        // Add BuildConfig fields for API keys from secrets.properties
+        buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"${System.getenv("GOOGLE_MAPS_API_KEY") ?: ""}\"")
+        buildConfigField("String", "STRIPE_PUBLISHABLE_KEY", "\"${System.getenv("STRIPE_PUBLISHABLE_KEY") ?: ""}\"")
     }
 
     buildFeatures {
-        viewBinding = true // Enable view binding
-        compose = true // Enable Jetpack Compose
+        viewBinding = true
+        compose = true
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-        isCoreLibraryDesugaringEnabled = true // For Java 8+ APIs
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -54,7 +49,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3" // Ensure this matches your Compose version
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 
     packaging {
@@ -64,104 +59,75 @@ android {
     }
 }
 
-// Function to retrieve API keys from secrets.properties
-def getApiKey(propName) {
-    def propertiesFile = rootProject.file('secrets.properties')
-    if (propertiesFile.exists()) {
-        Properties properties = new Properties()
-        properties.load(new FileInputStream(propertiesFile))
-        return properties[propName]
-    } else {
-        throw new GradleException("Properties file not found. Make sure 'secrets.properties' exists.")
-    }
+repositories {
+    google()
+    mavenCentral()
 }
 
 dependencies {
-    implementation(libs.androidx.espresso.core.v351)
-    implementation(libs.androidx.espresso.core.v351)
-    implementation(libs.androidx.espresso.core.v351)
-    // Kotlin BOM
-    implementation platform("org.jetbrains.kotlin:kotlin-bom")
+    // Core libraries
+    implementation("androidx.core:core-ktx:${libs.versions.coreKtx.get()}")
 
-    // Kotlin Standard Library
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
+    // AndroidX Libraries
+    implementation("androidx.appcompat:appcompat:${libs.versions.appcompat.get()}")
+    implementation("androidx.constraintlayout:constraintlayout:${libs.versions.constraintlayout.get()}")
+    implementation("androidx.recyclerview:recyclerview:${libs.versions.recyclerview.get()}")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:${libs.versions.lifecycleRuntimeKtx.get()}")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${libs.versions.lifecycleLivedataKtx.get()}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${libs.versions.lifecycleViewmodelKtx.get()}")
+    implementation("androidx.navigation:navigation-fragment-ktx:${libs.versions.navigationFragmentKtx.get()}")
+    implementation("androidx.navigation:navigation-ui-ktx:${libs.versions.navigationUiKtx.get()}")
 
-    // AndroidX Core and Lifecycle
-    implementation "androidx.core:core-ktx:1.12.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    // Material Components
+    implementation("com.google.android.material:material:${libs.versions.material.get()}")
 
-    // AndroidX UI Libraries
-    implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.recyclerview:recyclerview:1.3.1"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "androidx.paging:paging-runtime:3.2.1"
-    implementation "androidx.navigation:navigation-fragment-ktx:2.6.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
-
-    // Material Design
-    implementation "com.google.android.material:material:1.9.0"
-
-    // Compose BOM
-    implementation platform("androidx.compose:compose-bom:2023.09.01")
-    implementation "androidx.compose.ui:ui"
-    implementation "androidx.compose.ui:ui-graphics"
-    implementation "androidx.compose.ui:ui-tooling-preview"
-    implementation "androidx.compose.material3:material3"
+    // Jetpack Compose BOM
+    implementation(platform("androidx.compose:compose-bom:${libs.versions.composeBom.get()}"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
 
     // Retrofit and Gson
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-    implementation "com.google.code.gson:gson:2.10"
+    implementation("com.squareup.retrofit2:retrofit:${libs.versions.retrofit.get()}")
+    implementation("com.squareup.retrofit2:converter-gson:${libs.versions.converterGson.get()}")
 
     // OkHttp
-    implementation "com.squareup.okhttp3:okhttp:4.9.3"
+    implementation("com.squareup.okhttp3:okhttp:${libs.versions.okhttp.get()}")
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-ads:23.3.0"
-    implementation "com.google.android.gms:play-services-maps:18.0.2"
+    implementation("com.google.android.gms:play-services-ads:${libs.versions.playServicesAds.get()}")
+    implementation("com.google.android.gms:play-services-maps:${libs.versions.playServicesMaps.get()}")
 
-    // Stripe
-    implementation "com.stripe:stripe-android:20.15.1"
+    // Stripe SDK
+    implementation("com.stripe:stripe-android:${libs.versions.stripeAndroid.get()}")
 
-    // Firebase Services
-    implementation platform("com.google.firebase:firebase-bom:32.1.1")
-    implementation "com.google.firebase:firebase-auth-ktx"
-    implementation "com.google.firebase:firebase-database-ktx"
-    implementation "com.google.firebase:firebase-messaging-ktx"
-    implementation "com.google.firebase:firebase-firestore-ktx"
-    implementation "com.google.firebase:firebase-analytics"
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:${libs.versions.firebaseBom.get()}"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.versions.kotlinxCoroutinesCore.get()}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${libs.versions.kotlinxCoroutinesAndroid.get()}")
 
-    // Dagger Hilt for Dependency Injection
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-android-compiler:2.44"
+    // Hilt for Dependency Injection
+    implementation("com.google.dagger:hilt-android:${libs.versions.hiltAndroid.get()}")
+    kapt("com.google.dagger:hilt-android-compiler:${libs.versions.hiltAndroidCompiler.get()}")
 
-    // Hilt for ViewModel
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    // Core Desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:${libs.versions.desugarJdkLibs.get()}")
 
-    // Core Library Desugaring
-    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.1.5"
+    // Testing Dependencies
+    testImplementation("junit:junit:${libs.versions.junit.get()}")
+    androidTestImplementation(platform("androidx.compose:compose-bom:${libs.versions.composeBom.get()}"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("androidx.test.ext:junit:${libs.versions.androidxJunit.get()}")
+    androidTestImplementation("androidx.test.espresso:espresso-core:${libs.versions.espressoCore.get()}")
 
-    // Testing dependencies
-    testImplementation "junit:junit:4.13.2"
-    androidTestImplementation platform("androidx.compose:compose-bom:2024.10.00")
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
-    androidTestImplementation "androidx.test.ext:junit:1.1.5"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
-
-    // Debug dependencies
-    debugImplementation "androidx.compose.ui:ui-tooling"
-    debugImplementation "androidx.compose.ui:ui-test-manifest"
-}
-
-kapt {
-    correctErrorTypes = true
-}
+    // Debugging Tools
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

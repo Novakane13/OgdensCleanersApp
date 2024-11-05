@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp.activities
+package com.ogdenscleaners.ogdenscleanersapp.api
 
 import retrofit2.Call
 import retrofit2.http.Body
