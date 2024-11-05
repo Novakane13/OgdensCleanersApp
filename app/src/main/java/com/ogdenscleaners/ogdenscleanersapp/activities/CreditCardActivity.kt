@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.CreditCardAdapter
 import com.ogdenscleaners.ogdenscleanersapp.models.Customer.CreditCard
-import com.ogdenscleaners.ogdenscleanersapp.repositories.CustomerRepository
+import com.ogdenscleaners.ogdenscleanersapp.repository.CustomerRepository
 import com.ogdenscleaners.ogdenscleanersapp.services.PaymentHelper
 import com.stripe.android.model.CardParams
 import org.json.JSONArray

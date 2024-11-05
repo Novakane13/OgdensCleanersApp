@@ -1,98 +1,49 @@
-package com.ogdenscleaners.ogdenscleanersapp.activities
+// LoginActivity.kt
+package com.ogdenscleaners.ogdenscleanersapp.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.ogdenscleaners.ogdenscleanersapp.R
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityLoginBinding
+import com.ogdenscleaners.ogdenscleanersapp.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class LoginActivity : ComponentActivity() {
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
-    private lateinit var registerTextView: TextView
+@AndroidEntryPoint
+class LoginActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityLoginBinding
+    private val loginViewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        mAuth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        binding.loginButton.setOnClickListener {
+            val email = binding.emailEditText.text.toString().trim()
+            val password = binding.passwordEditText.text.toString().trim()
 
-        emailEditText = findViewById(R.id.editTextEmail)
-        passwordEditText = findViewById(R.id.passwordinput)
-        loginButton = findViewById(R.id.buttonLogin)
-        registerTextView = findViewById(R.id.textViewRegister)
-
-
-        loginButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-
-            if (email.isEmpty() || password.isEmpty()) {
-                showToast("Please fill out both email and password")
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                loginViewModel.loginUser(email, password)
             } else {
-                mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val user = mAuth.currentUser
-                            if (user != null) {
-                                fetchUserRoleAndNavigate(user.uid)
-                            }
-                        } else {
-                            showToast("Authentication Failed: ${task.exception?.message}")
-                        }
-                    }
+                Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Register link action
-        registerTextView.setOnClickListener {
-            navigateToRegister()
-        }
+        observeViewModel()
     }
 
-    private fun fetchUserRoleAndNavigate(uid: String) {
-        db.collection("users").document(uid).get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    val role = document.getString("role")
-                    if (role == "employee") {
-                        navigateToDashboard(true)
-                    } else {
-                        navigateToDashboard(false)
-                    }
-                } else {
-                    showToast("User role not found")
-                }
+    private fun observeViewModel() {
+        loginViewModel.loginStatus.observe(this, Observer { result ->
+            result.onSuccess {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                // Navigate to next screen
+            }.onFailure {
+                Toast.makeText(this, "Login Failed: ${it.message}", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener {
-                showToast("Failed to fetch user role")
-            }
-    }
-
-    private fun navigateToDashboard(isEmployee: Boolean) {
-        val intent = if (isEmployee) {
-            Intent(this, EmployeeDashboardActivity::class.java)
-        } else {
-            Intent(this, DashboardActivity::class.java)
-        }
-        startActivity(intent)
-        finish()
-    }
-
-    private fun navigateToRegister() {
-        startActivity(Intent(this, RegisterActivity::class.java))
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        })
     }
 }

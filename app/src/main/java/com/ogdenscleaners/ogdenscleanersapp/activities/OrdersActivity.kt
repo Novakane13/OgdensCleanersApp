@@ -2,74 +2,76 @@ package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.google.android.material.button.MaterialButton
 import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.OrdersAdapter
+import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityOrdersBinding
 import com.ogdenscleaners.ogdenscleanersapp.models.Order
+import com.ogdenscleaners.ogdenscleanersapp.viewmodel.OrderViewModel
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
-import org.json.JSONObject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrdersActivity : AppCompatActivity() {
-    private lateinit var activeOrdersRecyclerView: RecyclerView
-    private lateinit var inactiveOrdersRecyclerView: RecyclerView
-    private lateinit var moreInfoButton: MaterialButton
-    private lateinit var makePaymentButton: MaterialButton
-    private lateinit var ordersAdapter: OrdersAdapter
-    private lateinit var inactiveOrdersAdapter: OrdersAdapter
-    private lateinit var paymentSheet: PaymentSheet
-    private var paymentIntentClientSecret: String? = null
 
-    private val activeOrders = mutableListOf<Order>()
-    private val inactiveOrders = mutableListOf<Order>()
+    private lateinit var binding: ActivityOrdersBinding
+    private lateinit var paymentSheet: PaymentSheet
+    private val orderViewModel: OrderViewModel by viewModels()
+    private val activeOrdersAdapter = OrdersAdapter(onMoreInfoClick = { order -> showOrderDetails(order) })
+    private val inactiveOrdersAdapter = OrdersAdapter(onMoreInfoClick = { order -> showOrderDetails(order) })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_orders)
+        binding = ActivityOrdersBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Initialize PaymentConfiguration with the test key
         PaymentConfiguration.init(applicationContext, "pk_test_51QEmC6F9q8Y1A3UES8uzimDczaKS3xMRUNr9QN4vhQN8wjktGMEONNrWWP7mFCJRrdYDmTPADDDVxn1GvS0mTkCw00XlEDwkSY")
 
-        // Initialize views
-        activeOrdersRecyclerView = findViewById(R.id.active_orders_recycler_view)
-        inactiveOrdersRecyclerView = findViewById(R.id.inactive_orders_recycler_view)
-        moreInfoButton = findViewById(R.id.moreInfoButton)
-        makePaymentButton = findViewById(R.id.makePaymentButton)
-
         // Initialize Stripe PaymentSheet
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
 
-        // Set up RecyclerViews and Adapters
-        ordersAdapter = OrdersAdapter(onMoreInfoClick = { order -> showOrderDetails(order) })
-        inactiveOrdersAdapter = OrdersAdapter(onMoreInfoClick = { order -> showOrderDetails(order) })
+        // Set up RecyclerViews
+        binding.activeOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.activeOrdersRecyclerView.adapter = activeOrdersAdapter
+        binding.inactiveOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.inactiveOrdersRecyclerView.adapter = inactiveOrdersAdapter
 
-        activeOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
-        activeOrdersRecyclerView.adapter = ordersAdapter
+        // Observers
+        orderViewModel.activeOrders.observe(this, Observer { orders ->
+            activeOrdersAdapter.submitList(orders)
+        })
 
-        inactiveOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
-        inactiveOrdersRecyclerView.adapter = inactiveOrdersAdapter
+        orderViewModel.inactiveOrders.observe(this, Observer { orders ->
+            inactiveOrdersAdapter.submitList(orders)
+        })
 
-        // Add placeholder orders for testing
-        activeOrders.addAll(
-            listOf(
-                Order("1", date = "January 5, 2024", items = listOf("Shirt", "Pants"), total = 20.0),
-                Order("2", date = "February 10, 2024", items = listOf("Jacket"), total = 15.0),
-                Order("3", date = "March 15, 2024", items = listOf("Coat", "Scarf"), total = 30.0)
-            )
-        )
-        ordersAdapter.submitList(activeOrders)
+        orderViewModel.loading.observe(this, Observer { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        })
+
+        orderViewModel.errorMessage.observe(this, Observer { message ->
+            message?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        orderViewModel.paymentIntentClientSecret.observe(this, Observer { clientSecret ->
+            clientSecret?.let { presentPaymentSheet(it) }
+        })
+
+        // Load orders
+        orderViewModel.loadOrders()
 
         // Set up onClickListeners
-        moreInfoButton.setOnClickListener {
-            val selectedOrders = ordersAdapter.getSelectedOrders()
+        binding.moreInfoButton.setOnClickListener {
+            val selectedOrders = activeOrdersAdapter.getSelectedOrders()
             if (selectedOrders.size == 1) {
                 showOrderDetails(selectedOrders.first())
             } else {
@@ -77,10 +79,10 @@ class OrdersActivity : AppCompatActivity() {
             }
         }
 
-        makePaymentButton.setOnClickListener {
-            val selectedOrders = ordersAdapter.getSelectedOrders()
+        binding.makePaymentButton.setOnClickListener {
+            val selectedOrders = activeOrdersAdapter.getSelectedOrders()
             if (selectedOrders.isNotEmpty()) {
-                initiatePayment(selectedOrders)
+                orderViewModel.initiatePayment(selectedOrders)
             } else {
                 Toast.makeText(this, "Please select at least one order to make a payment", Toast.LENGTH_SHORT).show()
             }
@@ -104,35 +106,10 @@ class OrdersActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun initiatePayment(selectedOrders: List<Order>) {
-        val totalAmount = selectedOrders.sumOf { it.total * 100 }.toInt()  // Convert to cents
-        createPaymentIntent(totalAmount)
-    }
-
-    private fun createPaymentIntent(amount: Int) {
-        val queue = Volley.newRequestQueue(this)
-        val url = "http://10.0.2.2:4242/create-payment-intent"
-
-        val jsonObject = JSONObject().apply {
-            put("amount", amount)
-            put("currency", "usd")
-        }
-
-        val request = JsonObjectRequest(Request.Method.POST, url, jsonObject, { response ->
-            paymentIntentClientSecret = response.getString("clientSecret")
-            paymentIntentClientSecret?.let { presentPaymentSheet(it) }
-        }, { error ->
-            Toast.makeText(this, "Error creating payment intent", Toast.LENGTH_SHORT).show()
-        })
-        queue.add(request)
-    }
-
     private fun presentPaymentSheet(clientSecret: String) {
         paymentSheet.presentWithPaymentIntent(
             clientSecret,
-            PaymentSheet.Configuration(
-                merchantDisplayName = "Ogden's Cleaners"
-            )
+            PaymentSheet.Configuration(merchantDisplayName = "Ogden's Cleaners")
         )
     }
 
@@ -140,14 +117,8 @@ class OrdersActivity : AppCompatActivity() {
         when (paymentSheetResult) {
             is PaymentSheetResult.Completed -> {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show()
-                // Move paid orders to inactive list and mark them as ready for pickup
-                val selectedOrders = ordersAdapter.getSelectedOrders()
-                selectedOrders.forEach { it.isReadyForPickup = true }
-                activeOrders.removeAll(selectedOrders)
-                inactiveOrders.addAll(selectedOrders)
-                ordersAdapter.clearSelectedOrders()
-                ordersAdapter.submitList(activeOrders) // Update active orders list
-                inactiveOrdersAdapter.submitList(inactiveOrders) // Update inactive orders list
+                val selectedOrders = activeOrdersAdapter.getSelectedOrders()
+                orderViewModel.completePayment(selectedOrders)
             }
             is PaymentSheetResult.Canceled -> {
                 Toast.makeText(this, "Payment canceled.", Toast.LENGTH_SHORT).show()

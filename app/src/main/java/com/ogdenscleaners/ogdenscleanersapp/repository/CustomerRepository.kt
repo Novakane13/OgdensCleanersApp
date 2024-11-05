@@ -1,4 +1,4 @@
-package com.ogdenscleaners.ogdenscleanersapp.repositories
+package com.ogdenscleaners.ogdenscleanersapp.repository
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase

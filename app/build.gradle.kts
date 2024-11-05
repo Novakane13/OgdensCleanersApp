@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
     id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt") // KAPT plugin for annotation processing (required for Hilt)
 }
 
 android {
@@ -20,11 +22,15 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Add BuildConfig fields for API keys
+        buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${getApiKey("GOOGLE_MAPS_API_KEY")}\""
+        buildConfigField "String", "STRIPE_PUBLISHABLE_KEY", "\"${getApiKey("STRIPE_PUBLISHABLE_KEY")}\""
     }
 
     buildFeatures {
-        viewBinding = true // Proper place for enabling view binding
-        compose = true
+        viewBinding = true // Enable view binding
+        compose = true // Enable Jetpack Compose
     }
 
     buildTypes {
@@ -58,98 +64,104 @@ android {
     }
 }
 
+// Function to retrieve API keys from secrets.properties
+def getApiKey(propName) {
+    def propertiesFile = rootProject.file('secrets.properties')
+    if (propertiesFile.exists()) {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(propertiesFile))
+        return properties[propName]
+    } else {
+        throw new GradleException("Properties file not found. Make sure 'secrets.properties' exists.")
+    }
+}
 
 dependencies {
+    implementation(libs.androidx.espresso.core.v351)
+    implementation(libs.androidx.espresso.core.v351)
+    implementation(libs.androidx.espresso.core.v351)
     // Kotlin BOM
-    implementation(libs.kotlin.bom)
+    implementation platform("org.jetbrains.kotlin:kotlin-bom")
 
     // Kotlin Standard Library
-    implementation(libs.kotlin.stdlib.jdk8)
-    implementation(libs.kotlinx.serialization.json)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 
-    // AndroidX Core
-    implementation(libs.androidx.core.ktx.v1120)
+    // AndroidX Core and Lifecycle
+    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
 
-    // Lifecycle and Activity KTX
-    implementation(libs.androidx.lifecycle.runtime.ktx.v261)
-    implementation(libs.androidx.activity.compose.v180)
+    // AndroidX UI Libraries
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.recyclerview:recyclerview:1.3.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "androidx.paging:paging-runtime:3.2.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.6.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
+
+    // Material Design
+    implementation "com.google.android.material:material:1.9.0"
 
     // Compose BOM
-    implementation(platform(libs.androidx.compose.bom.v20230901))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
+    implementation platform("androidx.compose:compose-bom:2023.09.01")
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.ui:ui-graphics"
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    implementation "androidx.compose.material3:material3"
 
     // Retrofit and Gson
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.gson)
-
-    // Google Play
-    implementation(libs.play.services.ads.v2330)
-
-    // Stripe
-    implementation(libs.stripe.android)
-    implementation(libs.stripe.android.v20151)
-    implementation(libs.stripe.android.vpaymentcompose)
-    implementation (libs.stripe.android)
-
-
-
-    // Firebase Services
-    implementation(libs.firebase.auth.ktx)
-    implementation(libs.firebase.database.ktx)
-    implementation(libs.firebase.messaging.ktx)
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.dataconnect)
-    implementation(libs.firebase.core)
-
-    // Other dependencies
-    implementation(libs.androidx.appcompat.v161)
-    implementation(libs.androidx.paging.runtime)
-    implementation(libs.androidx.recyclerview)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.material)
-    implementation(libs.play.services.maps)
-    implementation(libs.play.services.maps.v1802)
-    implementation(libs.android.maps.utils)
-    implementation(libs.cronet.embedded)
-    implementation(libs.androidx.mediarouter)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.material.v190)
-    implementation(libs.firebase.inappmessaging)
-    implementation (libs.android.maps.utils.v223)
-    implementation (libs.retrofit.v290)
-    implementation (libs.converter.gson.v290)
-    implementation(libs.volley)
-    implementation(libs.play.services.wallet)
-    implementation(libs.play.services.ads)
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.google.code.gson:gson:2.10"
 
     // OkHttp
-    implementation (libs.okhttp) // Or latest version
-    implementation (libs.okhttp.v493)
+    implementation "com.squareup.okhttp3:okhttp:4.9.3"
+
+    // Google Play Services
+    implementation "com.google.android.gms:play-services-ads:23.3.0"
+    implementation "com.google.android.gms:play-services-maps:18.0.2"
+
+    // Stripe
+    implementation "com.stripe:stripe-android:20.15.1"
+
+    // Firebase Services
+    implementation platform("com.google.firebase:firebase-bom:32.1.1")
+    implementation "com.google.firebase:firebase-auth-ktx"
+    implementation "com.google.firebase:firebase-database-ktx"
+    implementation "com.google.firebase:firebase-messaging-ktx"
+    implementation "com.google.firebase:firebase-firestore-ktx"
+    implementation "com.google.firebase:firebase-analytics"
 
     // Coroutines
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
+    // Dagger Hilt for Dependency Injection
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-android-compiler:2.44"
 
+    // Hilt for ViewModel
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
 
     // Core Library Desugaring
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.1.5"
 
     // Testing dependencies
-    testImplementation(libs.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom.v20241000))
-    androidTestImplementation(libs.ui.test.junit4)
-    androidTestImplementation(libs.androidx.junit.v115)
-    androidTestImplementation(libs.androidx.espresso.core.v351)
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation platform("androidx.compose:compose-bom:2024.10.00")
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
 
     // Debug dependencies
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
+    debugImplementation "androidx.compose.ui:ui-tooling"
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
+}
+
+kapt {
+    correctErrorTypes = true
+}
 }

@@ -1,124 +1,60 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
-import com.ogdenscleaners.ogdenscleanersapp.R.id
-import com.ogdenscleaners.ogdenscleanersapp.R.layout
 import com.ogdenscleaners.ogdenscleanersapp.adapters.CreditCardAdapter
+import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityAccountInfoBinding
 import com.ogdenscleaners.ogdenscleanersapp.models.Customer
-import org.json.JSONArray
+import com.ogdenscleaners.ogdenscleanersapp.viewmodel.AccountViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccountInfoActivity : AppCompatActivity() {
 
-    private lateinit var sharedPreferences: SharedPreferences
-    private val savedCards: MutableList<Customer.CreditCard> = mutableListOf()
-
-    // UI Elements
-    private lateinit var editTextName: EditText
-    private lateinit var editTextPhone: EditText
-    private lateinit var editTextEmail: EditText
-    private lateinit var editTextNotes: EditText
-    private lateinit var buttonSave: Button
-    private lateinit var chipAddCard: Chip
-    private lateinit var savedCardsRecyclerView: RecyclerView
+    private lateinit var binding: ActivityAccountInfoBinding
+    private val accountViewModel: AccountViewModel by viewModels()
     private lateinit var cardAdapter: CreditCardAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_account_info)
+        binding = ActivityAccountInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize shared preferences
-        sharedPreferences = getSharedPreferences("UserInfoPrefs", Context.MODE_PRIVATE)
+        cardAdapter = CreditCardAdapter(mutableListOf())
+        binding.savedCardsRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.savedCardsRecyclerView.adapter = cardAdapter
 
-        // Initialize views
-        editTextName = findViewById(id.editTextName)
-        editTextPhone = findViewById(id.editTextPhone)
-        editTextEmail = findViewById(id.editTextEmail)
-        editTextNotes = findViewById(id.editTextNotes)
-        buttonSave = findViewById(id.buttonSave)
-        chipAddCard = findViewById(id.chipAddCard)
-        savedCardsRecyclerView = findViewById(id.savedCardsRecyclerView)
+        accountViewModel.userInfo.observe(this, Observer { userInfo ->
+            binding.editTextName.setText(userInfo.name)
+            binding.editTextPhone.setText(userInfo.phone)
+            binding.editTextEmail.setText(userInfo.email)
+            binding.editTextNotes.setText(userInfo.notes)
+        })
 
-        // Load saved user info
-        loadUserInfo()
+        accountViewModel.savedCards.observe(this, Observer { cards ->
+            cardAdapter.updateCards(cards)
+        })
 
-        // Set up RecyclerView for saved credit cards
-        cardAdapter = CreditCardAdapter(savedCards)
-        savedCardsRecyclerView.layoutManager = LinearLayoutManager(this)
-        savedCardsRecyclerView.adapter = cardAdapter
+        accountViewModel.loadUserInfo()
+        accountViewModel.loadSavedCreditCards()
 
-        // Load saved credit cards
-        loadSavedCreditCards()
-
-        // Set up the Add Card button click to open CreditCardActivity
-        chipAddCard.setOnClickListener {
-            val intent = Intent(this, CreditCardActivity::class.java)
-            startActivity(intent)
+        binding.buttonSave.setOnClickListener {
+            val userInfo = Customer.UserInfo(
+                binding.editTextName.text.toString().trim(),
+                binding.editTextPhone.text.toString().trim(),
+                binding.editTextEmail.text.toString().trim(),
+                binding.editTextNotes.text.toString().trim()
+            )
+            accountViewModel.saveUserInfo(userInfo)
+            Toast.makeText(this, "User info saved", Toast.LENGTH_SHORT).show()
         }
 
-        // Handle Save Changes button click (for name, phone, email, notes)
-        buttonSave.setOnClickListener {
-            saveUserInfo()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Refresh the credit cards list when returning to this activity
-        loadSavedCreditCards()
-    }
-
-    private fun saveUserInfo() {
-        val name = editTextName.text.toString().trim()
-        val phone = editTextPhone.text.toString().trim()
-        val email = editTextEmail.text.toString().trim()
-        val notes = editTextNotes.text.toString().trim()
-
-        val editor = sharedPreferences.edit()
-        editor.putString("name", name)
-        editor.putString("phone", phone)
-        editor.putString("email", email)
-        editor.putString("notes", notes)
-        editor.apply()
-
-        Toast.makeText(this, "User info saved", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun loadUserInfo() {
-        editTextName.setText(sharedPreferences.getString("name", ""))
-        editTextPhone.setText(sharedPreferences.getString("phone", ""))
-        editTextEmail.setText(sharedPreferences.getString("email", ""))
-        editTextNotes.setText(sharedPreferences.getString("notes", ""))
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun loadSavedCreditCards() {
-        savedCards.clear()
-        val cardsJson = getSharedPreferences("credit_cards", MODE_PRIVATE).getString("cards", null)
-        if (cardsJson != null) {
-            val jsonArray = JSONArray(cardsJson)
-            for (i in 0 until jsonArray.length()) {
-                val cardJson = jsonArray.getJSONObject(i)
-                val card = Customer.CreditCard(
-                    cardholderName = cardJson.getString("cardholderName"),
-                    lastFourDigits = cardJson.getString("lastFourDigits"),
-                    expirationDate = cardJson.getString("expiryDate"),
-                    cardToken = cardJson.optString("cardToken")
-                )
-                savedCards.add(card)
-            }
-            cardAdapter.notifyDataSetChanged()
+        binding.chipAddCard.setOnClickListener {
+            // Navigate to CreditCardActivity
         }
     }
 }

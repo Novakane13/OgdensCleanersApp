@@ -1,41 +1,37 @@
 package com.ogdenscleaners.ogdenscleanersapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ogdenscleaners.ogdenscleanersapp.R
-import com.ogdenscleaners.ogdenscleanersapp.models.Customer.CreditCard
+import com.ogdenscleaners.ogdenscleanersapp.databinding.ItemCreditCardBinding
+import com.ogdenscleaners.ogdenscleanersapp.models.Customer
 
-class CreditCardAdapter(private val cards: MutableList<CreditCard>) :
-    RecyclerView.Adapter<CreditCardAdapter.CreditCardViewHolder>() {
-
-    class CreditCardViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val cardholderName: TextView = view.findViewById(R.id.cardholder_name)
-        val lastFourDigits: TextView = view.findViewById(R.id.last_four_digits)
-        val expiryDate: TextView = view.findViewById(R.id.expiry_date)
-    }
+class CreditCardAdapter(
+    private var cards: MutableList<Customer.CreditCard>
+) : RecyclerView.Adapter<CreditCardAdapter.CreditCardViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditCardViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_item, parent, false)
-        return CreditCardViewHolder(view)
+        val binding = ItemCreditCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CreditCardViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CreditCardViewHolder, position: Int) {
-        val card = cards[position]
-        holder.cardholderName.text = card.cardholderName
-        holder.lastFourDigits.text = "**** **** **** ${card.lastFourDigits}"
-        holder.expiryDate.text = card.expirationDate
+        holder.bind(cards[position])
     }
 
-    override fun getItemCount(): Int {
-        return cards.size
+    override fun getItemCount(): Int = cards.size
+
+    fun updateCards(newCards: List<Customer.CreditCard>) {
+        cards.clear()
+        cards.addAll(newCards)
+        notifyDataSetChanged()
     }
 
-    fun addCard(card: CreditCard) {
-        cards.add(card)
-        notifyItemInserted(cards.size - 1)
+    inner class CreditCardViewHolder(private val binding: ItemCreditCardBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(card: Customer.CreditCard) {
+            binding.cardholderName.text = card.cardholderName
+            binding.cardLastFourDigits.text = "**** **** **** ${card.lastFourDigits}"
+            binding.cardExpiry.text = "Exp: ${card.expirationDate}"
+        }
     }
 }
