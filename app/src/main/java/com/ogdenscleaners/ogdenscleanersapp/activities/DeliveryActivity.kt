@@ -1,4 +1,3 @@
-// DeliveryActivity.kt
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
 import android.app.AlertDialog
@@ -6,11 +5,11 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityDeliveryBinding
 import com.ogdenscleaners.ogdenscleanersapp.models.PickupRequest
 import com.ogdenscleaners.ogdenscleanersapp.viewmodel.DeliveryViewModel
@@ -137,7 +136,7 @@ class DeliveryActivity : AppCompatActivity() {
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
             val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                datePicker.setText(getString(R.string.date_format, selectedDay, selectedMonth + 1, selectedYear))
+                datePicker.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
             }, year, month, day)
 
             datePickerDialog.show()

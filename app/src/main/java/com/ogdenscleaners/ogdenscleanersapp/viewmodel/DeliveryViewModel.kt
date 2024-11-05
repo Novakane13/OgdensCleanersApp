@@ -1,4 +1,3 @@
-// DeliveryViewModel.kt
 package com.ogdenscleaners.ogdenscleanersapp.viewmodel
 
 import androidx.lifecycle.LiveData
@@ -9,7 +8,6 @@ import com.ogdenscleaners.ogdenscleanersapp.models.PickupRequest
 import com.ogdenscleaners.ogdenscleanersapp.repository.DeliveryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +37,6 @@ class DeliveryViewModel @Inject constructor(
 
     fun tempStopService() {
         viewModelScope.launch {
-            // You can add any specific logic for temporarily stopping the service here
             deliveryRepository.tempStopService()
         }
     }

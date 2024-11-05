@@ -1,7 +1,10 @@
 package com.ogdenscleaners.ogdenscleanersapp.repository
 
+import com.ogdenscleaners.ogdenscleanersapp.api.ApiService
+import com.ogdenscleaners.ogdenscleanersapp.api.PaymentIntentResponse
 import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
 import org.json.JSONObject
+import retrofit2.Call
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,7 +21,7 @@ class BillingRepository @Inject constructor(
         )
     }
 
-    suspend fun createPaymentIntent(amount: Int): String {
+    suspend fun createPaymentIntent(amount: Int): Call<PaymentIntentResponse> {
         val jsonObject = JSONObject().apply {
             put("amount", amount)
             put("currency", "usd")

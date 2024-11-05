@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ogdenscleaners.ogdenscleanersapp.adapters.CreditCardAdapter
 import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityAccountInfoBinding
 import com.ogdenscleaners.ogdenscleanersapp.models.Customer
+import com.ogdenscleaners.ogdenscleanersapp.models.User
 import com.ogdenscleaners.ogdenscleanersapp.viewmodel.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class AccountInfoActivity : AppCompatActivity() {
@@ -43,7 +45,7 @@ class AccountInfoActivity : AppCompatActivity() {
         accountViewModel.loadSavedCreditCards()
 
         binding.buttonSave.setOnClickListener {
-            val userInfo = Customer.UserInfo(
+            val userInfo = Customer.User(
                 binding.editTextName.text.toString().trim(),
                 binding.editTextPhone.text.toString().trim(),
                 binding.editTextEmail.text.toString().trim(),

@@ -20,18 +20,15 @@ class PaymentHelper(context: Context, publishableKey: String) {
             cardParams,
             object : ApiResultCallback<Token> {
                 override fun onSuccess(token: Token) {
-                    // Invoke the callback with success
                     callback(Result.success(token))
                 }
 
                 override fun onError(e: Exception) {
-                    // Invoke the callback with failure
                     callback(Result.failure(e))
                 }
             }
         )
     }
-
 
     private fun sendTokenToServer(token: String) {
         val url = "https://your-backend-server-url.com/charge"
@@ -41,7 +38,6 @@ class PaymentHelper(context: Context, publishableKey: String) {
         }
         """.trimIndent()
 
-        // Use an HTTP library to make the request (like OkHttp)
         val client = OkHttpClient()
         val body = json.toRequestBody("application/json; charset=utf-8".toMediaType())
         val request = Request.Builder()
@@ -51,16 +47,13 @@ class PaymentHelper(context: Context, publishableKey: String) {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                // Handle the error, e.g., show a message to the user
                 println("Failed to send token to server: ${e.message}")
             }
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    // Handle success, e.g., show a success message
                     println("Successfully sent token to server")
                 } else {
-                    // Handle failure, e.g., show a failure message
                     println("Failed to send token to server: ${response.message}")
                 }
             }

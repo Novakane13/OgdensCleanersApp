@@ -2,7 +2,8 @@ package com.ogdenscleaners.ogdenscleanersapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth
+
 
 class AuthRepository {
 

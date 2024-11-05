@@ -125,5 +125,9 @@
     <string name="total">Total: $</string>
     <string name="don_t_have_an_account_register_here">Don\'t have an account? Register here</string>
     <string name="employee_pin_optional">Employee PIN (Optional)</string>
+    <string name="last_4_numbers">Last 4 Numbers</string>
+    <string name="last_four_numbers">Last 4 Numbers</string>
+    <string name="last_four_number">Last Four Numbers</string>
+    <string name="back">Back</string>
 
 </resources>

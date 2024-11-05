@@ -12,4 +12,8 @@ data class Customer(
         var expirationDate: String? = null,
         var cardToken: String? = null
     )
+
+    class User(name: String, phone: String, email: String, address: String) {
+
+    }
 }

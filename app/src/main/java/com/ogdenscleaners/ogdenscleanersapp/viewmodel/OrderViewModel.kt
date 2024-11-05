@@ -1,11 +1,11 @@
-package com.ogdenscleaners.ogdenscleanersapp.viewmodels
+package com.ogdenscleaners.ogdenscleanersapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ogdenscleaners.ogdenscleanersapp.models.Order
-import com.ogdenscleaners.ogdenscleanersapp.repositories.OrderRepository
+import com.ogdenscleaners.ogdenscleanersapp.repository.OrderRepository
 import com.stripe.android.paymentsheet.PaymentSheet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -39,7 +39,7 @@ class OrderViewModel @Inject constructor(
         _inactiveOrders.value = orderRepository.getInactiveOrders()
     }
 
-    fun showOrderDetails(order: Order) {
+    private fun showOrderDetails(order: Order) {
         val details = """
             Order ID: ${order.id}
             Drop Off Date: ${order.date}
@@ -71,9 +71,9 @@ class OrderViewModel @Inject constructor(
     private fun createPaymentIntent(amount: Int) {
         viewModelScope.launch {
             val clientSecret = orderRepository.createPaymentIntent(amount)
-            clientSecret?.let {
+            clientSecret.let {
                 paymentSheet.presentWithPaymentIntent(
-                    it,
+                    it.toString(),
                     PaymentSheet.Configuration(merchantDisplayName = "Ogden's Cleaners")
                 )
             } ?: run {

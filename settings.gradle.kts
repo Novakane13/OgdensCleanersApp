@@ -1,24 +1,23 @@
- }
-    plugins {
-        id("com.android.application") version "8.6.1"
-        id("org.jetbrains.kotlin.android") version "1.9.10"
+// settings.gradle.kts
 
-        id("com.google.gms.google-services") version "4.4.2"
-        id("com.gradle.enterprise") version "3.14.1"  // Gradle Enterprise Plugin
-        kotlin("jvm") version "2.0.0"
+pluginManagement {
+    repositories {
+        gradlePluginPortal() // General plugins repository.
+        google() // Google repository for Android and Google Services plugins.
+        mavenCentral() // General-purpose repository.
     }
-}
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
     }
 }
 
+// Set the root project name
 rootProject.name = "OgdensCleanersApp"
+
+// Include the app module
 include(":app")

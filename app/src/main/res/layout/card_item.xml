@@ -1,34 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:background="#000000"
+    android:orientation="horizontal"
     android:padding="16dp">
 
     <!-- Cardholder Name -->
-    <TextView
-        android:id="@+id/cardholder_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="176dp"
+        android:layout_height="137dp"
+        android:layout_gravity="start"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/logo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/card_details"
+        android:layout_width="0dp"
+        android:layout_height="139dp"
+        android:layout_gravity="end"
+        android:layout_weight="1"
+        android:background="#216499"
+        android:divider="@color/colorOnPrimary"
+        android:drawingCacheQuality="auto"
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="#FFFFFF"
+        android:outlineProvider="bounds"
+        android:outlineSpotShadowColor="#FFFFFF"
+        android:showDividers="middle|beginning|end">
+
+        <TextView
+            android:id="@+id/cardholder_name"
+            android:layout_width="201dp"
+            android:layout_height="38dp"
+
+            android:layout_marginBottom="6dp"
+            android:hint="@string/cardholder_name"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/last_four_digits"
+            android:layout_width="201dp"
+            android:layout_height="38dp"
+
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:hint="@string/last_four_number"
+            android:textColor="#CCCCCC"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/expiry_date"
+            android:layout_width="207dp"
+            android:layout_height="39dp"
+
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:hint="@string/expiry_date_mm_yy"
+            android:textColor="#FFFFFF"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
     <!-- Last Four Digits -->
-    <TextView
-        android:id="@+id/last_four_digits"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:textColor="#CCCCCC"
-        android:textSize="14sp" />
 
     <!-- Expiry Date -->
-    <TextView
-        android:id="@+id/expiry_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:textColor="#CCCCCC"
-        android:textSize="14sp" />
 </LinearLayout>

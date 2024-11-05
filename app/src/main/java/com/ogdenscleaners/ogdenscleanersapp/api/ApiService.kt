@@ -1,6 +1,7 @@
 package com.ogdenscleaners.ogdenscleanersapp.api
 
 import com.ogdenscleaners.ogdenscleanersapp.models.*
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -28,5 +29,5 @@ interface ApiService {
     fun createEphemeralKey(@Body ephemeralKeyRequest: EphemeralKeyRequest): Call<EphemeralKeyResponse>
 
     @POST("/create-payment-intent")
-    fun createPaymentIntent(@Body paymentIntentRequest: PaymentIntentRequest): Call<PaymentIntentResponse>
+    fun createPaymentIntent(@Body paymentIntentRequest: JSONObject): Call<PaymentIntentResponse>
 }

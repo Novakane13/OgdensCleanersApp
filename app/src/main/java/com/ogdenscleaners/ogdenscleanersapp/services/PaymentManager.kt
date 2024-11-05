@@ -24,7 +24,6 @@ class PaymentManager(context: Context, private val paymentSheetResultHandler: (P
     private val paymentSheet: PaymentSheet = PaymentSheet(context as androidx.appcompat.app.AppCompatActivity, ::handlePaymentResult)
 
     init {
-        // Initialize Stripe with the publishable key
         PaymentConfiguration.init(context, context.getString(R.string.stripe_publishable_key))
     }
 
