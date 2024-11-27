@@ -14,6 +14,7 @@
         android:gravity="center_horizontal">
 
         <!-- Logo -->
+
         <ImageButton
             android:id="@+id/logoImageButton"
             android:layout_width="150dp"
@@ -38,8 +39,8 @@
 
         <EditText
             android:id="@+id/editTextName"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="376dp"
+            android:layout_height="34dp"
             android:layout_marginBottom="16dp"
             android:background="#226E90"
             android:hint="@string/full_name"
@@ -51,8 +52,8 @@
         <!-- Phone Number Input -->
         <EditText
             android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="376dp"
+            android:layout_height="37dp"
             android:layout_marginBottom="16dp"
             android:background="#226D8E"
             android:hint="@string/phone_number"
@@ -64,8 +65,8 @@
         <!-- Email Input -->
         <EditText
             android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="376dp"
+            android:layout_height="39dp"
             android:layout_marginBottom="16dp"
             android:background="#226D8F"
             android:hint="@string/email"
@@ -75,10 +76,23 @@
             tools:ignore="Autofill,LabelFor" />
 
         <!-- Notes Input -->
+
+        <EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_marginBottom="16dp"
+            android:background="#226D8F"
+            android:hint="@string/address"
+            android:inputType="text|textPostalAddress"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#BDBDBD"
+            tools:ignore="Autofill,LabelFor" />
+
         <EditText
             android:id="@+id/editTextNotes"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_width="377dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="16dp"
             android:background="#226D8E"
             android:hint="@string/notes"

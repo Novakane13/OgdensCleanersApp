@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00ADA5"
+    android:divider="?android:attr/dividerHorizontal"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:showDividers="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <TextView
+            android:id="@+id/order_id3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testorderid3"
+            android:textColor="#00CCCC"
+            android:textSize="14sp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/order_date3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testorderdate"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_pieces3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testorderpieces3"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_total3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testordertotal3"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <TextView
+            android:id="@+id/order_id2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testorderid2"
+            android:textColor="#00CCCC"
+            android:textSize="14sp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/order_date2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/orderdate"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_pieces2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testorderpieces2"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_total2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testordertotal2"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="356dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <TextView
+            android:id="@+id/order_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testorderid"
+            android:textColor="#00CCCC"
+            android:textSize="14sp"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/order_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/orderdate"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_pieces"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/amountofpieces"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/order_total"
+            android:layout_width="3dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="@string/testordertotal"
+            android:textColor="#00CCCC"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -129,5 +129,38 @@
     <string name="last_four_numbers">Last 4 Numbers</string>
     <string name="last_four_number">Last Four Numbers</string>
     <string name="back">Back</string>
+    <string name="stripe_publishable_key">pk_live_51QEmC6F9q8Y1A3UEvXwzb4Y3JPBfczyXhHgMRpn7LWAUQhkaYnD3MQC6giFb0UeLRtil4DuyFNI0HMJ4N85wMzqI00sJ2IvXEh</string>
+    <string name="address">Street Address</string>
+    <string name="save_button">Save Request</string>
+    <string name="saverequest">Save Delivery Request</string>
+    <string name="pickup_instructions">Pickup Instructions</string>
+    <string name="numpieces"># of Pieces</string>
+    <string name="drop_off_date">Drop Off Date</string>
+    <string name="order">Order#</string>
+    <string name="statement_date">Date of Statement</string>
+    <string name="statement_total">Amount Owed\n</string>
+    <string name="date_of_statement">Date of Statement</string>
+    <string name="amount_owed">Amount Owed</string>
+    <string name="save_button_icon">"Save "</string>
+
+    <string name="credit_card_display">**** **** **** %1$s</string>
+    <string name="expiration_date">Exp: %1$s</string>
+    <string name="testorderid">21245</string>
+    <string name="testorderidd">#21245</string>
+    <string name="orderdate">4/19/24</string>
+    <string name="amountofpieces">6</string>
+    <string name="testordertotal">$24.80</string>
+    <string name="testorderid2">21246</string>
+    <string name="testorderpieces2">7</string>
+    <string name="testordertotal2">$28.60</string>
+    <string name="testordertotal3">$10.50</string>
+    <string name="testorderpieces3">2</string>
+    <string name="testorderdate">4/26/24</string>
+    <string name="testorderid3">22573</string>
+    <string name="moreinfo">More Info</string>
+    <string name="backbutton">Back</string>
+    <string name="cvc">CvC</string>
+    <string name="no_data_message">No orders available to display</string>
+
 
 </resources>

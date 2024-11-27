@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityDashboardBinding
 import com.ogdenscleaners.ogdenscleanersapp.viewmodel.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,28 +16,37 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
+        // Initialize View Binding
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Setup navigation button click listeners using data binding
+        setupNavigationButtons()
+    }
+
+    private fun setupNavigationButtons() {
         binding.apply {
             navButtonOrders.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, OrdersActivity::class.java))
+                navigateToActivity(OrdersActivity::class.java)
             }
             navButtonBilling.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, MonthlyBillingActivity::class.java))
+                navigateToActivity(MonthlyBillingActivity::class.java)
             }
             navButtonDelivery.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, DeliveryActivity::class.java))
+                navigateToActivity(DeliveryActivity::class.java)
             }
             navButtonNotifications.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, NotificationsActivity::class.java))
+                navigateToActivity(NotificationsActivity::class.java)
             }
             navButtonFeedback.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, FeedbackActivity::class.java))
+                navigateToActivity(FeedbackActivity::class.java)
             }
             navButtonAccountInfo.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, AccountInfoActivity::class.java))
+                navigateToActivity(AccountInfoActivity::class.java)
             }
         }
+    }
+
+    private fun navigateToActivity(targetActivity: Class<*>) {
+        startActivity(Intent(this, targetActivity))
     }
 }

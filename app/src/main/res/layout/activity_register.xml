@@ -33,7 +33,6 @@
             android:id="@+id/buttonRegister"
             android:layout_width="314dp"
             android:layout_height="79dp"
-            android:layout_marginTop="8dp"
             android:background="#1D2E2A"
             android:text="@string/register"
             android:textColor="#FFFFFF"
@@ -47,19 +46,19 @@
             android:id="@+id/editTextEmployeePin"
             android:layout_width="322dp"
             android:layout_height="47dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="24dp"
             android:hint="@string/employee_pin_optional"
             android:importantForAutofill="no"
             android:inputType="numberPassword"
             android:textColor="#03A9F4"
-            android:textColorHint="#000000"
+            android:textColorHint="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/input_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
         <EditText
-            android:id="@+id/editTextEmail"
+            android:id="@+id/emailinput"
             android:layout_width="315dp"
             android:layout_height="54dp"
             android:layout_marginTop="10dp"
@@ -80,8 +79,7 @@
             android:id="@+id/confirm_password"
             android:layout_width="353dp"
             android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="45dp"
+            android:layout_marginBottom="24dp"
             android:textColorHint="#000000"
             app:boxBackgroundColor="#F8F8F8"
             app:boxBackgroundMode="outline"
@@ -99,8 +97,8 @@
 
             <EditText
                 android:id="@+id/confirmpassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="338dp"
+                android:layout_height="35dp"
                 android:layout_gravity="bottom|start|top|end"
                 android:autofillHints=""
                 android:background="#087DB3"
@@ -116,7 +114,7 @@
             android:layout_width="307dp"
             android:layout_height="51dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:autoSizeTextType="uniform"
             android:autofillHints=""
             android:backgroundTint="#000000"
@@ -128,7 +126,7 @@
             app:layout_constraintBottom_toTopOf="@id/editTextEmployeePin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
+            app:layout_constraintTop_toBottomOf="@id/emailinput" />
 
         <EditText
             android:id="@+id/editTextName"
@@ -141,7 +139,7 @@
             android:inputType="textPersonName"
             android:textColor="#03A9F4"
             android:textColorHint="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/editTextEmail"
+            app:layout_constraintBottom_toTopOf="@+id/emailinput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.542"
             app:layout_constraintStart_toStartOf="parent"
@@ -151,7 +149,6 @@
             android:id="@+id/input_password"
             android:layout_width="351dp"
             android:layout_height="56dp"
-            android:layout_marginTop="6dp"
             android:layout_marginBottom="10dp"
             android:textColorHint="#000000"
             app:boxBackgroundColor="#F8F8F8"

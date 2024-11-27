@@ -31,7 +31,7 @@
     <!-- Expiry Date Input -->
     <EditText
         android:id="@+id/expiry_date_input"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/expiry_date_mm_yy"
         android:importantForAutofill="no"
@@ -40,6 +40,15 @@
         android:textColorHint="#CCCCCC" />
 
     <!-- Save Card Button -->
+    <EditText
+        android:id="@+id/cvcinput"
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/cvc"
+        android:inputType="number"
+        android:textColorHint="#FFFFFF" />
+
     <Button
         android:id="@+id/save_card_button"
         android:layout_width="wrap_content"

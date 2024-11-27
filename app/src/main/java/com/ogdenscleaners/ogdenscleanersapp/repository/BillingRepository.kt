@@ -1,10 +1,9 @@
 package com.ogdenscleaners.ogdenscleanersapp.repository
 
 import com.ogdenscleaners.ogdenscleanersapp.api.ApiService
-import com.ogdenscleaners.ogdenscleanersapp.api.PaymentIntentResponse
 import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
-import org.json.JSONObject
-import retrofit2.Call
+import com.ogdenscleaners.ogdenscleanersapp.models.PaymentIntentRequest
+import com.ogdenscleaners.ogdenscleanersapp.models.PaymentIntentResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,20 +11,38 @@ import javax.inject.Singleton
 class BillingRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-
     suspend fun getBillingStatements(): List<BillingStatement> {
-        // Placeholder for fetching billing statements from server or database
         return listOf(
-            BillingStatement("1", "January 2024", "100.00", "Monthly dry cleaning charges", "Billing statement for the Month of January", false),
-            BillingStatement("2", "February 2024", "80.00", "Monthly dry cleaning charges", "Billing Statement for the Month of February", true)
+            BillingStatement(
+                statementId = "1",
+                customerId = "CUST001",
+                date = "January 2024",
+                amountOwed = "100.00",
+                orderIds = listOf("ORD001", "ORD002"), // Provide a List<String> for order IDs
+                paidStatus = false
+            ),
+            BillingStatement(
+                statementId = "2",
+                customerId = "CUST002",
+                date = "February 2024",
+                amountOwed = "80.00",
+                orderIds = listOf("ORD003", "ORD004"), // Provide a List<String> for order IDs
+                paidStatus = true
+            )
         )
     }
 
-    suspend fun createPaymentIntent(amount: Int): Call<PaymentIntentResponse> {
-        val jsonObject = JSONObject().apply {
-            put("amount", amount)
-            put("currency", "usd")
-        }
-        return apiService.createPaymentIntent(jsonObject)
+    suspend fun createPaymentIntent(
+        amount: Int,
+        customerId: String,
+        paymentMethodId: String
+    ): PaymentIntentResponse {
+        val paymentIntentRequest = PaymentIntentRequest(
+            amount = amount,
+            currency = "usd",
+            customerId = customerId,
+            paymentMethodId = paymentMethodId
+        )
+        return apiService.createPaymentIntent(paymentIntentRequest).execute().body()!!
     }
 }

@@ -2,11 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".activities.DeliveryActivity">
+    android:background="#000000">
 
 
     <!-- Buttons for Actions -->
@@ -20,8 +18,7 @@
         android:id="@+id/addresscheck"
         android:layout_width="205dp"
         android:layout_height="51dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="24dp"
         android:background="#413535"
         android:backgroundTint="#443232"
         android:bufferType="normal"
@@ -34,17 +31,15 @@
         app:iconSize="0dp"
         app:iconTint="#FF0000"
         app:iconTintMode="src_over"
-        app:layout_constraintBottom_toTopOf="@+id/updateorview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button" />
+        app:layout_constraintTop_toBottomOf="@id/tempstopservice" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/tempstopservice"
         android:layout_width="242dp"
         android:layout_height="52dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
         android:background="#000000"
         android:text="@string/temporary_stop_service"
         android:textColor="#FFFFFF"
@@ -59,29 +54,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/updateorview"
-        android:layout_width="251dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#1D2E2A"
-        android:text="@string/delivery_information"
-        android:textColor="#FFFFFF"
-        app:icon="@android:drawable/btn_default"
-        app:iconTint="#FF0000"
-        app:iconTintMode="src_over"
-        app:layout_constraintBaseline_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/requestapickup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addresscheck" />
-
-    <Button
         android:id="@+id/stopdelservice"
         android:layout_width="211dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:background="#1D2E2A"
         android:text="@string/stop_delivery_service"
         android:textColor="#FFFFFF"
@@ -97,7 +72,7 @@
         android:id="@+id/startnew"
         android:layout_width="228dp"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="50dp"
         android:background="#1D2E2A"
         android:text="@string/start_new_delivery_service"
         android:textColor="#FFFFFF"
@@ -113,8 +88,6 @@
         android:id="@+id/requestapickup"
         android:layout_width="213dp"
         android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:background="#1D2E2A"
         android:text="@string/request_a_pickup"
         android:textColor="#FFFFFF"
@@ -123,19 +96,20 @@
         app:iconTintMode="src_over"
         app:layout_constraintBottom_toTopOf="@id/stopdelservice"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateorview" />
+        app:layout_constraintTop_toBottomOf="@+id/addresscheck" />
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="125dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="100dp"
         android:contentDescription="@string/mainlogo"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
         android:scrollbarAlwaysDrawVerticalTrack="false"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/tempstopservice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
+import com.ogdenscleaners.ogdenscleanersapp.models.Order
 import com.ogdenscleaners.ogdenscleanersapp.repository.BillingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,28 +22,78 @@ class BillingViewModel @Inject constructor(
     private val _paymentIntentClientSecret = MutableLiveData<String?>()
     val paymentIntentClientSecret: LiveData<String?> get() = _paymentIntentClientSecret
 
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> get() = _loading
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> get() = _errorMessage
+
+    private val _orders = MutableLiveData<Result<List<Order>>>()
+    val orders: LiveData<Result<List<Order>>> get() = _orders
+
+
     fun loadBillingStatements() {
         viewModelScope.launch {
-            _billingStatements.value = billingRepository.getBillingStatements()
-        }
-    }
-
-    fun initiatePayment(selectedStatements: List<BillingStatement>, onError: (String) -> Unit) {
-        val totalAmount = selectedStatements.sumOf { it.totalAmount.toDouble() * 100 }.toInt()
-        viewModelScope.launch {
+            _loading.value = true
             try {
-                val clientSecret = billingRepository.createPaymentIntent(totalAmount)
-                _paymentIntentClientSecret.value = clientSecret
+                val statements = billingRepository.getBillingStatements()
+                _billingStatements.value = statements
             } catch (e: Exception) {
-                onError(e.localizedMessage ?: "Error creating payment intent")
+                _errorMessage.value = "Failed to load billing statements: ${e.localizedMessage}"
+            } finally {
+                _loading.value = false
             }
         }
     }
 
-    fun markStatementsPaid(statements: List<BillingStatement>) {
-        val updatedBillingStatements = _billingStatements.value?.map {
-            if (statements.contains(it)) it.copy(paidStatus = true) else it
+    fun initiatePayment(
+        selectedStatements: List<BillingStatement>,
+        customerId: String,
+        paymentMethodId: String
+    ): LiveData<Result<String>> {
+        val totalAmount = selectedStatements.sumOf { it.amountOwed.toDouble() * 100 }.toInt()
+        val result = MutableLiveData<Result<String>>()
+
+        viewModelScope.launch {
+            try {
+                val paymentIntentResponse = billingRepository.createPaymentIntent(
+                    totalAmount,
+                    customerId,
+                    paymentMethodId
+                )
+                val clientSecret = paymentIntentResponse.clientSecret
+                _paymentIntentClientSecret.value = clientSecret  // Optional, for direct observation
+                result.value = Result.success(clientSecret)
+            } catch (e: Exception) {
+                _errorMessage.value = "Error creating payment intent: ${e.localizedMessage}"
+                result.value = Result.failure(e)
+            }
         }
-        _billingStatements.value = updatedBillingStatements
+
+        return result
+    }
+    fun setMockOrders(mockOrders: List<Order>) {
+        // Update the LiveData with mock orders
+        _billingStatements.value = mockOrders.map { order ->
+            BillingStatement(
+                statementId = order.id,
+                customerId = order.customerId,
+                date = order.dropOffDate,
+                amountOwed = order.orderTotal.toString(),
+                orderIds = listOf(order.id),
+                paidStatus = false // Mock data, adjust as needed
+            )
+        }
+    }
+    fun markStatementsPaid(statements: List<BillingStatement>) {
+        viewModelScope.launch {
+            val updatedStatements = _billingStatements.value?.map {
+                if (it in statements) it.copy(paidStatus = true) else it
+            } ?: emptyList()
+            _billingStatements.value = updatedStatements
+
+
+        }
     }
 }
+

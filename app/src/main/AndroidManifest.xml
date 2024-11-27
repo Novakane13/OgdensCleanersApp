@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ogdenscleaners.ogdenscleanersapp">
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -10,63 +12,69 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Ogdens Cleaners"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OgdensCleanersApp"
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:theme="@style/Theme.OgdensCleanersApp">
 
-
-
-
-    <meta-data
+        <!-- Meta-data for API Keys -->
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA9_HFfk9t48l4_G0mCuIZss6PjSqN9jrQ"/>
-
+            android:value="AIzaSyA9_HFfk9t48l4_G0mCuIZss6PjSqN9jrQ" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2406873860479635~6853526496"/>
+            android:value="ca-app-pub-2406873860479635~6853526496" />
 
-
-
+        <!-- Default (Launcher) Activity -->
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Other Activities -->
+        <activity
+            android:name=".activities.DetailedBillingStatementActivity"
+            android:exported="true" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.DashboardActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.AccountInfoActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.MonthlyBillingActivity"
             android:exported="true" />
         <activity
             android:name=".activities.DeliveryActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.FeedbackActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.NotificationsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.OrdersActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.CustomerCheckActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.DeliveryInfoActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.StartNewServiceActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".activities.CreditCardActivity"
-            android:exported="false" />
+            android:exported="true" />
     </application>
 
 </manifest>

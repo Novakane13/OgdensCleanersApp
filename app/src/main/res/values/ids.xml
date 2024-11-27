@@ -24,4 +24,8 @@
     <item name="btntokenize" type="id" />
     <item name="tvresult" type="id" />
     <item name="etcardnumber" type="id" />
-    </resources>
+    <item name="monthTextView" type="id" />
+    <item name="totalAmountTextView" type="id" />
+    <item name="detailsButton" type="id" />
+    <item name="checkBox" type="id" />
+</resources>

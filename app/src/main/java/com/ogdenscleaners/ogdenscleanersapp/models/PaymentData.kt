@@ -1,6 +1,8 @@
 package com.ogdenscleaners.ogdenscleanersapp.models
 
 data class PaymentData(
-    val amount: Int,  // Payment amount in cents
+    val customerId: String,
+    val items: List<ClothingItem>,
+    val fullamount: Int,
     val currency: String
 )

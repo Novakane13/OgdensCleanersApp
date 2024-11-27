@@ -8,8 +8,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ogdenscleaners.ogdenscleanersapp.R
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
+@AndroidEntryPoint
 class StartNewServiceActivity : AppCompatActivity() {
 
     private lateinit var nameInput: EditText

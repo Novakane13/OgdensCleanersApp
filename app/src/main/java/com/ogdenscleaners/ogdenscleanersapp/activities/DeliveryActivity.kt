@@ -1,17 +1,17 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityDeliveryBinding
-import com.ogdenscleaners.ogdenscleanersapp.models.PickupRequest
+import com.ogdenscleaners.ogdenscleanersapp.models.DeliveryRequest
 import com.ogdenscleaners.ogdenscleanersapp.viewmodel.DeliveryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -21,138 +21,97 @@ class DeliveryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeliveryBinding
     private val deliveryViewModel: DeliveryViewModel by viewModels()
+    private var selectedDate: String = ""
+    private var instructionsinput: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeliveryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set onClickListeners for each button
-        binding.buttonTempStopService.setOnClickListener {
-            showTempStopServiceDialog()
-        }
-
-        binding.buttonCheckAddress.setOnClickListener {
-            Log.d("DeliveryActivity", "Check Address Button Clicked")
-            val intent = Intent(this, CustomerCheckActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.buttonDeliveryInfo.setOnClickListener {
-            Log.d("DeliveryActivity", "Delivery Info Button Clicked")
-            val intent = Intent(this, DeliveryInfoActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.buttonRequestPickup.setOnClickListener {
-            showPickupRequestDialog()
-        }
-
-        binding.buttonStopDelService.setOnClickListener {
-            showStopServiceDialog()
-        }
-
-        binding.buttonStartNewService.setOnClickListener {
-            Log.d("DeliveryActivity", "Start New Service Button Clicked")
-            val intent = Intent(this, StartNewServiceActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Observe LiveData from ViewModel
-        deliveryViewModel.serviceStopDate.observe(this, Observer { date ->
-            date?.let {
-                Toast.makeText(this, "Delivery service will stop on $it", Toast.LENGTH_LONG).show()
-            }
-        })
-
-        deliveryViewModel.pickupRequest.observe(this, Observer { request ->
-            request?.let {
-                Toast.makeText(
-                    this,
-                    "Pickup scheduled on ${request.date} with note: ${request.note}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+        setupButtons()
+        observeViewModel()
     }
 
-    private fun showStopServiceDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Stop Service")
-        builder.setMessage("Are you sure you want to stop your delivery service?")
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            showDatePickerDialog()
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
+    private fun setupButtons() {
+        binding.requestapickup.setOnClickListener { showPickupRequestDialog() }
     }
 
-    private fun showDatePickerDialog() {
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-            val selectedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
-            deliveryViewModel.stopService(selectedDate)
-        }, year, month, day)
-
-        datePickerDialog.show()
-    }
-
-    private fun showTempStopServiceDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Temporarily Stop Service")
-        builder.setMessage("Are you sure you want to temporarily stop your delivery service?")
-        builder.setPositiveButton("Save") { dialog, _ ->
-            deliveryViewModel.tempStopService()
-            Toast.makeText(this, "Temporary service stop saved.", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create().show()
-    }
-
+    @SuppressLint("InflateParams")
     private fun showPickupRequestDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Request Pickup")
+        val dialogView = layoutInflater.inflate(R.layout.pickup_request_dialog, null)
+        val selectDateButton = dialogView.findViewById<Button>(R.id.pickupdate)
+        val instructionsButton = dialogView.findViewById<Button>(R.id.pickupinstructions)
+        val saveRequestButton = dialogView.findViewById<Button>(R.id.saverequest)
 
-        val pickupLayout = layoutInflater.inflate(R.layout.pickup_request_dialog, null)
-        builder.setView(pickupLayout)
+        builder.setView(dialogView)
+        val dialog = builder.create()
 
-        val datePicker = pickupLayout.findViewById<EditText>(R.id.pickup_date)
-        val noteInput = pickupLayout.findViewById<EditText>(R.id.pickup_note)
+        selectDateButton.setOnClickListener { showDatePickerDialog { date -> selectedDate = date } }
+        instructionsButton.setOnClickListener { showPickupInstructionsDialog { instructions -> instructionsinput = instructions } }
 
-        datePicker.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, selectedDay ->
-                datePicker.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
-            }, year, month, day)
-
-            datePickerDialog.show()
+        saveRequestButton.setOnClickListener {
+            if (selectedDate.isEmpty() || instructionsinput.isEmpty()) {
+                Toast.makeText(this, "Please complete all fields.", Toast.LENGTH_SHORT).show()
+            } else {
+                val pickupRequest = DeliveryRequest(
+                    customerId = "12345", // Replace with dynamic ID
+                    address = "Customer Address", // Replace with dynamic address
+                    date = selectedDate,
+                    instructions = instructionsinput
+                )
+                deliveryViewModel.requestPickup(pickupRequest)
+                dialog.dismiss()
+            }
         }
 
-        builder.setPositiveButton("Save") { dialog, _ ->
-            val selectedDate = datePicker.text.toString()
-            val note = noteInput.text.toString()
-            val pickupRequest = PickupRequest(selectedDate, note)
-            deliveryViewModel.requestPickup(pickupRequest)
-            dialog.dismiss()
+        dialog.show()
+    }
+
+    private fun showDatePickerDialog(onDateSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+        DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                val date = "$dayOfMonth/${month + 1}/$year"
+                onDateSelected(date)
+                Toast.makeText(this, "Date Selected: $date", Toast.LENGTH_SHORT).show()
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun showPickupInstructionsDialog(onInstructionsSaved: (String) -> Unit) {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.pickup_instructions, null)
+        val saveButton = dialogView.findViewById<Button>(R.id.saverequest)
+        val instructionsInput = dialogView.findViewById<EditText>(R.id.instructionsinput)
+
+        builder.setView(dialogView)
+        val dialog = builder.create()
+
+        saveButton.setOnClickListener {
+            val instructions = instructionsInput.text.toString().trim()
+            if (instructions.isNotEmpty()) {
+                onInstructionsSaved(instructions)
+                dialog.dismiss()
+                Toast.makeText(this, "Instructions Saved", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Please enter valid instructions.", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
+        dialog.show()
+    }
+
+    private fun observeViewModel() {
+        deliveryViewModel.pickupRequest.observe(this) { request ->
+            request?.let {
+                Toast.makeText(this, "Pickup Scheduled: $it", Toast.LENGTH_SHORT).show()
+            }
         }
-        builder.create().show()
     }
 }

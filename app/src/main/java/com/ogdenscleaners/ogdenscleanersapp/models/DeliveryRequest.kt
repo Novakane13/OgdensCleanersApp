@@ -1,9 +1,10 @@
 package com.ogdenscleaners.ogdenscleanersapp.models
 
 data class DeliveryRequest(
-    val userId: String,
+    val customerId: String,
     val address: String,
     val date: String,
-    val time: String,
-    val instructions: String
+    val instructions: String,
+    val needsPickup: Boolean = false,
+    val serviceStopped: Boolean = false
 )

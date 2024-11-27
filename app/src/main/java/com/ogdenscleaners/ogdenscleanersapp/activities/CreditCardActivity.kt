@@ -6,14 +6,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.CreditCardAdapter
-import com.ogdenscleaners.ogdenscleanersapp.models.Customer.CreditCard
+import com.ogdenscleaners.ogdenscleanersapp.models.AppCustomer.CreditCard
 import com.ogdenscleaners.ogdenscleanersapp.repository.CustomerRepository
 import com.ogdenscleaners.ogdenscleanersapp.services.PaymentHelper
-import com.stripe.android.model.CardParams
+import com.stripe.android.model.PaymentMethodCreateParams
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 
 class CreditCardActivity : AppCompatActivity() {
@@ -21,6 +23,7 @@ class CreditCardActivity : AppCompatActivity() {
     private lateinit var cardNumberInput: EditText
     private lateinit var expiryDateInput: EditText
     private lateinit var cardholderNameInput: EditText
+    private lateinit var cvcInput: EditText
     private lateinit var saveCardButton: Button
     private lateinit var cardsRecyclerView: RecyclerView
     private lateinit var cardAdapter: CreditCardAdapter
@@ -38,6 +41,7 @@ class CreditCardActivity : AppCompatActivity() {
         cardNumberInput = findViewById(R.id.card_number_input)
         expiryDateInput = findViewById(R.id.expiry_date_input)
         cardholderNameInput = findViewById(R.id.cardholder_name_input)
+        cvcInput = findViewById(R.id.cvcinput)
         saveCardButton = findViewById(R.id.save_card_button)
         cardsRecyclerView = findViewById(R.id.cards_recycler_view)
 
@@ -58,44 +62,54 @@ class CreditCardActivity : AppCompatActivity() {
             val cardNumber = cardNumberInput.text.toString()
             val expiryDate = expiryDateInput.text.toString()
             val cardholderName = cardholderNameInput.text.toString()
+            val cvc = cvcInput.text.toString()
 
-            if (cardNumber.isNotBlank() && expiryDate.isNotBlank() && cardNumber.length >= 4) {
+            if (cardNumber.isNotBlank() && expiryDate.isNotBlank() && cvc.isNotBlank() && cardNumber.length >= 4) {
                 val expDateParts = expiryDate.split("/")
                 if (expDateParts.size == 2) {
-                    val expMonth = expDateParts[0].toIntOrNull() ?: return@setOnClickListener
-                    val expYear = expDateParts[1].toIntOrNull() ?: return@setOnClickListener
-                    val cardParams = CardParams(
-                        number = cardNumber,
-                        expMonth = expMonth,
-                        expYear = expYear,
-                        cvc = "123" // Replace with actual CVC input from user
-                    )
+                    val expMonth = expDateParts[0].toIntOrNull()
+                    val expYear = expDateParts[1].toIntOrNull()
 
-                    // Tokenize the card using PaymentHelper
-                    paymentHelper.tokenizeCard(cardParams) { result ->
-                        result.onSuccess { token ->
-                            val lastFourDigits = cardNumber.takeLast(4)
-                            val creditCard = CreditCard(
-                                cardholderName = cardholderName,
-                                lastFourDigits = lastFourDigits,
-                                expirationDate = expiryDate,
-                                cardToken = token.id
-                            )
+                    if (expMonth != null && expYear != null) {
+                        val paymentMethodParams = PaymentMethodCreateParams.create(
+                            PaymentMethodCreateParams.Card.Builder()
+                                .setNumber(cardNumber)
+                                .setCvc(cvc)
+                                .setExpiryMonth(expMonth)
+                                .setExpiryYear(expYear)
+                                .build()
+                        )
 
-                            // Save card to Firebase or wherever necessary
-                            customerRepository.addCreditCardToCustomer(customerId, creditCard)
-                            savedCards.add(creditCard)
-                            cardAdapter.notifyItemInserted(savedCards.size - 1)
+                        // Tokenize the card using PaymentHelper with coroutine
+                        lifecycleScope.launch {
+                            val result = paymentHelper.createPaymentMethod(paymentMethodParams)
+                            result.onSuccess { paymentMethod ->
+                                val lastFourDigits = cardNumber.takeLast(4)
+                                val creditCard = CreditCard(
+                                    cardholderName = cardholderName,
+                                    lastFourDigits = lastFourDigits,
+                                    expirationDate = expiryDate,
+                                    cardToken = paymentMethod.id ?: ""
+                                )
 
-                            // Clear inputs
-                            cardNumberInput.text.clear()
-                            expiryDateInput.text.clear()
-                            cardholderNameInput.text.clear()
+                                // Save card to Firebase or wherever necessary
+                                customerRepository.addCreditCardToCustomer(customerId, creditCard)
+                                savedCards.add(creditCard)
+                                cardAdapter.notifyItemInserted(savedCards.size - 1)
 
-                            Toast.makeText(this, "Card saved successfully!", Toast.LENGTH_SHORT).show()
-                        }.onFailure { error ->
-                            Toast.makeText(this, "Error: ${error.localizedMessage}", Toast.LENGTH_SHORT).show()
+                                // Clear inputs
+                                cardNumberInput.text.clear()
+                                expiryDateInput.text.clear()
+                                cardholderNameInput.text.clear()
+                                cvcInput.text.clear()
+
+                                Toast.makeText(this@CreditCardActivity, "Card saved successfully!", Toast.LENGTH_SHORT).show()
+                            }.onFailure { error ->
+                                Toast.makeText(this@CreditCardActivity, "Error: ${error.localizedMessage}", Toast.LENGTH_SHORT).show()
+                            }
                         }
+                    } else {
+                        Toast.makeText(this, "Invalid expiry date format.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this, "Please enter a valid expiry date in MM/YY format.", Toast.LENGTH_SHORT).show()

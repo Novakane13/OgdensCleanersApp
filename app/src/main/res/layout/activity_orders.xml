@@ -54,15 +54,23 @@
         android:id="@+id/inactive_orders_recycler_view"
         android:layout_width="372dp"
         android:layout_height="116dp"
-        android:padding="8dp"
         tools:itemCount="6"
         tools:listitem="@layout/recycler_view_item_1" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:layout_gravity="center_horizontal"
+        android:indeterminateBehavior="repeat"
+        android:visibility="gone" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -77,10 +85,11 @@
         <Button
             android:id="@+id/makePaymentButton"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="192dp"
-            android:layout_height="match_parent"
+            android:layout_width="197dp"
+            android:layout_height="wrap_content"
             android:text="@string/make_payment"
             android:textColor="#049A9A" />
 
     </LinearLayout>
+
 </LinearLayout>

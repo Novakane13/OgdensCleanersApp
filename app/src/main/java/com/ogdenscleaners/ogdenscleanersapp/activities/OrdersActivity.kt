@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.OrdersAdapter
@@ -32,45 +31,50 @@ class OrdersActivity : AppCompatActivity() {
         binding = ActivityOrdersBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize PaymentConfiguration with the test key
-        PaymentConfiguration.init(applicationContext, "pk_test_51QEmC6F9q8Y1A3UES8uzimDczaKS3xMRUNr9QN4vhQN8wjktGMEONNrWWP7mFCJRrdYDmTPADDDVxn1GvS0mTkCw00XlEDwkSY")
+        // Initialize PaymentConfiguration with the publishable key
+        PaymentConfiguration.init(
+            applicationContext,
+            getString(R.string.stripe_publishable_key)
+        )
 
         // Initialize Stripe PaymentSheet
-        paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
+        paymentSheet = PaymentSheet(this) { paymentSheetResult ->
+            handlePaymentSheetResult(paymentSheetResult)
+        }
 
-        // Set up RecyclerViews
+        // Set up RecyclerViews for active and inactive orders
         binding.activeOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.activeOrdersRecyclerView.adapter = activeOrdersAdapter
         binding.inactiveOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.inactiveOrdersRecyclerView.adapter = inactiveOrdersAdapter
 
         // Observers
-        orderViewModel.activeOrders.observe(this, Observer { orders ->
+        orderViewModel.activeOrders.observe(this) { orders ->
             activeOrdersAdapter.submitList(orders)
-        })
+        }
 
-        orderViewModel.inactiveOrders.observe(this, Observer { orders ->
+        orderViewModel.inactiveOrders.observe(this) { orders ->
             inactiveOrdersAdapter.submitList(orders)
-        })
+        }
 
-        orderViewModel.loading.observe(this, Observer { isLoading ->
+        orderViewModel.loading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        })
+        }
 
-        orderViewModel.errorMessage.observe(this, Observer { message ->
+        orderViewModel.errorMessage.observe(this) { message ->
             message?.let {
                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
             }
-        })
+        }
 
-        orderViewModel.paymentIntentClientSecret.observe(this, Observer { clientSecret ->
+        orderViewModel.paymentIntentClientSecret.observe(this) { clientSecret ->
             clientSecret?.let { presentPaymentSheet(it) }
-        })
+        }
 
-        // Load orders
+        // Load orders from the ViewModel
         orderViewModel.loadOrders()
 
-        // Set up onClickListeners
+        // Set up onClickListeners for more info and payment actions
         binding.moreInfoButton.setOnClickListener {
             val selectedOrders = activeOrdersAdapter.getSelectedOrders()
             if (selectedOrders.size == 1) {
@@ -92,11 +96,11 @@ class OrdersActivity : AppCompatActivity() {
 
     private fun showOrderDetails(order: Order) {
         val orderDetails = """
-            Order ID: ${order.id}
-            Drop Off Date: ${order.date}
-            Items: ${order.items.joinToString(", ")}
+            Order ID: ${order.customerId}
+            Drop Off Date: ${order.dropOffDate}
+            Items: ${order.items.joinToString(", ") { it.name }}
             Total Pieces: ${order.items.size}
-            Total Cost: $${order.total}
+            Total Cost: $${order.orderTotal}
             Status: ${if (order.isReadyForPickup) "Ready for Pickup" else "Not Ready for Pickup"}
         """.trimIndent()
 
@@ -108,24 +112,25 @@ class OrdersActivity : AppCompatActivity() {
     }
 
     private fun presentPaymentSheet(clientSecret: String) {
-        paymentSheet.presentWithPaymentIntent(
-            clientSecret,
-            PaymentSheet.Configuration(merchantDisplayName = "Ogden's Cleaners")
+        val paymentConfiguration = PaymentSheet.Configuration(
+            merchantDisplayName = "Ogden's Cleaners"
         )
+        paymentSheet.presentWithPaymentIntent(clientSecret, paymentConfiguration)
     }
 
-    private fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
+    private fun handlePaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         when (paymentSheetResult) {
             is PaymentSheetResult.Completed -> {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show()
-                val selectedOrders = activeOrdersAdapter.getSelectedOrders()
-                orderViewModel.completePayment(selectedOrders)
+                // Handle success
             }
             is PaymentSheetResult.Canceled -> {
                 Toast.makeText(this, "Payment canceled.", Toast.LENGTH_SHORT).show()
+                // Handle cancellation
             }
             is PaymentSheetResult.Failed -> {
                 Toast.makeText(this, "Payment failed: ${paymentSheetResult.error.localizedMessage}", Toast.LENGTH_LONG).show()
+                // Handle failure
             }
         }
     }

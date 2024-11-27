@@ -1,8 +1,7 @@
 package com.ogdenscleaners.ogdenscleanersapp.models
 
+import com.google.gson.annotations.SerializedName
+
 data class PaymentIntentResponse(
-    val clientSecret: String
-) {
-    val isSuccessful: Boolean
-        get() = clientSecret.isNotEmpty()
-}
+    @SerializedName("client_secret") val clientSecret: String
+)

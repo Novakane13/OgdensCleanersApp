@@ -1,57 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:background="@color/black"
-    android:orientation="vertical"
-    android:outlineAmbientShadowColor="#FFFFFF"
-    android:outlineSpotShadowColor="#FFFFFF"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal"
     android:padding="8dp">
 
-    <!-- Month and Total Amount -->
-    <TextView
-        android:id="@+id/monthTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/january_2024"
-        android:textColor="@color/colorOnPrimary"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/totalAmountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/total"
-        android:textColor="@color/colorOnPrimary"
-        android:textSize="20sp" />
-
-    <!-- Details Button -->
-
-    <!-- Pay Button -->
-
     <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="77dp"
-        android:layout_height="31dp"
-        android:layout_gravity="right"
-        android:gravity="start"
-        android:lineHeight="50dp"
-        android:scaleX="2"
-        android:scaleY="2"
-        app:checkedState="unchecked"
-        tools:ignore="RtlHardcoded" />
-
-    <Button
-        android:id="@+id/detailsButton"
+        android:id="@+id/checkbox"
         android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="4dp"
-        android:background="#00D0C6"
-        android:text="@string/view_details"
-        android:textColor="@android:color/white" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_weight="0" />
+
+    <TextView
+        android:id="@+id/textStatementDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="@string/date_of_statement"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textAmountOwed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="@string/amount_owed"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
 
 </LinearLayout>

@@ -11,7 +11,7 @@
     <!-- Notifications Switch -->
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/loginlogo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
@@ -26,16 +26,16 @@
         android:id="@+id/textViewNotifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="24dp"
         android:text="@string/receive_order_status_notifications"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="14sp"
         tools:text="Receive notification when order is ready" />
 
     <Switch
         android:id="@+id/switchNotifications"
         android:layout_width="131dp"
-        android:layout_height="54dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:checked="false"
         android:scaleX="1.5"
@@ -54,12 +54,12 @@
         android:layout_marginTop="16dp"
         android:text="@string/del_notification"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <Switch
         android:id="@+id/switch1"
         android:layout_width="131dp"
-        android:layout_height="54dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:scaleX="1.5"
         android:scaleY="1.5"
@@ -80,12 +80,12 @@
         android:layout_marginTop="16dp"
         android:text="@string/week_notification"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <Switch
         android:id="@+id/switch2"
         android:layout_width="131dp"
-        android:layout_height="54dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:scaleX="1.5"
         android:scaleY="1.5"
@@ -106,13 +106,13 @@
         android:layout_marginTop="16dp"
         android:text="@string/two_week_notif"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="14sp"
         tools:text="Receive notification for outstanding order of 2 weeks" />
 
     <Switch
         android:id="@+id/switch3"
         android:layout_width="131dp"
-        android:layout_height="54dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:scaleX="1.5"
         android:scaleY="1.5"
@@ -133,12 +133,12 @@
         android:layout_marginTop="16dp"
         android:text="@string/month_notification"
         android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <Switch
         android:id="@+id/switch4"
         android:layout_width="131dp"
-        android:layout_height="54dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:scaleX="1.5"
         android:scaleY="1.5"
@@ -157,7 +157,7 @@
         android:layout_width="175dp"
         android:layout_height="65dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="32dp"
         android:text="@string/button" />
 
 </LinearLayout>

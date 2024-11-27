@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <LinearLayout
+        android:id="@+id/statementtime"
+        android:layout_width="199dp"
+        android:layout_height="405dp"
+        android:layout_marginBottom="300dp"
+        android:background="#FFFFFF"
+        android:gravity="top|fill_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/statementtotal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/date_of_statement"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#000000"
+            android:text="@string/statement_date"
+            android:textColor="#FFFFFF" />
+
+        <ListView
+            android:id="@+id/statement_date_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:cacheColorHint="#FFFFFF"
+            android:clickable="true"
+            android:divider="@color/colorOnPrimary"
+            android:listSelector="@color/colorAccent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/statementtotal"
+        android:layout_width="211dp"
+        android:layout_height="405dp"
+        android:layout_marginBottom="300dp"
+        android:gravity="top|fill_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/statementtime"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/amount_owed"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#000000"
+            android:text="@string/statement_total"
+            android:textColor="#FFFFFF" />
+
+        <ListView
+            android:id="@+id/statement_amount_owed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:clickable="true"
+            android:listSelector="@color/colorAccent" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

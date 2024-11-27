@@ -8,11 +8,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ogdenscleaners.ogdenscleanersapp.adapters.CreditCardAdapter
 import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityAccountInfoBinding
-import com.ogdenscleaners.ogdenscleanersapp.models.Customer
-import com.ogdenscleaners.ogdenscleanersapp.models.User
+import com.ogdenscleaners.ogdenscleanersapp.models.AppCustomer // Renamed for clarity and removed the conflicting import
 import com.ogdenscleaners.ogdenscleanersapp.viewmodel.AccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class AccountInfoActivity : AppCompatActivity() {
@@ -26,37 +24,47 @@ class AccountInfoActivity : AppCompatActivity() {
         binding = ActivityAccountInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize the adapter for the RecyclerView
         cardAdapter = CreditCardAdapter(mutableListOf())
         binding.savedCardsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.savedCardsRecyclerView.adapter = cardAdapter
 
-        accountViewModel.userInfo.observe(this, Observer { userInfo ->
-            binding.editTextName.setText(userInfo.name)
-            binding.editTextPhone.setText(userInfo.phone)
-            binding.editTextEmail.setText(userInfo.email)
-            binding.editTextNotes.setText(userInfo.notes)
+        // Observing user info and saved cards
+        accountViewModel.userInfo.observe(this, Observer { userInfo: AppCustomer? ->
+            userInfo?.let {
+                binding.editTextName.setText(it.name)
+                binding.editTextPhone.setText(it.phone)
+                binding.editTextEmail.setText(it.email)
+                binding.editTextAddress.setText(it.address)
+                binding.editTextNotes.setText(it.notes)
+            }
         })
 
-        accountViewModel.savedCards.observe(this, Observer { cards ->
+        accountViewModel.savedCards.observe(this, Observer { cards: List<AppCustomer.CreditCard> ->
             cardAdapter.updateCards(cards)
         })
 
+        // Load user info and saved cards initially
         accountViewModel.loadUserInfo()
         accountViewModel.loadSavedCreditCards()
 
+        // Saving user information when save button is clicked
         binding.buttonSave.setOnClickListener {
-            val userInfo = Customer.User(
-                binding.editTextName.text.toString().trim(),
-                binding.editTextPhone.text.toString().trim(),
-                binding.editTextEmail.text.toString().trim(),
-                binding.editTextNotes.text.toString().trim()
+            val userInfo = AppCustomer(
+                name = binding.editTextName.text.toString().trim(),
+                phone = binding.editTextPhone.text.toString().trim(),
+                email = binding.editTextEmail.text.toString().trim(),
+                address = binding.editTextAddress.text.toString().trim(),
+                notes = binding.editTextNotes.text.toString().trim()
             )
             accountViewModel.saveUserInfo(userInfo)
             Toast.makeText(this, "User info saved", Toast.LENGTH_SHORT).show()
         }
 
+        // Navigate to CreditCardActivity for handling saved cards
         binding.chipAddCard.setOnClickListener {
-            // Navigate to CreditCardActivity
+            // TODO: Implement CreditCardActivity for handling saved cards
+            Toast.makeText(this, "Navigating to Add Card Screen (Not yet implemented)", Toast.LENGTH_SHORT).show()
         }
     }
 }

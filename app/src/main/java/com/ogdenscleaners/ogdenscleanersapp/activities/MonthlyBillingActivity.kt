@@ -1,14 +1,14 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.adapters.BillingAdapter
 import com.ogdenscleaners.ogdenscleanersapp.databinding.ActivityMonthlyBillingBinding
-import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
 import com.ogdenscleaners.ogdenscleanersapp.viewmodel.BillingViewModel
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -28,40 +28,62 @@ class MonthlyBillingActivity : AppCompatActivity() {
         binding = ActivityMonthlyBillingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        PaymentConfiguration.init(applicationContext, "your_publishable_key_here")
+        PaymentConfiguration.init(applicationContext, getString(R.string.stripe_publishable_key))
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
 
-        billingAdapter = BillingAdapter(mutableListOf()) { billingStatement, isSelected ->
-            billingViewModel.markStatementsPaid(listOf(billingStatement))
-        }
+        setupRecyclerView()
+        observeViewModel()
 
-        binding.recyclerViewBilling.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewBilling.adapter = billingAdapter
-
-        billingViewModel.loadBillingStatements()
-
-        billingViewModel.billingStatements.observe(this, Observer {
-            billingAdapter.updateBillingStatements(it)
-        })
-
-        billingViewModel.paymentIntentClientSecret.observe(this, Observer { clientSecret ->
-            clientSecret?.let {
-                paymentSheet.presentWithPaymentIntent(
-                    it,
-                    PaymentSheet.Configuration("Ogden's Cleaners"),
-                )
-            }
-        })
-
-        binding.button5.setOnClickListener {
+        // Handle Pay Bill button click
+        binding.buttonPayBill.setOnClickListener {
             val selectedStatements = billingAdapter.getSelectedBillingStatements()
             if (selectedStatements.isNotEmpty()) {
-                billingViewModel.initiatePayment(selectedStatements) { error ->
-                    Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-                }
+                // Obtain customerId and paymentMethodId
+                val customerId = getCustomerId()
+                val paymentMethodId = getPaymentMethodId()
+
+                billingViewModel.initiatePayment(selectedStatements, customerId, paymentMethodId)
+                    .observe(this) { result ->
+                        result.onSuccess { clientSecret ->
+                            paymentSheet.presentWithPaymentIntent(
+                                clientSecret,
+                                PaymentSheet.Configuration("Ogden's Cleaners")
+                            )
+                        }.onFailure { error ->
+                            Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                        }
+                    }
             } else {
-                Toast.makeText(this, "Please select at least one billing statement to make a payment", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select a statement to pay.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // Handle View Billing Statement button click
+        binding.buttonViewBillingStatement.setOnClickListener {
+            val selectedStatement = billingAdapter.getSelectedBillingStatements().firstOrNull()
+            if (selectedStatement != null) {
+                val intent = Intent(this, DetailedBillingStatementActivity::class.java).apply {
+                    putExtra("statement_id", selectedStatement.statementId)
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Please select a statement to view.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        billingAdapter = BillingAdapter(mutableListOf()) { billingStatement, isSelected ->
+            // Optional: Handle real-time selection UI updates if needed
+        }
+        binding.recyclerViewBilling.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewBilling.adapter = billingAdapter
+    }
+
+    private fun observeViewModel() {
+        billingViewModel.loadBillingStatements()
+        billingViewModel.billingStatements.observe(this) { statements ->
+            billingAdapter.updateBillingStatements(statements)
         }
     }
 
@@ -71,12 +93,25 @@ class MonthlyBillingActivity : AppCompatActivity() {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show()
                 billingViewModel.markStatementsPaid(billingAdapter.getSelectedBillingStatements())
             }
-            is PaymentSheetResult.Canceled -> {
-                Toast.makeText(this, "Payment canceled.", Toast.LENGTH_SHORT).show()
-            }
-            is PaymentSheetResult.Failed -> {
-                Toast.makeText(this, "Payment failed: ${paymentSheetResult.error.localizedMessage}", Toast.LENGTH_LONG).show()
-            }
+            is PaymentSheetResult.Canceled -> Toast.makeText(this, "Payment canceled.", Toast.LENGTH_SHORT).show()
+            is PaymentSheetResult.Failed -> Toast.makeText(
+                this,
+                "Payment failed: ${paymentSheetResult.error.localizedMessage}",
+                Toast.LENGTH_LONG
+            ).show()
         }
+    }
+
+    // Helper method to get customer ID
+    private fun getCustomerId(): String {
+        // TODO: Implement logic to retrieve the customer ID from user session or preferences
+        return "cus_123456789" // Replace with actual customer ID
+    }
+
+    // Helper method to get payment method ID
+    private fun getPaymentMethodId(): String {
+        // TODO: Implement logic to create or retrieve a payment method ID using Stripe SDK
+        // For example, you might prompt the user to enter payment details and create a PaymentMethod
+        return "pm_123456789" // Replace with actual payment method ID
     }
 }

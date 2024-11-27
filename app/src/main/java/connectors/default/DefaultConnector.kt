@@ -1,82 +1,116 @@
-
-@file:Suppress(
-  "KotlinRedundantDiagnosticSuppress",
-  "LocalVariableName",
-  "MayBeConstant",
-  "RedundantVisibilityModifier",
-  "RemoveEmptyClassBody",
-  "SpellCheckingInspection",
-  "LocalVariableName",
-  "unused",
-)
-
 package connectors.default
 
-import com.google.firebase.FirebaseApp
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import java.util.Date
+import java.util.UUID
 import com.google.firebase.dataconnect.ConnectorConfig
-import com.google.firebase.dataconnect.DataConnectSettings
+import com.google.firebase.dataconnect.ExperimentalFirebaseDataConnect
 import com.google.firebase.dataconnect.FirebaseDataConnect
 import com.google.firebase.dataconnect.generated.GeneratedConnector
-import com.google.firebase.dataconnect.getInstance
+import com.google.firebase.dataconnect.generated.GeneratedMutation
+import com.google.firebase.dataconnect.generated.GeneratedOperation
+import com.google.firebase.dataconnect.generated.GeneratedQuery
 import java.util.WeakHashMap
 
-public interface DefaultConnector : GeneratedConnector {
-  override val dataConnect: FirebaseDataConnect
+// Custom Serializers for UUID and Date
+object DateSerializer : KSerializer<Date> {
+  override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Date", PrimitiveKind.LONG)
 
-  
+  override fun serialize(encoder: Encoder, value: Date) {
+    encoder.encodeLong(value.time)
+  }
 
-  public companion object {
-    @Suppress("MemberVisibilityCanBePrivate")
-    public val config: ConnectorConfig = ConnectorConfig(
-      connector = "default",
-      location = "us-west2",
-      serviceId = "OgdensCleanersApp",
-    )
-
-    public fun getInstance(
-      dataConnect: FirebaseDataConnect
-    ):DefaultConnector = synchronized(instances) {
-      instances.getOrPut(dataConnect) {
-        DefaultConnectorImpl(dataConnect)
-      }
-    }
-
-    private val instances = WeakHashMap<FirebaseDataConnect, DefaultConnectorImpl>()
+  override fun deserialize(decoder: Decoder): Date {
+    return Date(decoder.decodeLong())
   }
 }
 
-public val DefaultConnector.Companion.instance:DefaultConnector
-  get() = getInstance(FirebaseDataConnect.getInstance(config))
+object UUIDSerializer : KSerializer<UUID> {
+  override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
 
-public fun DefaultConnector.Companion.getInstance(
-  settings: DataConnectSettings = DataConnectSettings()
-):DefaultConnector =
-  getInstance(FirebaseDataConnect.getInstance(config, settings))
+  override fun serialize(encoder: Encoder, value: UUID) {
+    encoder.encodeString(value.toString())
+  }
 
-public fun DefaultConnector.Companion.getInstance(
-  app: FirebaseApp,
-  settings: DataConnectSettings = DataConnectSettings()
-):DefaultConnector =
-  getInstance(FirebaseDataConnect.getInstance(app, config, settings))
+  override fun deserialize(decoder: Decoder): UUID {
+    return UUID.fromString(decoder.decodeString())
+  }
+}
 
-private class DefaultConnectorImpl(
+@Serializable
+data class ExampleDataClass(
+  @Serializable(with = UUIDSerializer::class)
+  val id: UUID,
+  @Serializable(with = DateSerializer::class)
+  val created: Date,
+  val timestamp: Long
+)
+
+// DefaultConnector interface with generics
+interface DefaultConnector<T : GeneratedConnector<T>> : GeneratedConnector<T> {
   override val dataConnect: FirebaseDataConnect
-) : DefaultConnector {
-  
+}
 
+// DefaultConnector implementation
+class DefaultConnectorImpl<T : GeneratedConnector<T>>(
+  override val dataConnect: FirebaseDataConnect
+) : DefaultConnector<T> {
+
+  companion object {
+    private val instances = WeakHashMap<FirebaseDataConnect, DefaultConnector<*>>()
+
+    // Configuration for the connector
+    val config: ConnectorConfig = ConnectorConfig(
+      connector = "default",
+      location = "us-west2",
+      serviceId = "OgdensCleanersApp"
+    )
+
+    // Retrieve or create a DefaultConnector instance
+    fun <T : GeneratedConnector<T>> getInstance(dataConnect: FirebaseDataConnect): DefaultConnector<T> {
+      return synchronized(instances) {
+        instances.getOrPut(dataConnect) {
+          DefaultConnectorImpl(dataConnect)
+        } as DefaultConnector<T>
+      }
+    }
+  }
+
+  @ExperimentalFirebaseDataConnect
+  fun copy(): T {
+    throw NotImplementedError("copy() is not implemented yet")
+  }
+
+  @ExperimentalFirebaseDataConnect
+  override fun mutations(): List<GeneratedMutation<T, *, *>> {
+    throw NotImplementedError("mutations() is not implemented yet")
+  }
+
+  @ExperimentalFirebaseDataConnect
+  override fun operations(): List<GeneratedOperation<T, *, *>> {
+    throw NotImplementedError("operations() is not implemented yet")
+  }
+
+  @ExperimentalFirebaseDataConnect
+  override fun queries(): List<GeneratedQuery<T, *, *>> {
+    throw NotImplementedError("queries() is not implemented yet")
+  }
+
+  @ExperimentalFirebaseDataConnect
+  override fun copy(dataConnect: FirebaseDataConnect): T {
+    TODO("Not yet implemented")
+  }
+
+  // Override equals, hashCode, and toString
   override fun equals(other: Any?): Boolean = other === this
 
   override fun hashCode(): Int = System.identityHashCode(this)
 
   override fun toString() = "DefaultConnectorImpl(dataConnect=$dataConnect)"
 }
-
-
-
-// The lines below are used by the code generator to ensure that this file is deleted if it is no
-// longer needed. Any files in this directory that contain the lines below will be deleted by the
-// code generator if the file is no longer needed. If, for some reason, you do _not_ want the code
-// generator to delete this file, then remove the line below (and this comment too, if you want).
-
-// FIREBASE_DATA_CONNECT_GENERATED_FILE MARKER 42da5e14-69b3-401b-a9f1-e407bee89a78
-// FIREBASE_DATA_CONNECT_GENERATED_FILE CONNECTOR default

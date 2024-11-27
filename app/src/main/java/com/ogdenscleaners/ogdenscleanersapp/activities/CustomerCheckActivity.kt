@@ -22,7 +22,7 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var customerAddressInput: EditText
     private lateinit var checkButton: Button
-    private lateinit var deliveryCenter: LatLng // Center of the delivery circle
+    private lateinit var deliveryCenter: LatLng
     private val deliveryRadiusMeters = 16093.4 // 10 miles in meters
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,15 +35,13 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Get the LatLng for 3655 W. Anthem Way, New River, AZ
         val geocoder = Geocoder(this, Locale.getDefault())
         val addressList = geocoder.getFromLocationName("3655 W. Anthem Way, New River, AZ 85086", 1)
-        if (!addressList.isNullOrEmpty()) {
+        deliveryCenter = if (!addressList.isNullOrEmpty()) {
             val address = addressList[0]
-            deliveryCenter = LatLng(address.latitude, address.longitude)
+            LatLng(address.latitude, address.longitude)
         } else {
-            // Fallback if geocoding fails
-            deliveryCenter = LatLng(33.8657, -112.1420) // approximate coordinates
+            LatLng(33.8657, -112.1420) // Default location if address lookup fails
         }
 
         checkButton.setOnClickListener {
@@ -51,7 +49,6 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
             val customerLatLng = getLocationFromAddress(customerAddress)
 
             if (customerLatLng != null) {
-                // Check if the customer location is within the delivery radius
                 val distance = SphericalUtil.computeDistanceBetween(customerLatLng, deliveryCenter)
                 if (distance <= deliveryRadiusMeters) {
                     Toast.makeText(this, "Within delivery range!", Toast.LENGTH_LONG).show()
@@ -66,22 +63,18 @@ class CustomerCheckActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        // Place a marker at the center of the delivery area
         mMap.addMarker(MarkerOptions().position(deliveryCenter).title("Center of Delivery Area"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(deliveryCenter, 12f))
 
-        // Draw a circle to represent the 10-mile delivery area
         val deliveryCircle = CircleOptions()
             .center(deliveryCenter)
-            .radius(deliveryRadiusMeters.toDouble()) // 10 miles in meters
+            .radius(deliveryRadiusMeters)
             .strokeColor(0xFF6200EE.toInt())
-            .fillColor(0x556200EE.toInt()) // Semi-transparent fill
+            .fillColor(0x556200EE.toInt())
 
         mMap.addCircle(deliveryCircle)
     }
 
-    // Helper function to geocode address into LatLng
     private fun getLocationFromAddress(address: String): LatLng? {
         val geocoder = Geocoder(this, Locale.getDefault())
         return try {

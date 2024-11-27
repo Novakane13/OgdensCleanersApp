@@ -1,13 +1,17 @@
 package com.ogdenscleaners.ogdenscleanersapp.api
 
+import android.accounts.Account
 import com.ogdenscleaners.ogdenscleanersapp.models.*
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import com.ogdenscleaners.ogdenscleanersapp.models.PaymentIntentResponse
+import com.ogdenscleaners.ogdenscleanersapp.models.PaymentResponse
+import com.ogdenscleaners.ogdenscleanersapp.models.PaymentRequest
+import okhttp3.RequestBody
 
 interface ApiService {
     @GET("accounts/{id}")
@@ -26,8 +30,8 @@ interface ApiService {
     suspend fun requestDelivery(@Body deliveryRequest: DeliveryRequest): DeliveryResponse
 
     @POST("/ephemeral_keys")
-    fun createEphemeralKey(@Body ephemeralKeyRequest: EphemeralKeyRequest): Call<EphemeralKeyResponse>
+    suspend fun createEphemeralKey(@Body ephemeralKeyRequest: EphemeralKeyRequest): Call<EphemeralKeyResponse>
 
     @POST("/create-payment-intent")
-    fun createPaymentIntent(@Body paymentIntentRequest: JSONObject): Call<PaymentIntentResponse>
+    suspend fun createPaymentIntent(@Body paymentIntentRequest: PaymentIntentRequest): Call<PaymentIntentResponse>
 }

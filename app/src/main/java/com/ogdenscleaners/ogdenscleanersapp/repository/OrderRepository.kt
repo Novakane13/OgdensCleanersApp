@@ -20,29 +20,28 @@ class OrderRepository @Inject constructor(@ApplicationContext private val contex
 
     private val ordersList = mutableListOf<Order>()
 
-    suspend fun getOrders(): List<Order> {
-        return withContext(Dispatchers.IO) {
-            ordersList
-        }
+    suspend fun getActiveOrders(): List<Order> = withContext(Dispatchers.IO) {
+        ordersList.filter { it.pickedup && it.paidfor }
     }
 
-    suspend fun createPaymentIntent(amount: Int): JSONObject {
-        return withContext(Dispatchers.IO) {
-            val url = "http://10.0.2.2:4242/create-payment-intent"
-            val jsonObject = JSONObject().apply {
-                put("amount", amount)
-                put("currency", "usd")
-            }
+    suspend fun getInactiveOrders(): List<Order> = withContext(Dispatchers.IO) {
+        ordersList.filter { !it.pickedup || !it.paidfor }
+    }
 
-            val response = suspendCoroutine<JSONObject> { cont ->
-                val request = JsonObjectRequest(
-                    Request.Method.POST, url, jsonObject,
-                    { response -> cont.resume(response) },
-                    { error -> cont.resumeWithException(error) }
-                )
-                Volley.newRequestQueue(context).add(request)
-            }
-            response
+    suspend fun createPaymentIntent(amount: Int): String = withContext(Dispatchers.IO) {
+        val url = "http://10.0.2.2:4242/create-payment-intent"
+        val jsonObject = JSONObject().apply {
+            put("amount", amount)
+            put("currency", "usd")
+        }
+
+        suspendCoroutine { cont ->
+            val request = JsonObjectRequest(
+                Request.Method.POST, url, jsonObject,
+                { response -> cont.resume(response.getString("clientSecret")) },
+                { error -> cont.resumeWithException(error) }
+            )
+            Volley.newRequestQueue(context).add(request)
         }
     }
 
