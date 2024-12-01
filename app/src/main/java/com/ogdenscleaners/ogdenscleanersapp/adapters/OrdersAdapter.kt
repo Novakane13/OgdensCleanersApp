@@ -1,7 +1,6 @@
 package com.ogdenscleaners.ogdenscleanersapp.adapters
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,31 +12,41 @@ import com.ogdenscleaners.ogdenscleanersapp.R
 import com.ogdenscleaners.ogdenscleanersapp.models.Order
 
 class OrdersAdapter(
-    private val onMoreInfoClick: (Order) -> Unit // Callback for "More Info" action
+    private val onMoreInfoClick: (Order) -> Unit,
+    private val selectionMode: SelectionMode = SelectionMode.MULTIPLE
 ) : ListAdapter<Order, OrdersAdapter.OrderViewHolder>(OrderDiffCallback()) {
 
-    private val selectedOrders = mutableSetOf<Order>() // Tracks selected orders
+    enum class SelectionMode {
+        SINGLE, MULTIPLE
+    }
 
-    // ViewHolder class for better code encapsulation
-    class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val orderId: TextView = view.findViewById(R.id.order_id)
-        val orderDate: TextView = view.findViewById(R.id.order_date)
-        val orderPieces: TextView = view.findViewById(R.id.order_pieces)
-        val orderTotal: TextView = view.findViewById(R.id.order_total)
+    private var singleSelectedOrder: Order? = null
+    private val selectedOrders = mutableSetOf<Order>()
 
-        fun bind(order: Order, isSelected: Boolean, onClick: () -> Unit, onLongClick: () -> Unit) {
-            // Set order data
-            orderId.text = order.customerId
+    inner class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val orderId: TextView = view.findViewById(R.id.order_id)
+        private val orderDate: TextView = view.findViewById(R.id.order_date)
+        private val orderPieces: TextView = view.findViewById(R.id.order_pieces)
+        private val orderTotal: TextView = view.findViewById(R.id.order_total)
+
+        fun bind(
+            order: Order,
+            isSelected: Boolean,
+            onClick: () -> Unit,
+            onLongClick: () -> Unit
+        ) {
+            orderId.text = order.id
             orderDate.text = order.dropOffDate
-            orderPieces.text = order.items.size.toString()
-            orderTotal.text = "$${order.orderTotal}"
+            orderPieces.text = order.numOfPieces.toString()
+            orderTotal.text = "$${"%.2f".format(order.orderTotal)}"
 
-            // Highlight background if the order is selected
             itemView.setBackgroundColor(
-                if (isSelected) Color.parseColor("#008080") else Color.WHITE
+                if (isSelected)
+                    itemView.context.getColor(R.color.selectedobject)
+                else
+                    itemView.context.getColor(R.color.buttonbackground)
             )
 
-            // Set click listeners
             itemView.setOnClickListener { onClick() }
             itemView.setOnLongClickListener {
                 onLongClick()
@@ -52,47 +61,59 @@ class OrdersAdapter(
         return OrderViewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
         val order = getItem(position)
+        val isSelected = when (selectionMode) {
+            SelectionMode.SINGLE -> order == singleSelectedOrder
+            SelectionMode.MULTIPLE -> selectedOrders.contains(order)
+        }
         holder.bind(
             order = order,
-            isSelected = selectedOrders.contains(order),
+            isSelected = isSelected,
             onClick = {
                 toggleSelection(order)
-                notifyItemChanged(position)
             },
-            onLongClick = { onMoreInfoClick(order) }
+            onLongClick = {
+                onMoreInfoClick(order)
+            }
         )
     }
 
-    // Toggles the selection of an order
     private fun toggleSelection(order: Order) {
-        if (selectedOrders.contains(order)) {
-            selectedOrders.remove(order)
-        } else {
-            selectedOrders.add(order)
+        when (selectionMode) {
+            SelectionMode.SINGLE -> {
+                singleSelectedOrder = if (singleSelectedOrder == order) null else order
+                notifyDataSetChanged()
+            }
+            SelectionMode.MULTIPLE -> {
+                if (selectedOrders.contains(order)) {
+                    selectedOrders.remove(order)
+                } else {
+                    selectedOrders.add(order)
+                }
+                notifyDataSetChanged()
+            }
         }
     }
 
-    // Returns the currently selected orders
-    fun getSelectedOrders(): List<Order> = selectedOrders.toList()
+    fun getSelectedOrder(): Order? = singleSelectedOrder
 
-    // Clears all selected orders
+    fun getSelectedOrders(): List<Order> =
+        if (selectionMode == SelectionMode.SINGLE) {
+            listOfNotNull(singleSelectedOrder)
+        } else {
+            selectedOrders.toList()
+        }
+
     @SuppressLint("NotifyDataSetChanged")
     fun clearSelectedOrders() {
         selectedOrders.clear()
-        notifyDataSetChanged() // Refresh the list
+        singleSelectedOrder = null
+        notifyDataSetChanged()
     }
 }
 
-// DiffUtil for efficient updates
 class OrderDiffCallback : DiffUtil.ItemCallback<Order>() {
-    override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean {
-        return oldItem.id == newItem.id // Compare by unique ID
-    }
-
-    override fun areContentsTheSame(oldItem: Order, newItem: Order): Boolean {
-        return oldItem == newItem // Compare entire contents
-    }
+    override fun areItemsTheSame(oldItem: Order, newItem: Order): Boolean = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Order, newItem: Order): Boolean = oldItem == newItem
 }

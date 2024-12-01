@@ -23,8 +23,10 @@ class OrdersActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOrdersBinding
     private lateinit var paymentSheet: PaymentSheet
     private val orderViewModel: OrderViewModel by viewModels()
-    private val activeOrdersAdapter = OrdersAdapter(onMoreInfoClick = { order -> showOrderDetails(order) })
-    private val inactiveOrdersAdapter = OrdersAdapter(onMoreInfoClick = { order -> showOrderDetails(order) })
+
+    // Initialize adapters with appropriate selection modes
+    private lateinit var activeOrdersAdapter: OrdersAdapter
+    private lateinit var inactiveOrdersAdapter: OrdersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +45,7 @@ class OrdersActivity : AppCompatActivity() {
         }
 
         // Set up RecyclerViews for active and inactive orders
-        binding.activeOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.activeOrdersRecyclerView.adapter = activeOrdersAdapter
-        binding.inactiveOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.inactiveOrdersRecyclerView.adapter = inactiveOrdersAdapter
+        setupRecyclerViews()
 
         // Observers
         orderViewModel.activeOrders.observe(this) { orders ->
@@ -71,27 +70,37 @@ class OrdersActivity : AppCompatActivity() {
             clientSecret?.let { presentPaymentSheet(it) }
         }
 
-        // Load orders from the ViewModel
+
         orderViewModel.loadOrders()
 
-        // Set up onClickListeners for more info and payment actions
-        binding.moreInfoButton.setOnClickListener {
-            val selectedOrders = activeOrdersAdapter.getSelectedOrders()
-            if (selectedOrders.size == 1) {
-                showOrderDetails(selectedOrders.first())
-            } else {
-                Toast.makeText(this, "Please select exactly one order to view details", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         binding.makePaymentButton.setOnClickListener {
             val selectedOrders = activeOrdersAdapter.getSelectedOrders()
             if (selectedOrders.isNotEmpty()) {
-                orderViewModel.initiatePayment(selectedOrders)
+                processPaymentForOrders(selectedOrders)
             } else {
-                Toast.makeText(this, "Please select at least one order to make a payment", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please select at least one order.", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    private fun setupRecyclerViews() {
+
+        activeOrdersAdapter = OrdersAdapter(
+            onMoreInfoClick = { order -> showOrderDetails(order) },
+            selectionMode = OrdersAdapter.SelectionMode.MULTIPLE
+        )
+        binding.activeOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.activeOrdersRecyclerView.adapter = activeOrdersAdapter
+
+
+        inactiveOrdersAdapter = OrdersAdapter(
+            onMoreInfoClick = { order -> showOrderDetails(order) },
+            selectionMode = OrdersAdapter.SelectionMode.SINGLE
+        )
+        binding.inactiveOrdersRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.inactiveOrdersRecyclerView.adapter = inactiveOrdersAdapter
     }
 
     private fun showOrderDetails(order: Order) {
@@ -122,16 +131,23 @@ class OrdersActivity : AppCompatActivity() {
         when (paymentSheetResult) {
             is PaymentSheetResult.Completed -> {
                 Toast.makeText(this, "Payment successful!", Toast.LENGTH_SHORT).show()
-                // Handle success
+
+                orderViewModel.loadOrders()
             }
             is PaymentSheetResult.Canceled -> {
                 Toast.makeText(this, "Payment canceled.", Toast.LENGTH_SHORT).show()
-                // Handle cancellation
             }
             is PaymentSheetResult.Failed -> {
-                Toast.makeText(this, "Payment failed: ${paymentSheetResult.error.localizedMessage}", Toast.LENGTH_LONG).show()
-                // Handle failure
+                Toast.makeText(
+                    this,
+                    "Payment failed: ${paymentSheetResult.error.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
+    }
+
+    private fun processPaymentForOrders(selectedOrders: List<Order>) {
+        orderViewModel.initiatePayment(selectedOrders)
     }
 }

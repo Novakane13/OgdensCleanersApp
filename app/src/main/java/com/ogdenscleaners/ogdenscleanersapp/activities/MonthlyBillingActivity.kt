@@ -28,7 +28,7 @@ class MonthlyBillingActivity : AppCompatActivity() {
         binding = ActivityMonthlyBillingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        PaymentConfiguration.init(applicationContext, getString(R.string.stripe_publishable_key))
+        PaymentConfiguration.init(applicationContext, "pk_test_51QEmC6F9q8Y1A3UES8uzimDczaKS3xMRUNr9QN4vhQN8wjktGMEONNrWWP7mFCJRrdYDmTPADDDVxn1GvS0mTkCw00XlEDwkSY")
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
 
         setupRecyclerView()
@@ -42,7 +42,7 @@ class MonthlyBillingActivity : AppCompatActivity() {
                 val customerId = getCustomerId()
                 val paymentMethodId = getPaymentMethodId()
 
-                billingViewModel.initiatePayment(selectedStatements, customerId, paymentMethodId)
+                billingViewModel.initiateBillingPayment(selectedStatements, customerId, paymentMethodId)
                     .observe(this) { result ->
                         result.onSuccess { clientSecret ->
                             paymentSheet.presentWithPaymentIntent(
@@ -64,6 +64,7 @@ class MonthlyBillingActivity : AppCompatActivity() {
             if (selectedStatement != null) {
                 val intent = Intent(this, DetailedBillingStatementActivity::class.java).apply {
                     putExtra("statement_id", selectedStatement.statementId)
+                    putStringArrayListExtra("order_ids", ArrayList(selectedStatement.orderIds))
                 }
                 startActivity(intent)
             } else {
@@ -83,7 +84,9 @@ class MonthlyBillingActivity : AppCompatActivity() {
     private fun observeViewModel() {
         billingViewModel.loadBillingStatements()
         billingViewModel.billingStatements.observe(this) { statements ->
-            billingAdapter.updateBillingStatements(statements)
+            if (statements != null) {
+                billingAdapter.updateBillingStatements(statements)
+            }
         }
     }
 
@@ -105,13 +108,13 @@ class MonthlyBillingActivity : AppCompatActivity() {
     // Helper method to get customer ID
     private fun getCustomerId(): String {
         // TODO: Implement logic to retrieve the customer ID from user session or preferences
-        return "cus_123456789" // Replace with actual customer ID
+        return "cus_123456789"
     }
 
     // Helper method to get payment method ID
     private fun getPaymentMethodId(): String {
         // TODO: Implement logic to create or retrieve a payment method ID using Stripe SDK
         // For example, you might prompt the user to enter payment details and create a PaymentMethod
-        return "pm_123456789" // Replace with actual payment method ID
+        return "pm_123456789"
     }
 }

@@ -19,8 +19,8 @@ class OrderDetailsActivity : AppCompatActivity() {
     private fun loadOrderDetails(orderId: String) {
         // Mock data for demonstration
         val mockGarments = listOf(
-            ClothingItem("Shirt", 3,"White", 4.99),
-            ClothingItem("Pants", 2,"Blue", 9.99)
+            ClothingItem("Shirt", 3,"White", "plaid", "linen", 4.99),
+            ClothingItem("Pants", 2,"Blue", "striped", "silk, heavy", 9.99)
         )
 
         // Bind the mock data to a RecyclerView or UI component

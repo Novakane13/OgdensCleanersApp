@@ -1,11 +1,7 @@
 package com.ogdenscleaners.ogdenscleanersapp.activities
 
-import com.ogdenscleaners.ogdenscleanersapp.api.PaymentData
-import com.ogdenscleaners.ogdenscleanersapp.api.PaymentIntentResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
 
 object RetrofitClient {
     private const val BASE_URL = "http://10.0.2.2"
@@ -21,6 +17,4 @@ object RetrofitClient {
 }
 
 interface APIService {
-    @POST("/create-payment-intent")
-    fun createPaymentIntent(@Body paymentData: PaymentData): retrofit2.Call<PaymentIntentResponse>
 }

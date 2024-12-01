@@ -22,19 +22,32 @@ class DeliveryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDeliveryBinding
     private val deliveryViewModel: DeliveryViewModel by viewModels()
     private var selectedDate: String = ""
-    private var instructionsinput: String = ""
+    private var instructionsInput: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeliveryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupButtons()
+        setupButtonColors()
+        setupButtonListeners()
         observeViewModel()
     }
 
-    private fun setupButtons() {
+    private fun setupButtonColors() {
+        val buttons = listOf(
+            binding.addresscheck,
+            binding.tempstopservice,
+            binding.stopdelservice,
+            binding.startnew,
+            binding.requestapickup
+        )
+        buttons.forEach { it.setBackgroundColor(getColor(R.color.buttonbackground)) }
+    }
+
+    private fun setupButtonListeners() {
         binding.requestapickup.setOnClickListener { showPickupRequestDialog() }
+        // Add listeners for other buttons if needed
     }
 
     @SuppressLint("InflateParams")
@@ -49,17 +62,17 @@ class DeliveryActivity : AppCompatActivity() {
         val dialog = builder.create()
 
         selectDateButton.setOnClickListener { showDatePickerDialog { date -> selectedDate = date } }
-        instructionsButton.setOnClickListener { showPickupInstructionsDialog { instructions -> instructionsinput = instructions } }
+        instructionsButton.setOnClickListener { showPickupInstructionsDialog { instructions -> instructionsInput = instructions } }
 
         saveRequestButton.setOnClickListener {
-            if (selectedDate.isEmpty() || instructionsinput.isEmpty()) {
+            if (selectedDate.isEmpty() || instructionsInput.isEmpty()) {
                 Toast.makeText(this, "Please complete all fields.", Toast.LENGTH_SHORT).show()
             } else {
                 val pickupRequest = DeliveryRequest(
                     customerId = "12345", // Replace with dynamic ID
                     address = "Customer Address", // Replace with dynamic address
                     date = selectedDate,
-                    instructions = instructionsinput
+                    instructions = instructionsInput
                 )
                 deliveryViewModel.requestPickup(pickupRequest)
                 dialog.dismiss()

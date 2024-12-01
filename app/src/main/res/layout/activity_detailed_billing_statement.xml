@@ -89,28 +89,29 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="148dp">
+        android:layout_width="381dp"
+        android:layout_height="155dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewOrders"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
+            android:layout_height="148dp"
             android:layout_marginTop="8dp"
             android:background="#000000"
             tools:listitem="@layout/item_order" />
     </FrameLayout>
 
     <!-- TextView for No Data Message -->
+
     <TextView
         android:id="@+id/noDataText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="347dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:text="@string/no_data_message"
         android:textColor="#FFFFFF"
-        android:gravity="center"
-        android:visibility="gone"
-        android:layout_marginTop="8dp" />
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/moreinfobutton"
@@ -118,15 +119,9 @@
         android:layout_height="54dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="48dp"
+        android:background="@color/buttonbackground"
         android:text="@string/moreinfo"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:icon="@android:drawable/ic_dialog_info" />
-
-    <Button
-        android:id="@+id/backbutton"
-        android:layout_width="216dp"
-        android:layout_height="44dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/backbutton"
-        app:icon="@drawable/stripe_link_back" />
 
 </LinearLayout>

@@ -6,7 +6,8 @@ data class BillingStatement(
     val date: String,
     val amountOwed: String,
     val orderIds: List<String>,
-    val paidStatus: Boolean
+    val paidStatus: Boolean,
+    var isSelected: Boolean
 ) {
     val totalAmountText: String
         get() = "$$amountOwed"

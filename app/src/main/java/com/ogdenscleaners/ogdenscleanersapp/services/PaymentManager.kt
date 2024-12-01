@@ -1,12 +1,15 @@
 package com.ogdenscleaners.ogdenscleanersapp.services
 
 import android.content.Context
+import android.net.http.HttpException
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresExtension
 import com.ogdenscleaners.ogdenscleanersapp.api.ApiClient
 import com.ogdenscleaners.ogdenscleanersapp.api.ApiService
+import com.ogdenscleaners.ogdenscleanersapp.api.PaymentIntentRequest
+import com.ogdenscleaners.ogdenscleanersapp.api.PaymentIntentResponse
 import com.ogdenscleaners.ogdenscleanersapp.models.EphemeralKeyRequest
-import com.ogdenscleaners.ogdenscleanersapp.models.PaymentIntentRequest
-import com.ogdenscleaners.ogdenscleanersapp.models.PaymentIntentResponse
 import com.google.gson.Gson
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -22,7 +25,7 @@ class PaymentManager(
 ) {
 
     // Replace with your Stripe live key (ensure it is secure)
-    private val stripePublishableKey: String = "pk_live_your_live_key_here"
+    private val stripePublishableKey: String = "pk_test_51QEmC6F9q8Y1A3UES8uzimDczaKS3xMRUNr9QN4vhQN8wjktGMEONNrWWP7mFCJRrdYDmTPADDDVxn1GvS0mTkCw00XlEDwkSY"
 
     private val apiService: ApiService = ApiClient
         .getRetrofitInstance("http://10.0.2.2:4242/")
@@ -35,6 +38,7 @@ class PaymentManager(
         PaymentConfiguration.init(context, stripePublishableKey)
     }
 
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     suspend fun createEphemeralKey(
         customerId: String,
         apiVersion: String,
@@ -45,21 +49,23 @@ class PaymentManager(
             try {
                 val response = apiService.createEphemeralKey(
                     EphemeralKeyRequest(customerId, apiVersion)
-                ).execute()
+                )
 
                 withContext(Dispatchers.Main) {
-                    processResponse(
-                        response,
-                        { onSuccess(it.id) },
-                        { onFailure("Failed to parse ephemeral key response") }
-                    )
+                    response?.let {
+                        onSuccess(it.id)
+                    } ?: onFailure("Ephemeral key creation failed")
                 }
-            } catch (e: Exception) {
+            } catch (e: HttpException) {
                 logAndNotifyFailure("Failed to create ephemeral key", e, onFailure)
+            } catch (e: Exception) {
+                logAndNotifyFailure("Unexpected error occurred", e, onFailure)
+
             }
         }
     }
 
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     suspend fun createPaymentIntent(
         paymentMethodId: String,
         customerId: String,
@@ -76,17 +82,17 @@ class PaymentManager(
                     paymentMethodId = paymentMethodId
                 )
 
-                val response = apiService.createPaymentIntent(paymentIntentRequest).execute()
+                val response = apiService.createPaymentIntent(paymentIntentRequest)
 
                 withContext(Dispatchers.Main) {
-                    processResponse(
-                        response,
-                        { onSuccess(it.clientSecret) },
-                        { onFailure("Failed to parse payment intent response") }
-                    )
+                    response?.let {
+                        onSuccess(it.clientSecret)
+                    } ?: onFailure("Payment intent creation failed")
                 }
-            } catch (e: Exception) {
+            } catch (e: HttpException) {
                 logAndNotifyFailure("Failed to create payment intent", e, onFailure)
+            } catch (e: Exception) {
+                logAndNotifyFailure("Unexpected error occurred", e, onFailure)
             }
         }
     }
@@ -104,21 +110,6 @@ class PaymentManager(
 
     private fun handlePaymentResult(paymentSheetResult: PaymentSheetResult) {
         paymentSheetResultHandler(paymentSheetResult)
-    }
-
-    private inline fun <T> processResponse(
-        response: retrofit2.Response<T>,
-        onSuccess: (T) -> Unit,
-        onFailure: () -> Unit
-    ) {
-        if (response.isSuccessful) {
-            response.body()?.let {
-                onSuccess(it)
-            } ?: onFailure()
-        } else {
-            onFailure()
-            Log.e("PaymentManager", "Server Error: ${response.message()}")
-        }
     }
 
     private fun logAndNotifyFailure(message: String, exception: Exception, onFailure: (String) -> Unit) {

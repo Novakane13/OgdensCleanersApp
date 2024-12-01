@@ -10,4 +10,3 @@ interface PaymentApi {
 }
 
 data class PaymentData(val amount: Int, val currency: String)
-data class PaymentIntentResponse(val clientSecret: String)

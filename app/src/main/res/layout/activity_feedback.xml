@@ -26,6 +26,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:text="@string/textview"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         tools:text="Please let us about your experience and how we could make it better! " />
@@ -53,15 +54,19 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSubmitFeedback"
         android:layout_width="198dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginTop="16dp"
-        android:background="#1D2E2A"
+
         android:text="@string/submit_feedback"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/textColor"
+        android:textSize="14sp"
+        app:backgroundTint="@color/buttonbackground"
+        app:cornerRadius="8dp"
+        app:strokeColor="@color/selectedobject" />
 
     <EditText
         android:id="@+id/suggestions"
@@ -79,14 +84,18 @@
         android:textColor="#000000"
         android:textStyle="bold" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginTop="32dp"
-        android:background="#1D2E2A"
+
         android:text="@string/submit_suggestions"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/textColor"
+        android:textSize="14sp"
+        app:backgroundTint="@color/buttonbackground"
+        app:cornerRadius="8dp"
+        />
 
 </LinearLayout>

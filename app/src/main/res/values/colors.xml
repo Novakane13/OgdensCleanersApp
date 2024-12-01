@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primaryText">#6200EE</color>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
@@ -15,6 +16,9 @@
     <color name="colorSecondary">#03DAC6</color>
     <color name="colorSecondaryVariant">#018786</color>
     <color name="colorOnSecondary">#000000</color>
-    <color name="textColor">#000000</color>
-    <color name="buttonbackground">#1D2E2A</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="buttonbackground">#3D4648</color>
+    <color name="background">#000000</color>
+    <color name="selectedobject">#900404</color>
+    <color name="accessorycolor">#00BCD4</color>
 </resources>

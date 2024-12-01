@@ -26,72 +26,73 @@ class DetailedBillingStatementActivity : AppCompatActivity() {
         binding = ActivityDetailedBillingStatementBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Enable the back button in the toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Setup RecyclerView for displaying orders
         setupRecyclerView()
-
-        // Observe ViewModel for data changes
         observeViewModel()
-
-        // Fetch orders for the selected billing statement
-        fetchMockDataForTesting() // Replace with API call for production
+        fetchFilteredOrders()
     }
-// Handle back button in the toolbar
+
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
-    private fun setupRecyclerView() {
-        adapter = OrdersAdapter { order ->
-            showOrderDetailsDialog(order) // Trigger dialog for order details
-        }
-        binding.recyclerViewOrders.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewOrders.adapter = adapter
-    }
+private fun setupRecyclerView() {
+    adapter = OrdersAdapter(
+        onMoreInfoClick = { order -> showOrderDetailsDialog(order) },
+        selectionMode = OrdersAdapter.SelectionMode.SINGLE
+    )
+    binding.recyclerViewOrders.layoutManager = LinearLayoutManager(this)
+    binding.recyclerViewOrders.adapter = adapter
+}
 
-    private fun observeViewModel() {
-        billingViewModel.orders.observe(this) { result ->
-            result.onSuccess { orders ->
-                if (orders.isEmpty()) {
-                    binding.noDataText.visibility = View.VISIBLE
-                } else {
-                    binding.noDataText.visibility = View.GONE
-                }
-                adapter.submitList(orders)
-            }.onFailure { error ->
-                Toast.makeText(
-                    this,
-                    "Failed to load orders: ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+    private fun moreinfobutton() {
+        binding.moreinfobutton.setOnClickListener {
+            val selectedOrder = adapter.getSelectedOrder()
+            if (selectedOrder != null) {
+                showOrderDetailsDialog(selectedOrder)
+            } else {
+                Toast.makeText(this, "Please select an order.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    private fun fetchFilteredOrders() {
+        val orderIds = intent.getStringArrayListExtra("order_ids") ?: emptyList()
+        val mockOrders = createMockOrders()
+        val filteredOrders = mockOrders.filter { it.id in orderIds }
+
+        adapter.submitList(filteredOrders)
+    }
+
+    private fun observeViewModel() {
+        billingViewModel.orders.observe(this) { result ->
+            result?.onSuccess { orders ->
+                adapter.submitList(orders)
+            }?.onFailure { error ->
+                Toast.makeText(this, "Failed to load orders: ${error.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
+
+
     private fun showOrderDetailsDialog(order: Order) {
-        val itemsDetails = order.items.joinToString(separator = "\n") { item ->
-            "${item.name} - ${item.quantity} pcs @ $${item.price} each"
+        val details = order.items.joinToString("\n") {
+            "Item: ${it.name}, Color: ${it.color}, Pattern: ${it.pattern}, Cost: $${"%.2f".format(it.price)}"
         }
 
         MaterialAlertDialogBuilder(this)
             .setTitle("Order Details")
-            .setMessage(
-                """
-            Order ID: ${order.id}
-            Drop Off Date: ${order.dropOffDate}
-            
-            Items:
-            $itemsDetails
-            """.trimIndent()
-            )
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            .setMessage(details)
+            .setPositiveButton("OK", null)
             .show()
     }
 
-    private fun fetchMockDataForTesting() {
+    private fun createMockOrders(): List<Order> {
         // Mock data for testing purposes
         val mockOrders = listOf(
             Order(
@@ -101,8 +102,22 @@ class DetailedBillingStatementActivity : AppCompatActivity() {
                 numOfPieces = 3,
                 orderTotal = 18.0,
                 items = listOf(
-                    ClothingItem(name = "Shirt", quantity = 4, details = "Size M", price = 5.0),
-                    ClothingItem(name = "Pants", quantity = 1, details = "Size L", price = 8.0)
+                    ClothingItem(
+                        name = "Shirt",
+                        quantity = 4,
+                        color = "Blue",
+                        pattern = "Striped",
+                        upcharges = "Linen",
+                        price = 5.0
+                    ),
+                    ClothingItem(
+                        name = "Pants",
+                        quantity = 1,
+                        color = "Black",
+                        pattern = "Solid",
+                        upcharges = "None",
+                        price = 8.0
+                    )
                 )
             ),
             Order(
@@ -112,12 +127,28 @@ class DetailedBillingStatementActivity : AppCompatActivity() {
                 numOfPieces = 2,
                 orderTotal = 27.0,
                 items = listOf(
-                    ClothingItem(name = "Coat", quantity = 2, details = "Winter coat", price = 15.0),
-                    ClothingItem(name = "Sweater", quantity = 3, details = "Wool sweater", price = 12.0)
+                    ClothingItem(
+                        name = "Coat",
+                        quantity = 2,
+                        color = "Brown",
+                        pattern = "Checkered",
+                        upcharges = "Winter",
+                        price = 15.0
+                    ),
+                    ClothingItem(
+                        name = "Sweater",
+                        quantity = 3,
+                        color = "Red",
+                        pattern = "Knitted",
+                        upcharges = "Wool",
+                        price = 12.0
+                    )
                 )
             )
         )
 
-        billingViewModel.setMockOrders(mockOrders)
+        billingViewModel.loadMockOrders(mockOrders)
+        return mockOrders
     }
 }
+

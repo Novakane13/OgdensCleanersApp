@@ -15,6 +15,8 @@ data class Order(
     data class ClothingItem(
         val name: String,
         val quantity: Int,
-        val details: String,
+        val color: String,
+        val pattern: String,
+        val upcharges: String,
         val price: Double
     )

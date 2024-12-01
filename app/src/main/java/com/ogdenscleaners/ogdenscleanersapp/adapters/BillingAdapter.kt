@@ -10,10 +10,10 @@ import com.ogdenscleaners.ogdenscleanersapp.models.BillingStatement
 
 class BillingAdapter(
     private val billingList: MutableList<BillingStatement>,
-    private val onItemSelected: (BillingStatement, Boolean) -> Unit
+    private val onItemSelected: (BillingStatement, Boolean) -> Unit // Callback when an item is selected or deselected
 ) : RecyclerView.Adapter<BillingAdapter.BillingViewHolder>() {
 
-    private val selectedStatements = mutableSetOf<BillingStatement>()
+    private val selectedStatements = mutableSetOf<BillingStatement>() // Tracks selected billing statements
 
     /**
      * Retrieve the selected billing statements.
@@ -50,8 +50,8 @@ class BillingAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(billingStatement: BillingStatement) {
             // Display billing statement data
-            binding.textStatementDate.text = billingStatement.date
-            binding.textAmountOwed.text = "$${billingStatement.amountOwed}"
+            binding.textStatementDate.text = billingStatement.date // Display the date of the statement
+            binding.textAmountOwed.text = "$${"%.2f".format(billingStatement.amountOwed.toDouble())}" // Format the amount owed
 
             // Set up the checkbox
             binding.checkbox.setOnCheckedChangeListener(null) // Clear any previous listeners
@@ -76,7 +76,7 @@ class BillingAdapter(
                     } else {
                         selectedStatements.remove(billingStatement)
                     }
-                    onItemSelected(billingStatement, isChecked)
+                    onItemSelected(billingStatement, isChecked) // Trigger callback to notify parent of the change
                 }
             }
         }
